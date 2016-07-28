@@ -154,9 +154,6 @@ Inc. under a more liberal, MIT-style license, as follows:
 
  MGL driver      include/GL/mglmesa.h  SciTech, Inc        GNU LGPL
 
- Windows driver  mesa/drivers/windows/ Li Wei              GNU LGPL
-                 include/GL/wmesa.h
-
  SVGA driver     mesa/drivers/svga/    Brian Paul          GNU LGPL
                  include/GL/svgamesa.h
 

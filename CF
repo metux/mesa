@@ -1,0 +1,15 @@
+#!/bin/bash
+
+./configure \
+    --prefix=/home/nekrad/MESA	\
+    --enable-shared \
+    --enable-llvm-shared-libs \
+    --enable-gbm \
+    --enable-dri \
+    --enable-dri3 \
+    --enable-glx \
+    --enable-xa \
+    --enable-shared-glapi \
+    --enable-sysfs \
+    --enable-gallium-llvm \
+    --with-egl-platforms="x11,drm"
