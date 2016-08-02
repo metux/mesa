@@ -40,7 +40,7 @@ buildflags-i686 = \
 include debian/not-installed
 
 # build the following configurations by default
-CONFIGS = dri osmesa
+CONFIGS = dri
 
 LLVM_VERSION = 3.6
 
@@ -118,6 +118,7 @@ confflags-dri = \
 	--enable-glx-tls \
 	--enable-shared-glapi \
 	--enable-texture-float \
+	--enable-gallium-osmesa \
 	--enable-xa \
 	--disable-xvmc \
 	$(confflags_DIRECT_RENDERING) \
