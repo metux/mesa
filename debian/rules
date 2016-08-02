@@ -103,7 +103,6 @@ else
   endif
 
 	confflags_DIRECT_RENDERING = --enable-driglx-direct
-	confflags_OPENVG = --enable-openvg --enable-gallium-egl
 	confflags_GALLIUM += --enable-vdpau
 endif
 confflags_EGL = --with-egl-platforms="$(EGL_DISPLAYS)"
@@ -126,7 +125,6 @@ confflags-dri = \
 	$(confflags_EGL) \
 	$(confflags_GALLIUM) \
 	$(confflags_GLES) \
-	$(confflags_OPENVG) \
 	$(buildflags)
 
 confflags-osmesa = \
@@ -251,8 +249,7 @@ binary-arch: install
 	# Empty directory for the alternative
 	mkdir -p $(CURDIR)/debian/libgl1-mesa-glx/usr/lib/$(DEB_HOST_MULTIARCH)/xorg/x11-extra-modules
 
-	# Create an ld.so.conf which says where to find libEGL, libGLES{1,2}
-	# and libOpenVG from Mesa.
+	# Create an ld.so.conf which says where to find libEGL, libGLES{1,2} from Mesa.
 	echo "/usr/lib/$(DEB_HOST_MULTIARCH)/mesa-egl" \
 	> $(CURDIR)/debian/libegl1-mesa/usr/lib/$(DEB_HOST_MULTIARCH)/mesa-egl/ld.so.conf
 
@@ -273,11 +270,11 @@ binary-arch: install
 	dh_strip $(foreach p,$(nodbgpkg),-p$(p))
 	dh_compress -s
 	dh_fixperms -s
-	# Resolve EGL/GLES/OpenVG symbols in the private library path.
+	# Resolve EGL/GLES symbols in the private library path.
 	# Because there's no packaging problem so onerous that accomodating
 	# proprietary alternatives can't make more difficult…
 	set -e ; for PACKAGE in \
-		libegl1-mesa libgles1-mesa libgles2-mesa libopenvg1-mesa; do \
+		libegl1-mesa libgles1-mesa libgles2-mesa ; do \
 			dh_makeshlibs -p$$PACKAGE -- -c4 \
 			-edebian/$$PACKAGE/usr/lib/$(DEB_HOST_MULTIARCH)/mesa-egl/\* \
 		; done
