@@ -59,7 +59,6 @@ glapi_gen_mapi_deps := \
 	$(wildcard glapi/gen/*.xml) \
 	$(wildcard glapi/gen/*.py)
 
-if HAVE_SHARED_GLAPI
 BUILT_SOURCES += shared-glapi/glapi_mapi_tmp.h
 
 lib_LTLIBRARIES += shared-glapi/libglapi.la
@@ -86,7 +85,6 @@ shared_glapi_test_CPPFLAGS = \
 shared_glapi_test_LDADD = \
 	$(top_builddir)/src/mapi/shared-glapi/libglapi.la \
 	$(top_builddir)/src/gtest/libgtest.la
-endif
 
 shared-glapi/glapi_mapi_tmp.h : glapi/gen/gl_and_es_API.xml $(glapi_gen_mapi_deps)
 	$(MKDIR_GEN)
@@ -95,17 +93,6 @@ shared-glapi/glapi_mapi_tmp.h : glapi/gen/gl_and_es_API.xml $(glapi_gen_mapi_dep
 
 if HAVE_OPENGL
 noinst_LTLIBRARIES = glapi/libglapi.la
-
-if HAVE_X86_ASM
-if HAVE_X86_64_ASM
-GLAPI_ASM_SOURCES = glapi/glapi_x86-64.S
-else
-GLAPI_ASM_SOURCES = glapi/glapi_x86.S
-endif
-endif
-if HAVE_SPARC_ASM
-GLAPI_ASM_SOURCES = glapi/glapi_sparc.S
-endif
 
 glapi_libglapi_la_SOURCES =
 glapi_libglapi_la_CPPFLAGS = \
@@ -117,37 +104,10 @@ if HAVE_APPLEDRI
 glapi_libglapi_la_SOURCES += glapi/glapi_gentable.c
 endif
 
-if HAVE_SHARED_GLAPI
 glapi_libglapi_la_SOURCES += $(MAPI_BRIDGE_FILES) glapi/glapi_mapi_tmp.h
 glapi_libglapi_la_CPPFLAGS += \
 	-DMAPI_MODE_BRIDGE \
 	-DMAPI_ABI_HEADER=\"glapi/glapi_mapi_tmp.h\"
-else
-glapi_libglapi_la_CPPFLAGS += \
-	-DMAPI_MODE_UTIL
-glapi_libglapi_la_SOURCES += \
-	glapi/glapi_dispatch.c \
-	glapi/glapi_entrypoint.c \
-	glapi/glapi_getproc.c \
-	glapi/glapi_nop.c \
-	glapi/glapi.c \
-	glapi/glapi.h \
-	glapi/glapi_priv.h \
-	$(GLAPI_ASM_SOURCES) \
-	$(MAPI_UTIL_FILES)
-
-TESTS += glapi-test
-check_PROGRAMS += glapi-test
-
-glapi_test_SOURCES = glapi/tests/check_table.cpp
-glapi_test_CPPFLAGS = \
-	$(AM_CPPFLAGS) \
-	-I$(top_srcdir)/src/gtest/include
-
-glapi_test_LDADD = \
-	$(top_builddir)/src/mapi/glapi/libglapi.la \
-	$(top_builddir)/src/gtest/libgtest.la
-endif
 endif
 
 if HAVE_OPENGL_ES1
@@ -181,9 +141,7 @@ es1api_libGLESv1_CM_la_LDFLAGS = \
 	$(GC_SECTIONS) \
 	$(LD_NO_UNDEFINED)
 
-if HAVE_SHARED_GLAPI
 es1api_libGLESv1_CM_la_LIBADD += shared-glapi/libglapi.la
-endif
 endif
 
 es1api/glapi_mapi_tmp.h: glapi/gen/gl_and_es_API.xml $(glapi_gen_mapi_deps)
@@ -227,9 +185,7 @@ es2api_libGLESv2_la_LDFLAGS = \
 	$(GC_SECTIONS) \
 	$(LD_NO_UNDEFINED)
 
-if HAVE_SHARED_GLAPI
 es2api_libGLESv2_la_LIBADD += shared-glapi/libglapi.la
-endif
 endif
 
 es2api/glapi_mapi_tmp.h: glapi/gen/gl_and_es_API.xml $(glapi_gen_mapi_deps)

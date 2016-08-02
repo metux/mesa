@@ -8,9 +8,7 @@ SUBDIRS+=common
 
 # On Android, we need to explicitly link to libglapi.so.
 if HAVE_ANDROID
-if HAVE_SHARED_GLAPI
 SHARED_GLAPI_LIB = $(top_builddir)/src/mapi/shared-glapi/libglapi.la
-endif
 endif
 
 if HAVE_I915_DRI

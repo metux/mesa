@@ -21,9 +21,6 @@ main_test_LDADD = \
 	$(PTHREAD_LIBS) \
 	$(DLOPEN_LIBS)
 
-if HAVE_SHARED_GLAPI
-AM_CPPFLAGS += -DHAVE_SHARED_GLAPI
-
 main_test_SOURCES +=			\
 	dispatch_sanity.cpp		\
 	mesa_formats.cpp			\
@@ -32,7 +29,3 @@ main_test_SOURCES +=			\
 
 main_test_LDADD += \
 	$(top_builddir)/src/mapi/shared-glapi/libglapi.la
-else
-main_test_SOURCES +=			\
-	stubs.cpp
-endif

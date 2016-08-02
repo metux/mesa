@@ -1,5 +1,3 @@
-
-
 # Copyright © 2012 Laurent Carlier <lordheavym@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
@@ -47,9 +45,7 @@ lib@OSMESA_LIB@_la_LDFLAGS = \
 	$(LD_NO_UNDEFINED)
 
 
-if HAVE_SHARED_GLAPI
 SHARED_GLAPI_LIB = $(top_builddir)/src/mapi/shared-glapi/libglapi.la
-endif
 
 lib@OSMESA_LIB@_la_LIBADD = \
 	$(top_builddir)/src/mesa/libmesa.la \

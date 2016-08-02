@@ -47,7 +47,7 @@ class PrintGlTable(gl_XML.gl_print_base):
     def printBody(self, api):
         for f in api.functionIterateByOffset():
             if not f.is_abi() and not self.ifdef_emitted:
-                print '#if !defined HAVE_SHARED_GLAPI'
+                print '#if 0 /* formerly: !defined HAVE_SHARED_GLAPI */'
                 self.ifdef_emitted = True
             arg_string = f.get_parameter_string()
             print '   %s (GLAPIENTRYP %s)(%s); /* %d */' % (

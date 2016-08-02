@@ -24,10 +24,7 @@ GL_MAJOR = 1
 GL_MINOR = 5
 GL_TINY = $(MESA_MAJOR)$(MESA_MINOR)0$(MESA_TINY)
 
-if HAVE_SHARED_GLAPI
-SHARED_GLAPI_CFLAGS = -DGLX_SHARED_GLAPI
 SHARED_GLAPI_LIB = $(top_builddir)/src/mapi/shared-glapi/libglapi.la
-endif
 
 AM_CPPFLAGS = \
 	-I$(top_srcdir)/include \
@@ -40,7 +37,6 @@ AM_CPPFLAGS = \
 	-I$(top_srcdir)/src/gallium/state_trackers/glx/xlib \
 	-I$(top_srcdir)/src/gallium/auxiliary \
 	-I$(top_srcdir)/src/gallium/winsys \
-	$(SHARED_GLAPI_CFLAGS) \
 	-DGALLIUM_SOFTPIPE \
 	-DGALLIUM_RBUG \
 	-DGALLIUM_TRACE

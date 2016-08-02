@@ -52,9 +52,7 @@ lib@OSMESA_LIB@_la_LDFLAGS += \
 	-Wl,--version-script=$(top_srcdir)/src/gallium/targets/osmesa/osmesa.sym
 endif
 
-if HAVE_SHARED_GLAPI
 SHARED_GLAPI_LIB = $(top_builddir)/src/mapi/shared-glapi/libglapi.la
-endif
 
 lib@OSMESA_LIB@_la_LIBADD = \
 	$(top_builddir)/src/mesa/libmesagallium.la \

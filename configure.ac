@@ -1123,23 +1123,6 @@ AM_CONDITIONAL(HAVE_DRI2, test "x$enable_dri" = xyes -a "x$dri_platform" = xdrm 
 AM_CONDITIONAL(HAVE_DRI3, test "x$enable_dri3" = xyes -a "x$dri_platform" = xdrm -a "x$have_libdrm" = xyes )
 AM_CONDITIONAL(HAVE_APPLEDRI, test "x$enable_dri" = xyes -a "x$dri_platform" = xapple )
 
-AC_ARG_ENABLE([shared-glapi],
-    [AS_HELP_STRING([--enable-shared-glapi],
-        [Enable shared glapi for OpenGL @<:@default=enabled@:>@])],
-    [enable_shared_glapi="$enableval"],
-    [enable_shared_glapi=yes])
-
-case "x$enable_opengl$enable_gles1$enable_gles2" in
-x*yes*yes*)
-    if test "x$enable_shared_glapi" = xno; then
-        AC_MSG_ERROR([shared GLAPI required when building two or more of
-                      the following APIs - opengl, gles1 gles2])
-    fi
-    ;;
-esac
-
-AM_CONDITIONAL(HAVE_SHARED_GLAPI, test "x$enable_shared_glapi" = xyes)
-
 # Build the pipe-drivers as separate libraries/modules.
 # Do not touch this unless you know what you are doing.
 # XXX: Expose via configure option ?
@@ -1732,11 +1715,7 @@ if test "x$enable_gbm" = xyes; then
         AC_MSG_ERROR([gbm requires udev >= $LIBUDEV_REQUIRED or sysfs])
     fi
 
-    if test "x$enable_dri" = xyes; then
-        if test "x$enable_shared_glapi" = xno; then
-            AC_MSG_ERROR([gbm_dri requires --enable-shared-glapi])
-        fi
-    else
+    if test "x$enable_dri" != xyes; then
         # Strictly speaking libgbm does not require --enable-dri, although
         # both of its backends do. Thus one can build libgbm without any
         # backends if --disable-dri is set.
@@ -1768,14 +1747,8 @@ if test "x$enable_egl" = xyes; then
     if test "$enable_static" != yes; then
         if test "x$enable_dri" = xyes; then
             HAVE_EGL_DRIVER_DRI2=1
-            if test "x$enable_shared_glapi" = xno; then
-                AC_MSG_ERROR([egl_dri2 requires --enable-shared-glapi])
-            fi
             if test "x$enable_dri3" = xyes; then
                 HAVE_EGL_DRIVER_DRI3=1
-                if test "x$enable_shared_glapi" = xno; then
-                    AC_MSG_ERROR([egl_dri3 requires --enable-shared-glapi])
-                fi
             fi
         else
             # Avoid building an "empty" libEGL. Drop/update this
@@ -2883,7 +2856,6 @@ dnl Libraries
 echo ""
 echo "        Shared libs:     $enable_shared"
 echo "        Static libs:     $enable_static"
-echo "        Shared-glapi:    $enable_shared_glapi"
 
 dnl Compiler options
 # cleanup the CFLAGS/CXXFLAGS/DEFINES vars

@@ -1,4 +1,3 @@
-if HAVE_SHARED_GLAPI
 AM_CFLAGS = $(PTHREAD_CFLAGS)
 AM_CPPFLAGS = \
 	-I$(top_srcdir)/src/gtest/include \
@@ -35,4 +34,3 @@ glx_test_LDADD = \
 	$(top_builddir)/src/gtest/libgtest.la \
 	$(top_builddir)/src/mapi/shared-glapi/libglapi.la \
 	$(PTHREAD_LIBS)
-endif

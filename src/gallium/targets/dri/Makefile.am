@@ -1,9 +1,7 @@
 include $(top_srcdir)/src/gallium/Automake.inc
 
 if HAVE_ANDROID
-if HAVE_SHARED_GLAPI
 SHARED_GLAPI_LIB = $(top_builddir)/src/mapi/shared-glapi/libglapi.la
-endif
 endif
 
 AM_CFLAGS = \
