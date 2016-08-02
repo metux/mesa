@@ -42,6 +42,8 @@ include debian/not-installed
 # build the following configurations by default
 CONFIGS = dri osmesa
 
+LLVM_VERSION = 3.6
+
 STAMP_DIR = debian/stamp
 STAMP = $(STAMP_DIR)/$(DEB_BUILD_GNU_TYPE)
 BUILD_STAMPS = $(addprefix $(STAMP)-build-, $(CONFIGS))
@@ -170,7 +172,7 @@ $(STAMP)-build-%: configure
 	             --libdir=\$${prefix}/lib/$(DEB_HOST_MULTIARCH) \
 	             --localstatedir=/var --disable-silent-rules \
 				 $(confflags) $(confflags-$*) \
-	             ac_cv_path_LLVM_CONFIG=llvm-config-3.4
+	             ac_cv_path_LLVM_CONFIG=llvm-config-$(LLVM_VERSION)
 	cd $(DEB_BUILD_DIR)/$* && $(MAKE)
 	>$@
 
@@ -289,7 +291,7 @@ binary-arch: install
 	dh_installdeb -s
 	dh_shlibdeps -s -l/usr/lib/$(DEB_HOST_MULTIARCH)/mesa:\
 /usr/lib/$(DEB_HOST_MULTIARCH)/mesa-egl
-	dh_gencontrol -s
+	dh_gencontrol -s -- -Vllvm:version=$(LLVM_VERSION)
 	dh_md5sums -s
 	dh_builddeb -s -- -Zxz
 
