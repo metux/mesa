@@ -66,7 +66,7 @@ surface_make_current(struct apple_glx_context *ac,
    assert(APPLE_GLX_DRAWABLE_SURFACE == d->type);
 
    apple_glx_diagnostic("%s: ac->context_obj %p s->surface_id %u\n",
-                        __func__, (void *) ac->context_obj, s->surface_id);
+                        __FUNCTION__, (void *) ac->context_obj, s->surface_id);
 
    error = xp_attach_gl_context(ac->context_obj, s->surface_id);
 
@@ -86,7 +86,7 @@ surface_make_current(struct apple_glx_context *ac,
       ac->made_current = true;
    }
 
-   apple_glx_diagnostic("%s: drawable 0x%lx\n", __func__, d->drawable);
+   apple_glx_diagnostic("%s: drawable 0x%lx\n", __FUNCTION__, d->drawable);
 
    return false;
 }
@@ -96,7 +96,7 @@ surface_destroy(Display * dpy, struct apple_glx_drawable *d)
 {
    struct apple_glx_surface *s = &d->types.surface;
 
-   apple_glx_diagnostic("%s: s->surface_id %u\n", __func__, s->surface_id);
+   apple_glx_diagnostic("%s: s->surface_id %u\n", __FUNCTION__, s->surface_id);
 
    xp_error error = xp_destroy_surface(s->surface_id);
 
@@ -119,7 +119,7 @@ surface_destroy(Display * dpy, struct apple_glx_drawable *d)
                               d->drawable);
 
       apple_glx_diagnostic
-         ("%s: destroyed a surface for drawable 0x%lx uid %u\n", __func__,
+         ("%s: destroyed a surface for drawable 0x%lx uid %u\n", __FUNCTION__,
           d->drawable, s->uid);
    }
 }
@@ -151,7 +151,7 @@ create_surface(Display * dpy, int screen, struct apple_glx_drawable *d)
       }
 
       apple_glx_diagnostic("%s: created a surface for drawable 0x%lx"
-                           " with uid %u\n", __func__, d->drawable, s->uid);
+                           " with uid %u\n", __FUNCTION__, d->drawable, s->uid);
       return false;             /*success */
    }
 

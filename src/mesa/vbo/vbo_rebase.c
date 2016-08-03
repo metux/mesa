@@ -64,7 +64,7 @@ static void *rebase_##TYPE( const void *ptr,			\
    TYPE *tmp_indices = malloc(count * sizeof(TYPE));		\
 								\
    if (tmp_indices == NULL) {                                   \
-      _mesa_error_no_memory(__func__);                          \
+      _mesa_error_no_memory(__FUNCTION__);                          \
       return NULL;                                              \
    }                                                            \
 								\
@@ -142,7 +142,7 @@ void vbo_rebase_prims( struct gl_context *ctx,
    assert(min_index != 0);
 
    if (0)
-      printf("%s %d..%d\n", __func__, min_index, max_index);
+      printf("%s %d..%d\n", __FUNCTION__, min_index, max_index);
 
 
    /* XXX this path is disabled for now.
@@ -155,7 +155,7 @@ void vbo_rebase_prims( struct gl_context *ctx,
       tmp_prims = malloc(sizeof(*prim) * nr_prims);
 
       if (tmp_prims == NULL) {
-         _mesa_error_no_memory(__func__);
+         _mesa_error_no_memory(__FUNCTION__);
          return;
       }
 
@@ -214,7 +214,7 @@ void vbo_rebase_prims( struct gl_context *ctx,
       tmp_prims = malloc(sizeof(*prim) * nr_prims);
 
       if (tmp_prims == NULL) {
-         _mesa_error_no_memory(__func__);
+         _mesa_error_no_memory(__FUNCTION__);
          return;
       }
 

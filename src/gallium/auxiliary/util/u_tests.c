@@ -274,7 +274,7 @@ util_report_result_helper(int status, const char *name, ...)
           status == PASS ? "pass" : "fail");
 }
 
-#define util_report_result(status) util_report_result_helper(status, __func__)
+#define util_report_result(status) util_report_result_helper(status, __FUNCTION__)
 
 /**
  * Test TGSI_PROPERTY_VS_WINDOW_SPACE_POSITION.
@@ -359,7 +359,7 @@ null_sampler_view(struct pipe_context *ctx, unsigned tgsi_tex_target)
 
    if (tgsi_tex_target == TGSI_TEXTURE_BUFFER &&
        !ctx->screen->get_param(ctx->screen, PIPE_CAP_TEXTURE_BUFFER_OBJECTS)) {
-      util_report_result_helper(SKIP, "%s: %s", __func__,
+      util_report_result_helper(SKIP, "%s: %s", __FUNCTION__,
                                 tgsi_texture_names[tgsi_tex_target]);
       return;
    }
@@ -392,7 +392,7 @@ null_sampler_view(struct pipe_context *ctx, unsigned tgsi_tex_target)
    ctx->delete_fs_state(ctx, fs);
    pipe_resource_reference(&cb, NULL);
 
-   util_report_result_helper(pass, "%s: %s", __func__,
+   util_report_result_helper(pass, "%s: %s", __FUNCTION__,
                              tgsi_texture_names[tgsi_tex_target]);
 }
 

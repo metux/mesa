@@ -53,7 +53,7 @@ radeon_delete_renderbuffer(struct gl_context *ctx, struct gl_renderbuffer *rb)
 
   radeon_print(RADEON_TEXTURE, RADEON_TRACE,
 		"%s(rb %p, rrb %p) \n",
-		__func__, rb, rrb);
+		__FUNCTION__, rb, rrb);
 
   assert(rrb);
 
@@ -470,7 +470,7 @@ radeon_alloc_renderbuffer_storage(struct gl_context * ctx, struct gl_renderbuffe
 
   radeon_print(RADEON_TEXTURE, RADEON_TRACE,
 		"%s(%p, rb %p) \n",
-		__func__, ctx, rb);
+		__FUNCTION__, ctx, rb);
 
    assert(rb->Name != 0);
   switch (internalFormat) {
@@ -613,7 +613,7 @@ radeon_alloc_window_storage(struct gl_context * ctx, struct gl_renderbuffer *rb,
    rb->InternalFormat = internalFormat;
   radeon_print(RADEON_TEXTURE, RADEON_TRACE,
 		"%s(%p, rb %p) \n",
-		__func__, ctx, rb);
+		__FUNCTION__, ctx, rb);
 
 
    return GL_TRUE;
@@ -643,7 +643,7 @@ radeon_create_renderbuffer(mesa_format format, __DRIdrawable *driDrawPriv)
 
     radeon_print(RADEON_TEXTURE, RADEON_TRACE,
 		"%s( rrb %p ) \n",
-		__func__, rrb);
+		__FUNCTION__, rrb);
 
     if (!rrb)
 	return NULL;
@@ -676,7 +676,7 @@ radeon_new_renderbuffer(struct gl_context * ctx, GLuint name)
 
   radeon_print(RADEON_TEXTURE, RADEON_TRACE,
 		"%s(%p, rrb %p) \n",
-		__func__, ctx, rrb);
+		__FUNCTION__, ctx, rrb);
 
   if (!rrb)
     return NULL;
@@ -697,7 +697,7 @@ radeon_bind_framebuffer(struct gl_context * ctx, GLenum target,
 {
   radeon_print(RADEON_TEXTURE, RADEON_TRACE,
 		"%s(%p, fb %p, target %s) \n",
-		__func__, ctx, fb,
+		__FUNCTION__, ctx, fb,
 		_mesa_enum_to_string(target));
 
    if (target == GL_FRAMEBUFFER_EXT || target == GL_DRAW_FRAMEBUFFER_EXT) {
@@ -719,7 +719,7 @@ radeon_framebuffer_renderbuffer(struct gl_context * ctx,
 
 	radeon_print(RADEON_TEXTURE, RADEON_TRACE,
 		"%s(%p, fb %p, rb %p) \n",
-		__func__, ctx, fb, rb);
+		__FUNCTION__, ctx, fb, rb);
 
    _mesa_FramebufferRenderbuffer_sw(ctx, fb, attachment, rb);
    radeon_draw_buffer(ctx, fb);
@@ -733,7 +733,7 @@ radeon_update_wrapper(struct gl_context *ctx, struct radeon_renderbuffer *rrb,
 
 	radeon_print(RADEON_TEXTURE, RADEON_TRACE,
 		"%s(%p, rrb %p, texImage %p, texFormat %s) \n",
-		__func__, ctx, rrb, texImage, _mesa_get_format_name(texImage->TexFormat));
+		__FUNCTION__, ctx, rrb, texImage, _mesa_get_format_name(texImage->TexFormat));
 
 	rrb->cpp = _mesa_get_format_bytes(texImage->TexFormat);
 	rrb->pitch = texImage->Width * rrb->cpp;
@@ -761,7 +761,7 @@ radeon_render_texture(struct gl_context * ctx,
 
   radeon_print(RADEON_TEXTURE, RADEON_TRACE,
 		"%s(%p, fb %p, rrb %p, att %p)\n",
-		__func__, ctx, fb, rrb, att);
+		__FUNCTION__, ctx, fb, rrb, att);
 
    (void) fb;
 
@@ -854,7 +854,7 @@ radeon_validate_framebuffer(struct gl_context *ctx, struct gl_framebuffer *fb)
 			fb->_Status = GL_FRAMEBUFFER_UNSUPPORTED;
 			radeon_print(RADEON_TEXTURE, RADEON_TRACE,
 						"%s: HW doesn't support format %s as output format of attachment %d\n",
-						__func__, _mesa_get_format_name(mesa_format), i);
+						__FUNCTION__, _mesa_get_format_name(mesa_format), i);
 			return;
 		}
 	}

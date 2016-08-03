@@ -1114,7 +1114,7 @@ dri2_x11_get_sync_values(_EGLDisplay *display, _EGLSurface *surface,
    reply = xcb_dri2_get_msc_reply(dri2_dpy->conn, cookie, NULL);
 
    if (!reply) {
-      _eglError(EGL_BAD_ACCESS, __func__);
+      _eglError(EGL_BAD_ACCESS, __FUNCTION__);
       return EGL_FALSE;
    }
 

@@ -119,7 +119,7 @@ _mesa_meta_framebuffer_texture_image(struct gl_context *ctx,
       : texObj->Target;
 
    _mesa_framebuffer_texture(ctx, fb, attachment, texObj, texTarget,
-                             level, layer, false, __func__);
+                             level, layer, false, __FUNCTION__);
 }
 
 static struct gl_shader *
@@ -317,7 +317,7 @@ _mesa_meta_setup_vertex_objects(struct gl_context *ctx,
          return;
 
       _mesa_buffer_data(ctx, *buf_obj, GL_NONE, 4 * sizeof(struct vertex), NULL,
-                        GL_DYNAMIC_DRAW, __func__);
+                        GL_DYNAMIC_DRAW, __FUNCTION__);
 
       /* setup vertex arrays */
       if (use_generic_attributes) {
@@ -1822,7 +1822,7 @@ meta_clear(struct gl_context *ctx, GLbitfield buffers, bool glsl)
 
    /* upload new vertex data */
    _mesa_buffer_data(ctx, clear->buf_obj, GL_NONE, sizeof(verts), verts,
-                     GL_DYNAMIC_DRAW, __func__);
+                     GL_DYNAMIC_DRAW, __FUNCTION__);
 
    /* draw quad(s) */
    if (fb->MaxNumLayers > 0) {
@@ -1909,7 +1909,7 @@ _mesa_meta_CopyPixels(struct gl_context *ctx, GLint srcX, GLint srcY,
 
       /* upload new vertex data */
       _mesa_buffer_sub_data(ctx, copypix->buf_obj, 0, sizeof(verts), verts,
-                            __func__);
+                            __FUNCTION__);
    }
 
    _mesa_set_enable(ctx, tex->Target, GL_TRUE);
@@ -2227,7 +2227,7 @@ _mesa_meta_DrawPixels(struct gl_context *ctx,
 
    /* upload new vertex data */
    _mesa_buffer_data(ctx, drawpix->buf_obj, GL_NONE, sizeof(verts), verts,
-                     GL_DYNAMIC_DRAW, __func__);
+                     GL_DYNAMIC_DRAW, __FUNCTION__);
 
    /* set given unpack params */
    ctx->Unpack = *unpack;
@@ -2429,7 +2429,7 @@ _mesa_meta_Bitmap(struct gl_context *ctx,
 
       /* upload new vertex data */
       _mesa_buffer_sub_data(ctx, bitmap->buf_obj, 0, sizeof(verts), verts,
-                            __func__);
+                            __FUNCTION__);
    }
 
    /* choose different foreground/background alpha values */
@@ -3153,7 +3153,7 @@ decompress_texture_image(struct gl_context *ctx,
 
    /* upload new vertex data */
    _mesa_buffer_sub_data(ctx, decompress->buf_obj, 0, sizeof(verts), verts,
-                         __func__);
+                         __FUNCTION__);
 
    /* setup texture state */
    _mesa_BindTexture(target, texObj->Name);
@@ -3317,7 +3317,7 @@ _mesa_meta_DrawTex(struct gl_context *ctx, GLfloat x, GLfloat y, GLfloat z,
          return;
 
       _mesa_buffer_data(ctx, drawtex->buf_obj, GL_NONE, sizeof(verts), verts,
-                        GL_DYNAMIC_DRAW, __func__);
+                        GL_DYNAMIC_DRAW, __FUNCTION__);
 
       /* setup vertex arrays */
       _mesa_update_array_format(ctx, array_obj, VERT_ATTRIB_POS,
@@ -3406,7 +3406,7 @@ _mesa_meta_DrawTex(struct gl_context *ctx, GLfloat x, GLfloat y, GLfloat z,
       }
 
       _mesa_buffer_sub_data(ctx, drawtex->buf_obj, 0, sizeof(verts), verts,
-                            __func__);
+                            __FUNCTION__);
    }
 
    _mesa_DrawArrays(GL_TRIANGLE_FAN, 0, 4);

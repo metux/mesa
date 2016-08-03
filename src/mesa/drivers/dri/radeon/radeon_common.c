@@ -167,7 +167,7 @@ uint32_t radeonGetAge(radeonContextPtr radeon)
 	ret = drmCommandWriteRead(radeon->radeonScreen->driScreen->fd, DRM_RADEON_GETPARAM,
 				  &gp, sizeof(gp));
 	if (ret) {
-		fprintf(stderr, "%s: drmRadeonGetParam: %d\n", __func__,
+		fprintf(stderr, "%s: drmRadeonGetParam: %d\n", __FUNCTION__,
 			ret);
 		exit(1);
 	}
@@ -342,7 +342,7 @@ void radeon_draw_buffer(struct gl_context *ctx, struct gl_framebuffer *fb)
 void radeonDrawBuffer( struct gl_context *ctx, GLenum mode )
 {
 	if (RADEON_DEBUG & RADEON_DRI)
-		fprintf(stderr, "%s %s\n", __func__,
+		fprintf(stderr, "%s %s\n", __FUNCTION__,
 			_mesa_enum_to_string( mode ));
 
 	if (_mesa_is_winsys_fbo(ctx->DrawBuffer)) {
@@ -482,7 +482,7 @@ GLuint radeonCountStateEmitSize(radeonContextPtr radeon)
 		}
 	}
 out:
-	radeon_print(RADEON_STATE, RADEON_NORMAL, "%s %u\n", __func__, dwords);
+	radeon_print(RADEON_STATE, RADEON_NORMAL, "%s %u\n", __FUNCTION__, dwords);
 	return dwords;
 }
 
@@ -531,7 +531,7 @@ static inline void radeonEmitAtoms(radeonContextPtr radeon, GLboolean emitAll)
 
 void radeonEmitState(radeonContextPtr radeon)
 {
-	radeon_print(RADEON_STATE, RADEON_NORMAL, "%s\n", __func__);
+	radeon_print(RADEON_STATE, RADEON_NORMAL, "%s\n", __FUNCTION__);
 
 	if (radeon->vtbl.pre_emit_state)
 		radeon->vtbl.pre_emit_state(radeon);
@@ -562,7 +562,7 @@ void radeonFlush(struct gl_context *ctx)
 {
 	radeonContextPtr radeon = RADEON_CONTEXT(ctx);
 	if (RADEON_DEBUG & RADEON_IOCTL)
-		fprintf(stderr, "%s %d\n", __func__, radeon->cmdbuf.cs->cdw);
+		fprintf(stderr, "%s %d\n", __FUNCTION__, radeon->cmdbuf.cs->cdw);
 
 	/* okay if we have no cmds in the buffer &&
 	   we have no DMA flush &&
@@ -576,7 +576,7 @@ void radeonFlush(struct gl_context *ctx)
 		radeon->dma.flush( ctx );
 
 	if (radeon->cmdbuf.cs->cdw)
-		rcommonFlushCmdBuf(radeon, __func__);
+		rcommonFlushCmdBuf(radeon, __FUNCTION__);
 
 flush_front:
 	if (_mesa_is_winsys_fbo(ctx->DrawBuffer) && radeon->front_buffer_dirty) {
@@ -635,7 +635,7 @@ int rcommonFlushCmdBufLocked(radeonContextPtr rmesa, const char *caller)
 	rmesa->cmdbuf.flushing = 1;
 
 	if (RADEON_DEBUG & RADEON_IOCTL) {
-		fprintf(stderr, "%s from %s\n", __func__, caller);
+		fprintf(stderr, "%s from %s\n", __FUNCTION__, caller);
 	}
 
 	radeonEmitQueryEnd(&rmesa->glCtx);

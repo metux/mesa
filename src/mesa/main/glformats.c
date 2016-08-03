@@ -1619,7 +1619,7 @@ _mesa_base_format_has_channel(GLenum base_format, GLenum pname)
       return GL_FALSE;
    default:
       _mesa_warning(NULL, "%s: Unexpected channel token 0x%x\n",
-		    __func__, pname);
+		    __FUNCTION__, pname);
       return GL_FALSE;
    }
 

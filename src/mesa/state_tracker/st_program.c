@@ -443,7 +443,7 @@ st_translate_vertex_program(struct st_context *st,
                                         output_semantic_index);
 
    if (error) {
-      debug_printf("%s: failed to translate Mesa program:\n", __func__);
+      debug_printf("%s: failed to translate Mesa program:\n", __FUNCTION__);
       _mesa_print_program(&stvp->Base.Base);
       debug_assert(0);
       return false;

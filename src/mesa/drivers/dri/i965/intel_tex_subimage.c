@@ -150,7 +150,7 @@ intel_texsubimage_tiled_memcpy(struct gl_context * ctx,
 
    error = brw_bo_map(brw, bo, true /* write enable */, "miptree");
    if (error || bo->virtual == NULL) {
-      DBG("%s: failed to map bo\n", __func__);
+      DBG("%s: failed to map bo\n", __FUNCTION__);
       return false;
    }
 
@@ -163,7 +163,7 @@ intel_texsubimage_tiled_memcpy(struct gl_context * ctx,
        "mesa_format=0x%x tiling=%d "
        "packing=(alignment=%d row_length=%d skip_pixels=%d skip_rows=%d) "
        "for_glTexImage=%d\n",
-       __func__, texImage->Level, xoffset, yoffset, width, height,
+       __FUNCTION__, texImage->Level, xoffset, yoffset, width, height,
        format, type, texImage->TexFormat, image->mt->tiling,
        packing->Alignment, packing->RowLength, packing->SkipPixels,
        packing->SkipRows, for_glTexImage);
@@ -205,7 +205,7 @@ intelTexSubImage(struct gl_context * ctx,
    bool tex_busy = intelImage->mt && drm_intel_bo_busy(intelImage->mt->bo);
 
    DBG("%s mesa_format %s target %s format %s type %s level %d %dx%dx%d\n",
-       __func__, _mesa_get_format_name(texImage->TexFormat),
+       __FUNCTION__, _mesa_get_format_name(texImage->TexFormat),
        _mesa_enum_to_string(texImage->TexObject->Target),
        _mesa_enum_to_string(format), _mesa_enum_to_string(type),
        texImage->Level, texImage->Width, texImage->Height, texImage->Depth);

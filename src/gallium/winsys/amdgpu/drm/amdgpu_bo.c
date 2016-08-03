@@ -68,7 +68,7 @@ static bool amdgpu_bo_wait(struct pb_buffer *_buf, uint64_t timeout,
 
       r = amdgpu_bo_wait_for_idle(bo->bo, timeout, &buffer_busy);
       if (r)
-         fprintf(stderr, "%s: amdgpu_bo_wait_for_idle failed %i\n", __func__,
+         fprintf(stderr, "%s: amdgpu_bo_wait_for_idle failed %i\n", __FUNCTION__,
                  r);
       return !buffer_busy;
    }

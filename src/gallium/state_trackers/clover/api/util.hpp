@@ -40,7 +40,7 @@
 
 #define CLOVER_NOT_SUPPORTED_UNTIL(version)                    \
    do {                                                        \
-      std::cerr << "CL user error: " << __func__               \
+      std::cerr << "CL user error: " << __FUNCTION__               \
                 << "() requires OpenCL version " << (version)  \
                 << " or greater." << std::endl;                \
    } while (0)

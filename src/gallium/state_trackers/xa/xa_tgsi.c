@@ -89,7 +89,7 @@ print_fs_traits(int fs_traits)
     };
     int i, k;
 
-    debug_printf("%s: ", __func__);
+    debug_printf("%s: ", __FUNCTION__);
 
     for (i = 0, k = 1; k < (1 << 16); i++, k <<= 1) {
 	if (fs_traits & k)

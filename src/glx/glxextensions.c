@@ -492,7 +492,7 @@ __glXExtensionsCtr(void)
 
 #if 0
       fprintf(stderr, "[%s:%u] Maximum client library version: %u.%u\n",
-              __func__, __LINE__, gl_major, gl_minor);
+              __FUNCTION__, __LINE__, gl_major, gl_minor);
 #endif
    }
 }

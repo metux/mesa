@@ -376,7 +376,7 @@ static bool radeon_drm_cs_validate(struct radeon_winsys_cs *rcs)
 
             assert(cs->base.current.cdw == 0);
             if (cs->base.current.cdw != 0) {
-                fprintf(stderr, "radeon: Unexpected error in %s.\n", __func__);
+                fprintf(stderr, "radeon: Unexpected error in %s.\n", __FUNCTION__);
             }
         }
     }

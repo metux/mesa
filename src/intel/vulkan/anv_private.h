@@ -221,13 +221,13 @@ void anv_abortfv(const char *format, va_list va) anv_noreturn;
 
 #define stub_return(v) \
    do { \
-      anv_finishme("stub %s", __func__); \
+      anv_finishme("stub %s", __FUNCTION__); \
       return (v); \
    } while (0)
 
 #define stub() \
    do { \
-      anv_finishme("stub %s", __func__); \
+      anv_finishme("stub %s", __FUNCTION__); \
       return; \
    } while (0)
 

@@ -122,7 +122,7 @@ intel_map_renderbuffer(struct gl_context *ctx,
    }
 
    DBG("%s: rb %d (%s) mt mapped: (%d, %d) (%dx%d) -> %p/%d\n",
-       __func__, rb->Name, _mesa_get_format_name(rb->Format),
+       __FUNCTION__, rb->Name, _mesa_get_format_name(rb->Format),
        x, y, w, h, map, stride);
 
    *out_map = map;
@@ -140,7 +140,7 @@ intel_unmap_renderbuffer(struct gl_context *ctx,
    struct swrast_renderbuffer *srb = (struct swrast_renderbuffer *)rb;
    struct intel_renderbuffer *irb = intel_renderbuffer(rb);
 
-   DBG("%s: rb %d (%s)\n", __func__,
+   DBG("%s: rb %d (%s)\n", __FUNCTION__,
        rb->Name, _mesa_get_format_name(rb->Format));
 
    if (srb->Buffer) {
@@ -202,7 +202,7 @@ intel_alloc_private_renderbuffer_storage(struct gl_context * ctx, struct gl_rend
 
    intel_miptree_release(&irb->mt);
 
-   DBG("%s: %s: %s (%dx%d)\n", __func__,
+   DBG("%s: %s: %s (%dx%d)\n", __FUNCTION__,
        _mesa_enum_to_string(internalFormat),
        _mesa_get_format_name(rb->Format), width, height);
 
@@ -555,7 +555,7 @@ intel_validate_framebuffer(struct gl_context *ctx, struct gl_framebuffer *fb)
    struct intel_mipmap_tree *depth_mt = NULL, *stencil_mt = NULL;
    int i;
 
-   DBG("%s() on fb %p (%s)\n", __func__,
+   DBG("%s() on fb %p (%s)\n", __FUNCTION__,
        fb, (fb == ctx->DrawBuffer ? "drawbuffer" :
 	    (fb == ctx->ReadBuffer ? "readbuffer" : "other buffer")));
 

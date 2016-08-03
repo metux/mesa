@@ -36,7 +36,7 @@
 
 
 #if 0
-#define DEBUG_INSERT printf("%s\n", __func__)
+#define DEBUG_INSERT printf("%s\n", __FUNCTION__)
 #else
 #define DEBUG_INSERT
 #endif

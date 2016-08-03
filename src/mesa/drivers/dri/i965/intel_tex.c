@@ -16,7 +16,7 @@
 static struct gl_texture_image *
 intelNewTextureImage(struct gl_context * ctx)
 {
-   DBG("%s\n", __func__);
+   DBG("%s\n", __FUNCTION__);
    (void) ctx;
    return (struct gl_texture_image *) CALLOC_STRUCT(intel_texture_image);
 }
@@ -36,7 +36,7 @@ intelNewTextureObject(struct gl_context * ctx, GLuint name, GLenum target)
 
    (void) ctx;
 
-   DBG("%s\n", __func__);
+   DBG("%s\n", __FUNCTION__);
 
    if (obj == NULL)
       return NULL;
@@ -89,7 +89,7 @@ intel_alloc_texture_image_buffer(struct gl_context *ctx,
        intel_miptree_match_image(intel_texobj->mt, image)) {
       intel_miptree_reference(&intel_image->mt, intel_texobj->mt);
       DBG("%s: alloc obj %p level %d %dx%dx%d using object's miptree %p\n",
-          __func__, texobj, image->Level,
+          __FUNCTION__, texobj, image->Level,
           image->Width, image->Height, image->Depth, intel_texobj->mt);
    } else {
       intel_image->mt = intel_miptree_create_for_teximage(brw, intel_texobj,
@@ -104,7 +104,7 @@ intel_alloc_texture_image_buffer(struct gl_context *ctx,
       intel_miptree_reference(&intel_texobj->mt, intel_image->mt);
 
       DBG("%s: alloc obj %p level %d %dx%dx%d using new miptree %p\n",
-          __func__, texobj, image->Level,
+          __FUNCTION__, texobj, image->Level,
           image->Width, image->Height, image->Depth, intel_image->mt);
    }
 
@@ -186,7 +186,7 @@ intel_free_texture_image_buffer(struct gl_context * ctx,
 {
    struct intel_texture_image *intelImage = intel_texture_image(texImage);
 
-   DBG("%s\n", __func__);
+   DBG("%s\n", __FUNCTION__);
 
    intel_miptree_release(&intelImage->mt);
 

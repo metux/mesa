@@ -794,7 +794,7 @@ intel_fallback_tri(struct intel_context *intel,
    SWvertex v[3];
 
    if (0)
-      fprintf(stderr, "\n%s\n", __func__);
+      fprintf(stderr, "\n%s\n", __FUNCTION__);
 
    INTEL_FIREVERTICES(intel);
 
@@ -815,7 +815,7 @@ intel_fallback_line(struct intel_context *intel,
    SWvertex v[2];
 
    if (0)
-      fprintf(stderr, "\n%s\n", __func__);
+      fprintf(stderr, "\n%s\n", __FUNCTION__);
 
    INTEL_FIREVERTICES(intel);
 
@@ -834,7 +834,7 @@ intel_fallback_point(struct intel_context *intel,
    SWvertex v[1];
 
    if (0)
-      fprintf(stderr, "\n%s\n", __func__);
+      fprintf(stderr, "\n%s\n", __FUNCTION__);
 
    INTEL_FIREVERTICES(intel);
 
@@ -960,7 +960,7 @@ intelChooseRenderState(struct gl_context * ctx)
    GLuint index = 0;
 
    if (INTEL_DEBUG & DEBUG_STATE)
-      fprintf(stderr, "\n%s\n", __func__);
+      fprintf(stderr, "\n%s\n", __FUNCTION__);
 
    if ((flags & (ANY_FALLBACK_FLAGS | ANY_RASTER_FLAGS)) || have_wpos) {
 
@@ -1122,7 +1122,7 @@ intelRasterPrimitive(struct gl_context * ctx, GLenum rprim, GLuint hwprim)
    struct intel_context *intel = intel_context(ctx);
 
    if (0)
-      fprintf(stderr, "%s %s %x\n", __func__,
+      fprintf(stderr, "%s %s %x\n", __FUNCTION__,
               _mesa_enum_to_string(rprim), hwprim);
 
    intel->vtbl.reduced_primitive_state(intel, rprim);
@@ -1147,7 +1147,7 @@ intelRenderPrimitive(struct gl_context * ctx, GLenum prim)
                          ctx->Polygon.BackMode != GL_FILL);
 
    if (0)
-      fprintf(stderr, "%s %s\n", __func__, _mesa_enum_to_string(prim));
+      fprintf(stderr, "%s %s\n", __FUNCTION__, _mesa_enum_to_string(prim));
 
    /* Let some clipping routines know which primitive they're dealing
     * with.

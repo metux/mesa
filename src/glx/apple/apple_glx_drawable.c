@@ -50,7 +50,7 @@ lock_drawables_list(void)
 
    if (err) {
       fprintf(stderr, "pthread_mutex_lock failure in %s: %s\n",
-              __func__, strerror(err));
+              __FUNCTION__, strerror(err));
       abort();
    }
 }
@@ -64,7 +64,7 @@ unlock_drawables_list(void)
 
    if (err) {
       fprintf(stderr, "pthread_mutex_unlock failure in %s: %s\n",
-              __func__, strerror(err));
+              __FUNCTION__, strerror(err));
       abort();
    }
 }
@@ -172,7 +172,7 @@ destroy_drawable(struct apple_glx_drawable *d)
       d->callbacks.destroy(d->display, d);
    }
 
-   apple_glx_diagnostic("%s: freeing %p\n", __func__, (void *) d);
+   apple_glx_diagnostic("%s: freeing %p\n", __FUNCTION__, (void *) d);
 
    /* Stupid recursive locks */
    while (pthread_mutex_unlock(&d->mutex) == 0);
@@ -202,7 +202,7 @@ destroy_drawable_callback(struct apple_glx_drawable *d)
 
    d->lock(d);
 
-   apple_glx_diagnostic("%s: %p ->reference_count before -- %d\n", __func__,
+   apple_glx_diagnostic("%s: %p ->reference_count before -- %d\n", __FUNCTION__,
                         (void *) d, d->reference_count);
 
    d->reference_count--;
@@ -339,7 +339,7 @@ apple_glx_drawable_create(Display * dpy,
 
    link_tail(d);
 
-   apple_glx_diagnostic("%s: new drawable %p\n", __func__, (void *) d);
+   apple_glx_diagnostic("%s: new drawable %p\n", __FUNCTION__, (void *) d);
 
    *agdResult = d;
 
@@ -510,7 +510,7 @@ apple_glx_drawable_destroy_by_type(Display * dpy,
          d->release(d);
 
          apple_glx_diagnostic("%s d->reference_count %d\n",
-                              __func__, d->reference_count);
+                              __FUNCTION__, d->reference_count);
 
          destroy_drawable(d);
          unlock_drawables_list();

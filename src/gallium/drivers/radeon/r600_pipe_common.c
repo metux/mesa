@@ -382,7 +382,7 @@ void radeon_save_cs(struct radeon_winsys *ws, struct radeon_winsys_cs *cs,
 	return;
 
 oom:
-	fprintf(stderr, "%s: out of memory\n", __func__);
+	fprintf(stderr, "%s: out of memory\n", __FUNCTION__);
 	memset(saved, 0, sizeof(*saved));
 }
 

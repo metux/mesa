@@ -173,7 +173,7 @@ _mesa_symbol_table_push_scope(struct _mesa_symbol_table *table)
     struct scope_level *const scope = calloc(1, sizeof(*scope));
     
     if (scope == NULL) {
-       _mesa_error_no_memory(__func__);
+       _mesa_error_no_memory(__FUNCTION__);
        return;
     }
 
@@ -260,14 +260,14 @@ _mesa_symbol_table_add_symbol(struct _mesa_symbol_table *table,
     if (hdr == NULL) {
        hdr = calloc(1, sizeof(*hdr));
        if (hdr == NULL) {
-          _mesa_error_no_memory(__func__);
+          _mesa_error_no_memory(__FUNCTION__);
           return -1;
        }
 
        hdr->name = strdup(name);
        if (hdr->name == NULL) {
           free(hdr);
-          _mesa_error_no_memory(__func__);
+          _mesa_error_no_memory(__FUNCTION__);
           return -1;
        }
 
@@ -292,7 +292,7 @@ _mesa_symbol_table_add_symbol(struct _mesa_symbol_table *table,
 
     sym = calloc(1, sizeof(*sym));
     if (sym == NULL) {
-       _mesa_error_no_memory(__func__);
+       _mesa_error_no_memory(__FUNCTION__);
        return -1;
     }
 
@@ -332,7 +332,7 @@ _mesa_symbol_table_add_global_symbol(struct _mesa_symbol_table *table,
     if (hdr == NULL) {
         hdr = calloc(1, sizeof(*hdr));
         if (hdr == NULL) {
-           _mesa_error_no_memory(__func__);
+           _mesa_error_no_memory(__FUNCTION__);
            return -1;
         }
 
@@ -366,7 +366,7 @@ _mesa_symbol_table_add_global_symbol(struct _mesa_symbol_table *table,
 
     sym = calloc(1, sizeof(*sym));
     if (sym == NULL) {
-       _mesa_error_no_memory(__func__);
+       _mesa_error_no_memory(__FUNCTION__);
        return -1;
     }
 

@@ -108,7 +108,7 @@ static void
 intelDmaPrimitive(struct intel_context *intel, GLenum prim)
 {
    if (0)
-      fprintf(stderr, "%s %s\n", __func__, _mesa_enum_to_string(prim));
+      fprintf(stderr, "%s %s\n", __FUNCTION__, _mesa_enum_to_string(prim));
    INTEL_FIREVERTICES(intel);
    intel->vtbl.reduced_primitive_state(intel, reduced_prim[prim]);
    intel_set_prim(intel, hw_prim[prim]);

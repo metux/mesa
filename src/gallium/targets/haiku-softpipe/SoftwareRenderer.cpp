@@ -68,7 +68,7 @@ SoftwareRenderer::SoftwareRenderer(BGLView *view, ulong options,
 	// Allocate a bitmap
 	BRect b = view->Bounds();
 	fColorSpace = BScreen(view->Window()).ColorSpace();
-	TRACE("%s: Colorspace:\t%s\n", __func__, color_space_name(fColorSpace));
+	TRACE("%s: Colorspace:\t%s\n", __FUNCTION__, color_space_name(fColorSpace));
 
 	fWidth = (GLint)b.IntegerWidth();
 	fHeight = (GLint)b.IntegerHeight();
@@ -81,10 +81,10 @@ SoftwareRenderer::SoftwareRenderer(BGLView *view, ulong options,
 	end = time(NULL);
 
 	if (fContextID < 0)
-		ERROR("%s: There was an error creating the context!\n", __func__);
+		ERROR("%s: There was an error creating the context!\n", __FUNCTION__);
 	else {
 		TRACE("%s: Haiku Software GL Pipe context creation time: %f.\n",
-			__func__, difftime(end, beg));
+			__FUNCTION__, difftime(end, beg));
 	}
 
 	if (!fContextObj->GetCurrentContext())
@@ -169,7 +169,7 @@ SoftwareRenderer::SwapBuffers(bool vsync)
 			!= fBitmap->Bounds().IntegerHeight()
 			|| fInfo->window_bounds.right - fInfo->window_bounds.left
 			!= fBitmap->Bounds().IntegerWidth()) {
-		ERROR("%s: Bitmap size doesn't match size!\n", __func__);
+		ERROR("%s: Bitmap size doesn't match size!\n", __FUNCTION__);
 		return;
 	}
 
@@ -321,7 +321,7 @@ SoftwareRenderer::DirectConnected(direct_buffer_info *info)
 void
 SoftwareRenderer::FrameResized(float width, float height)
 {
-	TRACE("%s: %f x %f\n", __func__, width, height);
+	TRACE("%s: %f x %f\n", __FUNCTION__, width, height);
 
 	BAutolock lock(fInfoLocker);
 	fWidth = (GLuint)width;
@@ -340,18 +340,18 @@ SoftwareRenderer::_AllocateBitmap()
 		delete fBitmap;
 
 	if (fWidth < 1 || fHeight < 1) {
-		TRACE("%s: Can't allocate bitmap of %dx%d\n", __func__,
+		TRACE("%s: Can't allocate bitmap of %dx%d\n", __FUNCTION__,
 			fWidth, fHeight);
 		return;
 	}
 	BRect rect(0.0, 0.0, fWidth, fHeight);
 	fBitmap = new (std::nothrow) BBitmap(rect, fColorSpace);
 	if (fBitmap == NULL) {
-		TRACE("%s: Can't create bitmap!\n", __func__);
+		TRACE("%s: Can't create bitmap!\n", __FUNCTION__);
 		return;
 	}
 
-	TRACE("%s: New bitmap size: %" B_PRId32 " x %" B_PRId32 "\n", __func__,
+	TRACE("%s: New bitmap size: %" B_PRId32 " x %" B_PRId32 "\n", __FUNCTION__,
 		fBitmap->Bounds().IntegerWidth(), fBitmap->Bounds().IntegerHeight());
 
 #if 0

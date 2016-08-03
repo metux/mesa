@@ -94,7 +94,7 @@ static void radeonSetTexWrap( radeonTexObjPtr t, GLenum swrap, GLenum twrap )
       is_clamp_to_border = GL_TRUE;
       break;
    default:
-      _mesa_problem(NULL, "bad S wrap mode in %s", __func__);
+      _mesa_problem(NULL, "bad S wrap mode in %s", __FUNCTION__);
    }
 
    if (t->base.Target != GL_TEXTURE_1D) {
@@ -128,7 +128,7 @@ static void radeonSetTexWrap( radeonTexObjPtr t, GLenum swrap, GLenum twrap )
 	 is_clamp_to_border = GL_TRUE;
 	 break;
       default:
-	 _mesa_problem(NULL, "bad T wrap mode in %s", __func__);
+	 _mesa_problem(NULL, "bad T wrap mode in %s", __FUNCTION__);
       }
    }
 
@@ -262,7 +262,7 @@ static void radeonTexEnv( struct gl_context *ctx, GLenum target,
 
    if ( RADEON_DEBUG & RADEON_STATE ) {
       fprintf( stderr, "%s( %s )\n",
-	       __func__, _mesa_enum_to_string( pname ) );
+	       __FUNCTION__, _mesa_enum_to_string( pname ) );
    }
 
    switch ( pname ) {
@@ -333,7 +333,7 @@ static void radeonTexParameter( struct gl_context *ctx,
 {
    radeonTexObj* t = radeon_tex_obj(texObj);
 
-   radeon_print(RADEON_TEXTURE, RADEON_VERBOSE, "%s( %s )\n", __func__,
+   radeon_print(RADEON_TEXTURE, RADEON_VERBOSE, "%s( %s )\n", __FUNCTION__,
 	       _mesa_enum_to_string( pname ) );
 
    switch ( pname ) {
@@ -357,7 +357,7 @@ static void radeonDeleteTexture( struct gl_context *ctx,
    int i;
 
    radeon_print(RADEON_TEXTURE, RADEON_NORMAL,
-	 "%s( %p (target = %s) )\n", __func__, (void *)texObj,
+	 "%s( %p (target = %s) )\n", __FUNCTION__, (void *)texObj,
 	       _mesa_enum_to_string( texObj->Target ) );
 
    if ( rmesa ) {

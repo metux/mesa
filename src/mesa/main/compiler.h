@@ -38,7 +38,7 @@
 
 #include "util/macros.h"
 
-#include "c99_compat.h" /* inline, __func__, etc. */
+#include "c99_compat.h" /* inline, __FUNCTION__, etc. */
 
 
 #ifdef __cplusplus

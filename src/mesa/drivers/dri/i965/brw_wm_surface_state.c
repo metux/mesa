@@ -149,7 +149,7 @@ brw_update_renderbuffer_surface(struct brw_context *brw,
    mesa_format rb_format = _mesa_get_render_format(ctx, intel_rb_format(irb));
    if (unlikely(!brw->format_supported_as_render_target[rb_format])) {
       _mesa_problem(ctx, "%s: renderbuffer format %s unsupported\n",
-                    __func__, _mesa_get_format_name(rb_format));
+                    __FUNCTION__, _mesa_get_format_name(rb_format));
    }
 
    const unsigned layer_multiplier =
@@ -847,7 +847,7 @@ gen4_update_renderbuffer_surface(struct brw_context *brw,
    format = brw->render_target_format[rb_format];
    if (unlikely(!brw->format_supported_as_render_target[rb_format])) {
       _mesa_problem(ctx, "%s: renderbuffer format %s unsupported\n",
-                    __func__, _mesa_get_format_name(rb_format));
+                    __FUNCTION__, _mesa_get_format_name(rb_format));
    }
 
    surf[0] = (BRW_SURFACE_2D << BRW_SURFACE_TYPE_SHIFT |

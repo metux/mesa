@@ -129,7 +129,7 @@ gl_target_to_pipe(GLenum target)
 static struct gl_texture_image *
 st_NewTextureImage(struct gl_context * ctx)
 {
-   DBG("%s\n", __func__);
+   DBG("%s\n", __FUNCTION__);
    (void) ctx;
    return (struct gl_texture_image *) ST_CALLOC_STRUCT(st_texture_image);
 }
@@ -150,7 +150,7 @@ st_NewTextureObject(struct gl_context * ctx, GLuint name, GLenum target)
 {
    struct st_texture_object *obj = ST_CALLOC_STRUCT(st_texture_object);
 
-   DBG("%s\n", __func__);
+   DBG("%s\n", __FUNCTION__);
    _mesa_initialize_texture_object(ctx, &obj->base, name, target);
 
    return &obj->base;
@@ -178,7 +178,7 @@ st_FreeTextureImageBuffer(struct gl_context *ctx,
 {
    struct st_texture_image *stImage = st_texture_image(texImage);
 
-   DBG("%s\n", __func__);
+   DBG("%s\n", __FUNCTION__);
 
    if (stImage->pt) {
       pipe_resource_reference(&stImage->pt, NULL);
@@ -464,7 +464,7 @@ guess_and_alloc_texture(struct st_context *st,
    enum pipe_format fmt;
    bool guessed_box = false;
 
-   DBG("%s\n", __func__);
+   DBG("%s\n", __FUNCTION__);
 
    assert(!stObj->pt);
 
@@ -541,7 +541,7 @@ guess_and_alloc_texture(struct st_context *st,
 
    stObj->lastLevel = lastLevel;
 
-   DBG("%s returning %d\n", __func__, (stObj->pt != NULL));
+   DBG("%s returning %d\n", __FUNCTION__, (stObj->pt != NULL));
 
    return stObj->pt != NULL;
 }
@@ -564,7 +564,7 @@ st_AllocTextureImageBuffer(struct gl_context *ctx,
    GLuint height = texImage->Height;
    GLuint depth = texImage->Depth;
 
-   DBG("%s\n", __func__);
+   DBG("%s\n", __FUNCTION__);
 
    assert(!stImage->pt); /* xxx this might be wrong */
 
@@ -2024,7 +2024,7 @@ st_GetTexSubImage(struct gl_context * ctx,
       }
 
       if (ST_DEBUG & DEBUG_FALLBACK)
-         debug_printf("%s: fallback format translation\n", __func__);
+         debug_printf("%s: fallback format translation\n", __FUNCTION__);
 
       dstMesaFormat = _mesa_format_from_format_and_type(format, type);
       dstStride = _mesa_image_row_stride(&ctx->Pack, width, format, type);
@@ -2112,7 +2112,7 @@ fallback_copy_texsubimage(struct gl_context *ctx,
    struct pipe_transfer *transfer;
 
    if (ST_DEBUG & DEBUG_FALLBACK)
-      debug_printf("%s: fallback processing\n", __func__);
+      debug_printf("%s: fallback processing\n", __FUNCTION__);
 
    if (st_fb_orientation(ctx->ReadBuffer) == Y_0_TOP) {
       srcY = strb->Base.Height - srcY - height;
@@ -2270,7 +2270,7 @@ st_CopyTexSubImage(struct gl_context *ctx, GLuint dims,
           texImage->TexFormat != MESA_FORMAT_ETC1_RGB8);
 
    if (!strb || !strb->surface || !stImage->pt) {
-      debug_printf("%s: null strb or stImage\n", __func__);
+      debug_printf("%s: null strb or stImage\n", __FUNCTION__);
       return;
    }
 

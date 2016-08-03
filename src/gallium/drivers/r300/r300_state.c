@@ -1625,7 +1625,7 @@ r300_create_sampler_view_custom(struct pipe_context *pipe,
 
         if (hwformat == ~0) {
             fprintf(stderr, "r300: Ooops. Got unsupported format %s in %s.\n",
-                    util_format_short_name(templ->format), __func__);
+                    util_format_short_name(templ->format), __FUNCTION__);
         }
         assert(hwformat != ~0);
 
