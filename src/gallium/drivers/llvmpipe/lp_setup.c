@@ -1497,7 +1497,7 @@ lp_setup_flush_and_restart(struct lp_setup_context *setup)
 
    if (!set_scene_state(setup, SETUP_FLUSHED, __FUNCTION__))
       return FALSE;
-   
+
    if (!lp_setup_update_state(setup, TRUE))
       return FALSE;
 

@@ -122,13 +122,13 @@ create_texture_for_pbo(struct gl_context *ctx,
                            last_pixel - first_pixel,
                            NULL,
                            GL_STREAM_READ,
-                           __func__);
+                           __FUNCTION__);
       else
          _mesa_buffer_data(ctx, *tmp_pbo, GL_NONE,
                            last_pixel - first_pixel,
                            (char *)pixels + first_pixel,
                            GL_STREAM_DRAW,
-                           __func__);
+                           __FUNCTION__);
 
       buffer_obj = *tmp_pbo;
       first_pixel = 0;

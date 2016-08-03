@@ -229,7 +229,7 @@ isl_surf_choose_tiling(const struct isl_device *dev,
    if (ISL_DEV_GEN(dev) >= 7) {
       gen7_filter_tiling(dev, info, &tiling_flags);
    } else {
-      isl_finishme("%s: gen%u", __func__, ISL_DEV_GEN(dev));
+      isl_finishme("%s: gen%u", __FUNCTION__, ISL_DEV_GEN(dev));
       gen7_filter_tiling(dev, info, &tiling_flags);
    }
 
@@ -492,7 +492,7 @@ isl_calc_phys_level0_extent_sa(const struct isl_device *dev,
    const struct isl_format_layout *fmtl = isl_format_get_layout(info->format);
 
    if (isl_format_is_yuv(info->format))
-      isl_finishme("%s:%s: YUV format", __FILE__, __func__);
+      isl_finishme("%s:%s: YUV format", __FILE__, __FUNCTION__);
 
    switch (info->dim) {
    case ISL_SURF_DIM_1D:
@@ -521,7 +521,7 @@ isl_calc_phys_level0_extent_sa(const struct isl_device *dev,
       assert(dim_layout == ISL_DIM_LAYOUT_GEN4_2D);
 
       if (tiling == ISL_TILING_Ys && info->samples > 1)
-         isl_finishme("%s:%s: multisample TileYs layout", __FILE__, __func__);
+         isl_finishme("%s:%s: multisample TileYs layout", __FILE__, __FUNCTION__);
 
       switch (msaa_layout) {
       case ISL_MSAA_LAYOUT_NONE:
@@ -574,7 +574,7 @@ isl_calc_phys_level0_extent_sa(const struct isl_device *dev,
 
       if (fmtl->bd > 1) {
          isl_finishme("%s:%s: compression block with depth > 1",
-                      __FILE__, __func__);
+                      __FILE__, __FUNCTION__);
       }
 
       switch (dim_layout) {

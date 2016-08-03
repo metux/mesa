@@ -503,7 +503,7 @@ static void test_system_values(struct context *ctx)
                 "  RET\n"
                 "ENDSUB\n";
 
-        printf("- %s\n", __func__);
+        printf("- %s\n", __FUNCTION__);
 
         init_prog(ctx, 0, 0, 0, src, NULL);
         init_tex(ctx, 0, PIPE_BUFFER, true, PIPE_FORMAT_R32_FLOAT,
@@ -548,7 +548,7 @@ static void test_resource_access(struct context *ctx)
                 "       RET\n"
                 "    ENDSUB\n";
 
-        printf("- %s\n", __func__);
+        printf("- %s\n", __FUNCTION__);
 
         init_prog(ctx, 0, 0, 0, src, NULL);
         init_tex(ctx, 0, PIPE_BUFFER, true, PIPE_FORMAT_R32_FLOAT,
@@ -616,7 +616,7 @@ static void test_function_calls(struct context *ctx)
                 "22:  RET\n"
                 "23: ENDSUB\n";
 
-        printf("- %s\n", __func__);
+        printf("- %s\n", __FUNCTION__);
 
         init_prog(ctx, 0, 0, 0, src, NULL);
         init_tex(ctx, 0, PIPE_TEXTURE_2D, true, PIPE_FORMAT_R32_FLOAT,
@@ -654,7 +654,7 @@ static void test_input_global(struct context *ctx)
         uint32_t input[8] = { 0x10001, 0x10002, 0x10003, 0x10004,
                               0x10005, 0x10006, 0x10007, 0x10008 };
 
-        printf("- %s\n", __func__);
+        printf("- %s\n", __FUNCTION__);
 
         init_prog(ctx, 0, 0, 32, src, NULL);
         init_tex(ctx, 0, PIPE_BUFFER, true, PIPE_FORMAT_R32_FLOAT, 32, 0,
@@ -726,7 +726,7 @@ static void test_private(struct context *ctx)
                 "       RET\n"
                 "    ENDSUB\n";
 
-        printf("- %s\n", __func__);
+        printf("- %s\n", __FUNCTION__);
 
         init_prog(ctx, 0, 128, 0, src, NULL);
         init_tex(ctx, 0, PIPE_BUFFER, true, PIPE_FORMAT_R32_FLOAT,
@@ -813,7 +813,7 @@ static void test_local(struct context *ctx)
                 "       RET\n"
                 "    ENDSUB\n";
 
-        printf("- %s\n", __func__);
+        printf("- %s\n", __FUNCTION__);
 
         init_prog(ctx, 256, 0, 0, src, NULL);
         init_tex(ctx, 0, PIPE_BUFFER, true, PIPE_FORMAT_R32_FLOAT,
@@ -869,7 +869,7 @@ static void test_sample(struct context *ctx)
                 "       RET\n"
                 "    ENDSUB\n";
 
-        printf("- %s\n", __func__);
+        printf("- %s\n", __FUNCTION__);
 
         init_prog(ctx, 0, 0, 0, src, NULL);
         init_tex(ctx, 0, PIPE_TEXTURE_2D, true, PIPE_FORMAT_R32_FLOAT,
@@ -923,7 +923,7 @@ static void test_many_kern(struct context *ctx)
                 "       RET\n"
                 "    ENDSUB\n";
 
-        printf("- %s\n", __func__);
+        printf("- %s\n", __FUNCTION__);
 
         init_prog(ctx, 0, 0, 0, src, NULL);
         init_tex(ctx, 0, PIPE_BUFFER, true, PIPE_FORMAT_R32_FLOAT,
@@ -967,7 +967,7 @@ static void test_constant(struct context *ctx)
                 "       RET\n"
                 "    ENDSUB\n";
 
-        printf("- %s\n", __func__);
+        printf("- %s\n", __FUNCTION__);
 
         init_prog(ctx, 0, 0, 0, src, NULL);
         init_tex(ctx, 0, PIPE_BUFFER, false, PIPE_FORMAT_R32_FLOAT,
@@ -1014,7 +1014,7 @@ static void test_resource_indirect(struct context *ctx)
                 "       RET\n"
                 "    ENDSUB\n";
 
-        printf("- %s\n", __func__);
+        printf("- %s\n", __FUNCTION__);
 
         init_prog(ctx, 0, 0, 0, src, NULL);
         init_tex(ctx, 0, PIPE_BUFFER, true, PIPE_FORMAT_R32_FLOAT,
@@ -1121,7 +1121,7 @@ static void test_surface_ld(struct context *ctx)
                 "    ENDSUB\n";
         int i = 0;
 
-        printf("- %s\n", __func__);
+        printf("- %s\n", __FUNCTION__);
 
         init_prog(ctx, 0, 0, 0, src, NULL);
 
@@ -1239,7 +1239,7 @@ static void test_surface_st(struct context *ctx)
                 "    ENDSUB\n";
         int i = 0;
 
-        printf("- %s\n", __func__);
+        printf("- %s\n", __FUNCTION__);
 
         init_prog(ctx, 0, 0, 0, src, NULL);
 
@@ -1332,7 +1332,7 @@ static void test_barrier(struct context *ctx)
                 "       RET\n"
                 "    ENDSUB\n";
 
-        printf("- %s\n", __func__);
+        printf("- %s\n", __FUNCTION__);
 
         init_prog(ctx, 256, 0, 0, src, NULL);
         init_tex(ctx, 0, PIPE_BUFFER, true, PIPE_FORMAT_R32_FLOAT,
@@ -1489,7 +1489,7 @@ static void test_atom_ops(struct context *ctx, bool global)
                 "       RET\n"
                 "    ENDSUB\n";
 
-        printf("- %s (%s)\n", __func__, global ? "global" : "local");
+        printf("- %s (%s)\n", __FUNCTION__, global ? "global" : "local");
 
         init_prog(ctx, 40, 0, 0, src,
                   (global ? "-DTARGET_GLOBAL" : "-DTARGET_LOCAL"));
@@ -1627,7 +1627,7 @@ static void test_atom_race(struct context *ctx, bool global)
                 "       RET\n"
                 "    ENDSUB\n";
 
-        printf("- %s (%s)\n", __func__, global ? "global" : "local");
+        printf("- %s (%s)\n", __FUNCTION__, global ? "global" : "local");
 
         init_prog(ctx, 256, 0, 0, src,
                   (global ? "-DTARGET_GLOBAL" : "-DTARGET_LOCAL"));

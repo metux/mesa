@@ -59,7 +59,7 @@ static void TAG(unfilled_tri)( struct gl_context *ctx,
       }
    }
 
-/*     fprintf(stderr, "%s %s %d %d %d\n", __func__, */
+/*     fprintf(stderr, "%s %s %d %d %d\n", __FUNCTION__, */
 /*  	   _mesa_enum_to_string( mode ), */
 /*  	   ef[e0], ef[e1], ef[e2]); */
 

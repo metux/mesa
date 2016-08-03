@@ -112,7 +112,7 @@ hgl_winsys_displaytarget_create(struct sw_winsys* winsys,
 		= CALLOC_STRUCT(haiku_displaytarget);
 	assert(haikuDisplayTarget);
 
-	TRACE("%s: %d x %d\n", __func__, width, height);
+	TRACE("%s: %d x %d\n", __FUNCTION__, width, height);
 
 	haikuDisplayTarget->colorSpace = hgl_winsys_convert_cs(format);
 	haikuDisplayTarget->format = format;

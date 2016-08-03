@@ -74,7 +74,7 @@ st_texture_create(struct st_context *st,
    if (target == PIPE_TEXTURE_CUBE)
       assert(layers == 6);
 
-   DBG("%s target %d format %s last_level %d\n", __func__,
+   DBG("%s target %d format %s last_level %d\n", __FUNCTION__,
        (int) target, util_format_name(format), last_level);
 
    assert(format);
@@ -253,7 +253,7 @@ st_texture_image_map(struct st_context *st, struct st_texture_image *stImage,
    GLuint level;
    void *map;
 
-   DBG("%s \n", __func__);
+   DBG("%s \n", __FUNCTION__);
 
    if (!stImage->pt)
       return NULL;
@@ -307,7 +307,7 @@ st_texture_image_unmap(struct st_context *st,
       slice += stObj->base.MinLayer;
    transfer = &stImage->transfer[slice + stImage->base.Face].transfer;
 
-   DBG("%s\n", __func__);
+   DBG("%s\n", __FUNCTION__);
 
    pipe_transfer_unmap(pipe, *transfer);
    *transfer = NULL;

@@ -2314,7 +2314,7 @@ link_intrastage_shaders(void *mem_ctx,
 
          free(linking_shaders);
       } else {
-         _mesa_error_no_memory(__func__);
+         _mesa_error_no_memory(__FUNCTION__);
       }
    } else {
       ok = link_function_calls(prog, linked, shader_list, num_shaders);
@@ -4000,7 +4000,7 @@ is_top_level_shader_storage_block_member(const char* name,
    int name_length = strlen(interface_name) + 1 + strlen(field_name) + 1;
    char *full_instanced_name = (char *) calloc(name_length, sizeof(char));
    if (!full_instanced_name) {
-      fprintf(stderr, "%s: Cannot allocate space for name\n", __func__);
+      fprintf(stderr, "%s: Cannot allocate space for name\n", __FUNCTION__);
       return false;
    }
 

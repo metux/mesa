@@ -512,7 +512,7 @@ do {									\
    }                                                                    \
 } while (0)
 
-#define ERROR(err) _mesa_error( ctx, err, __func__ )
+#define ERROR(err) _mesa_error( ctx, err, __FUNCTION__ )
 #define TAG(x) vbo_##x
 
 #include "vbo_attrib_tmp.h"

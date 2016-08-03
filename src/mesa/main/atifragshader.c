@@ -354,7 +354,7 @@ _mesa_BeginFragmentShaderATI(void)
    ctx->ATIFragmentShader.Current->swizzlerq = 0;
    ctx->ATIFragmentShader.Compiling = 1;
 #if MESA_DEBUG_ATI_FS
-   _mesa_debug(ctx, "%s %u\n", __func__, ctx->ATIFragmentShader.Current->Id);
+   _mesa_debug(ctx, "%s %u\n", __FUNCTION__, ctx->ATIFragmentShader.Current->Id);
 #endif
 }
 
@@ -494,7 +494,7 @@ _mesa_PassTexCoordATI(GLuint dst, GLuint coord, GLenum swizzle)
    curI->swizzle = swizzle;
 
 #if MESA_DEBUG_ATI_FS
-   _mesa_debug(ctx, "%s(%s, %s, %s)\n", __func__,
+   _mesa_debug(ctx, "%s(%s, %s, %s)\n", __FUNCTION__,
 	       _mesa_enum_to_string(dst), _mesa_enum_to_string(coord),
 	       _mesa_enum_to_string(swizzle));
 #endif
@@ -567,7 +567,7 @@ _mesa_SampleMapATI(GLuint dst, GLuint interp, GLenum swizzle)
    curI->swizzle = swizzle;
 
 #if MESA_DEBUG_ATI_FS
-   _mesa_debug(ctx, "%s(%s, %s, %s)\n", __func__,
+   _mesa_debug(ctx, "%s(%s, %s, %s)\n", __FUNCTION__,
 	       _mesa_enum_to_string(dst), _mesa_enum_to_string(interp),
 	       _mesa_enum_to_string(swizzle));
 #endif

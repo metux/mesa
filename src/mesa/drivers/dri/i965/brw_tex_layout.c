@@ -697,7 +697,7 @@ intel_miptree_set_total_width_height(struct brw_context *brw,
       break;
    }
 
-   DBG("%s: %dx%dx%d\n", __func__,
+   DBG("%s: %dx%dx%d\n", __FUNCTION__,
        mt->total_width, mt->total_height, mt->cpp);
 }
 

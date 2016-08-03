@@ -546,7 +546,7 @@ unsigned r200_blit(struct gl_context *ctx,
     /* Flush is needed to make sure that source buffer has correct data */
     radeonFlush(&r200->radeon.glCtx);
 
-    rcommonEnsureCmdBufSpace(&r200->radeon, 102, __func__);
+    rcommonEnsureCmdBufSpace(&r200->radeon, 102, __FUNCTION__);
 
     if (!validate_buffers(r200, src_bo, dst_bo))
         return GL_FALSE;

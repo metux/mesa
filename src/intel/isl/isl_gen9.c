@@ -67,7 +67,7 @@ gen9_calc_std_image_alignment_sa(const struct isl_device *dev,
 
       if (is_Ys) {
          /* FINISHME(chadv): I don't trust this code. Untested. */
-         isl_finishme("%s:%s: [SKL+] multisample TileYs", __FILE__, __func__);
+         isl_finishme("%s:%s: [SKL+] multisample TileYs", __FILE__, __FUNCTION__);
 
          switch (msaa_layout) {
          case ISL_MSAA_LAYOUT_NONE:

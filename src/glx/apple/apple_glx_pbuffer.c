@@ -209,7 +209,7 @@ get_max_size(int *widthresult, int *heightresult)
       err = apple_cgl.choose_pixel_format(attr, &pfobj, &vsref);
       if (kCGLNoError != err) {
          if (getenv("LIBGL_DIAGNOSTIC")) {
-            printf("choose_pixel_format error in %s: %s\n", __func__,
+            printf("choose_pixel_format error in %s: %s\n", __FUNCTION__,
                    apple_cgl.error_string(err));
          }
 
@@ -221,7 +221,7 @@ get_max_size(int *widthresult, int *heightresult)
 
       if (kCGLNoError != err) {
          if (getenv("LIBGL_DIAGNOSTIC")) {
-            printf("create_context error in %s: %s\n", __func__,
+            printf("create_context error in %s: %s\n", __FUNCTION__,
                    apple_cgl.error_string(err));
          }
 
@@ -233,7 +233,7 @@ get_max_size(int *widthresult, int *heightresult)
       err = apple_cgl.set_current_context(newcontext);
 
       if (kCGLNoError != err) {
-         printf("set_current_context error in %s: %s\n", __func__,
+         printf("set_current_context error in %s: %s\n", __FUNCTION__,
                 apple_cgl.error_string(err));
          return true;
       }

@@ -351,7 +351,7 @@ dd_dump_draw_vbo(struct dd_draw_state *dstate, struct pipe_draw_info *info, FILE
 static void
 dd_dump_launch_grid(struct dd_draw_state *dstate, struct pipe_grid_info *info, FILE *f)
 {
-   fprintf(f, "%s:\n", __func__+8);
+   fprintf(f, "%s:\n", __FUNCTION__+8);
    /* TODO */
 }
 
@@ -360,7 +360,7 @@ dd_dump_resource_copy_region(struct dd_draw_state *dstate,
                              struct call_resource_copy_region *info,
                              FILE *f)
 {
-   fprintf(f, "%s:\n", __func__+8);
+   fprintf(f, "%s:\n", __FUNCTION__+8);
    DUMP_M(resource, info, dst);
    DUMP_M(uint, info, dst_level);
    DUMP_M(uint, info, dstx);
@@ -374,7 +374,7 @@ dd_dump_resource_copy_region(struct dd_draw_state *dstate,
 static void
 dd_dump_blit(struct dd_draw_state *dstate, struct pipe_blit_info *info, FILE *f)
 {
-   fprintf(f, "%s:\n", __func__+8);
+   fprintf(f, "%s:\n", __FUNCTION__+8);
    DUMP_M(resource, info, dst.resource);
    DUMP_M(uint, info, dst.level);
    DUMP_M_ADDR(box, info, dst.box);
@@ -398,7 +398,7 @@ dd_dump_blit(struct dd_draw_state *dstate, struct pipe_blit_info *info, FILE *f)
 static void
 dd_dump_generate_mipmap(struct dd_draw_state *dstate, FILE *f)
 {
-   fprintf(f, "%s:\n", __func__+8);
+   fprintf(f, "%s:\n", __FUNCTION__+8);
    /* TODO */
 }
 
@@ -406,14 +406,14 @@ static void
 dd_dump_flush_resource(struct dd_draw_state *dstate, struct pipe_resource *res,
                        FILE *f)
 {
-   fprintf(f, "%s:\n", __func__+8);
+   fprintf(f, "%s:\n", __FUNCTION__+8);
    DUMP(resource, res);
 }
 
 static void
 dd_dump_clear(struct dd_draw_state *dstate, struct call_clear *info, FILE *f)
 {
-   fprintf(f, "%s:\n", __func__+8);
+   fprintf(f, "%s:\n", __FUNCTION__+8);
    DUMP_M(uint, info, buffers);
    DUMP_M_ADDR(color_union, info, color);
    DUMP_M(double, info, depth);
@@ -427,7 +427,7 @@ dd_dump_clear_buffer(struct dd_draw_state *dstate, struct call_clear_buffer *inf
    int i;
    const char *value = (const char*)info->clear_value;
 
-   fprintf(f, "%s:\n", __func__+8);
+   fprintf(f, "%s:\n", __FUNCTION__+8);
    DUMP_M(resource, info, res);
    DUMP_M(uint, info, offset);
    DUMP_M(uint, info, size);
@@ -442,14 +442,14 @@ dd_dump_clear_buffer(struct dd_draw_state *dstate, struct call_clear_buffer *inf
 static void
 dd_dump_clear_render_target(struct dd_draw_state *dstate, FILE *f)
 {
-   fprintf(f, "%s:\n", __func__+8);
+   fprintf(f, "%s:\n", __FUNCTION__+8);
    /* TODO */
 }
 
 static void
 dd_dump_clear_depth_stencil(struct dd_draw_state *dstate, FILE *f)
 {
-   fprintf(f, "%s:\n", __func__+8);
+   fprintf(f, "%s:\n", __FUNCTION__+8);
    /* TODO */
 }
 

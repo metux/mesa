@@ -6438,7 +6438,7 @@ out:
       t->num_immediates = 0;
 
       if (t->error) {
-         debug_printf("%s: translate error flag set\n", __func__);
+         debug_printf("%s: translate error flag set\n", __FUNCTION__);
       }
 
       FREE(t);

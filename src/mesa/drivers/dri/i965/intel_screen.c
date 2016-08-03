@@ -753,7 +753,7 @@ intel_create_image_from_fds(__DRIscreen *screen,
 
    if (f->nplanes == 1) {
       image->offset = image->offsets[0];
-      intel_image_warn_if_unaligned(image, __func__);
+      intel_image_warn_if_unaligned(image, __FUNCTION__);
    }
 
    return image;
@@ -843,7 +843,7 @@ intel_from_planar(__DRIimage *parent, int plane, void *loaderPrivate)
     image->pitch = stride;
     image->offset = offset;
 
-    intel_image_warn_if_unaligned(image, __func__);
+    intel_image_warn_if_unaligned(image, __FUNCTION__);
 
     return image;
 }
@@ -1167,14 +1167,14 @@ intel_init_bufmgr(struct intel_screen *intelScreen)
    intelScreen->bufmgr = intel_bufmgr_gem_init(spriv->fd, BATCH_SZ);
    if (intelScreen->bufmgr == NULL) {
       fprintf(stderr, "[%s:%u] Error initializing buffer manager.\n",
-	      __func__, __LINE__);
+	      __FUNCTION__, __LINE__);
       return false;
    }
 
    drm_intel_bufmgr_gem_enable_fenced_relocs(intelScreen->bufmgr);
 
    if (!intel_get_boolean(intelScreen, I915_PARAM_HAS_RELAXED_DELTA)) {
-      fprintf(stderr, "[%s: %u] Kernel 2.6.39 required.\n", __func__, __LINE__);
+      fprintf(stderr, "[%s: %u] Kernel 2.6.39 required.\n", __FUNCTION__, __LINE__);
       return false;
    }
 
@@ -1403,7 +1403,7 @@ intel_screen_make_configs(__DRIscreen *dri_screen)
    }
 
    if (configs == NULL) {
-      fprintf(stderr, "[%s:%u] Error creating FBConfig!\n", __func__,
+      fprintf(stderr, "[%s:%u] Error creating FBConfig!\n", __FUNCTION__,
               __LINE__);
       return NULL;
    }

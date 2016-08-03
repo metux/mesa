@@ -114,7 +114,7 @@
          _eglUnlockDisplay(disp);               \
       /* EGL error codes are non-zero */        \
       if (err)                                  \
-         _eglError(err, __func__);              \
+         _eglError(err, __FUNCTION__);              \
       return ret;                               \
    } while (0)
 
@@ -132,14 +132,14 @@
 
 #define _EGL_CHECK_DISPLAY(disp, ret, drv)         \
    do {                                            \
-      drv = _eglCheckDisplay(disp, __func__);      \
+      drv = _eglCheckDisplay(disp, __FUNCTION__);      \
       if (!drv)                                    \
          RETURN_EGL_ERROR(disp, 0, ret);           \
    } while (0)
 
 #define _EGL_CHECK_OBJECT(disp, type, obj, ret, drv)      \
    do {                                                   \
-      drv = _eglCheck ## type(disp, obj, __func__);       \
+      drv = _eglCheck ## type(disp, obj, __FUNCTION__);       \
       if (!drv)                                           \
          RETURN_EGL_ERROR(disp, 0, ret);                  \
    } while (0)

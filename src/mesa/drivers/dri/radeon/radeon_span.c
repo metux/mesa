@@ -91,7 +91,7 @@ radeon_map_framebuffer(struct gl_context *ctx, struct gl_framebuffer *fb)
 
 	radeon_print(RADEON_MEMORY, RADEON_TRACE,
 		"%s( %p , fb %p )\n",
-		     __func__, ctx, fb);
+		     __FUNCTION__, ctx, fb);
 
 	/* check for render to textures */
 	for (i = 0; i < BUFFER_COUNT; i++)
@@ -107,7 +107,7 @@ radeon_unmap_framebuffer(struct gl_context *ctx, struct gl_framebuffer *fb)
 
 	radeon_print(RADEON_MEMORY, RADEON_TRACE,
 		"%s( %p , fb %p)\n",
-		     __func__, ctx, fb);
+		     __FUNCTION__, ctx, fb);
 
 	/* check for render to textures */
 	for (i = 0; i < BUFFER_COUNT; i++)

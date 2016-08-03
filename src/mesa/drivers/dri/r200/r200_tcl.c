@@ -336,9 +336,9 @@ static GLuint r200EnsureEmitSize( struct gl_context * ctx , GLubyte* vimap_rev )
 
   radeon_print(RADEON_RENDER,RADEON_VERBOSE,
       "%s space %u, aos %d\n",
-      __func__, space_required, AOS_BUFSZ(nr_aos) );
+      __FUNCTION__, space_required, AOS_BUFSZ(nr_aos) );
   /* flush the buffer in case we need more than is left. */
-  if (rcommonEnsureCmdBufSpace(&rmesa->radeon, space_required + state_size, __func__))
+  if (rcommonEnsureCmdBufSpace(&rmesa->radeon, space_required + state_size, __FUNCTION__))
     return space_required + radeonCountStateEmitSize( &rmesa->radeon );
   else
     return space_required + state_size;
@@ -372,7 +372,7 @@ static GLboolean r200_run_tcl_render( struct gl_context *ctx,
    if (rmesa->radeon.TclFallback)
       return GL_TRUE;	/* fallback to software t&l */
 
-   radeon_print(RADEON_RENDER, RADEON_NORMAL, "%s\n", __func__);
+   radeon_print(RADEON_RENDER, RADEON_NORMAL, "%s\n", __FUNCTION__);
 
    if (VB->Count == 0)
       return GL_FALSE;

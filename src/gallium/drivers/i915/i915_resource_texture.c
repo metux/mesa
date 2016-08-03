@@ -962,7 +962,7 @@ i915_texture_create(struct pipe_screen *screen,
    if (!tex->buffer)
       goto fail;
 
-   I915_DBG(DBG_TEXTURE, "%s: %p stride %u, blocks (%u, %u) tiling %s\n", __func__,
+   I915_DBG(DBG_TEXTURE, "%s: %p stride %u, blocks (%u, %u) tiling %s\n", __FUNCTION__,
             tex, tex->stride,
             tex->stride / util_format_get_blocksize(tex->b.b.format),
             tex->total_nblocksy, get_tiling_string(tex->tiling));
@@ -1016,7 +1016,7 @@ i915_texture_from_handle(struct pipe_screen * screen,
 
    tex->buffer = buffer;
 
-   I915_DBG(DBG_TEXTURE, "%s: %p stride %u, blocks (%u, %u) tiling %s\n", __func__,
+   I915_DBG(DBG_TEXTURE, "%s: %p stride %u, blocks (%u, %u) tiling %s\n", __FUNCTION__,
             tex, tex->stride,
             tex->stride / util_format_get_blocksize(tex->b.b.format),
             tex->total_nblocksy, get_tiling_string(tex->tiling));

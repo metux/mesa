@@ -328,7 +328,7 @@ _mesa_meta_GenerateMipmap(struct gl_context *ctx, GLenum target,
 
          /* upload vertex data */
          _mesa_buffer_data(ctx, mipmap->buf_obj, GL_NONE, sizeof(verts), verts,
-                           GL_DYNAMIC_DRAW, __func__);
+                           GL_DYNAMIC_DRAW, __FUNCTION__);
 
          _mesa_meta_framebuffer_texture_image(ctx, ctx->DrawBuffer,
                                               GL_COLOR_ATTACHMENT0, dstImage,

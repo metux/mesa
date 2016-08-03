@@ -76,7 +76,7 @@ lock_context_list(void)
 
    if (err) {
       fprintf(stderr, "pthread_mutex_lock failure in %s: %d\n",
-              __func__, err);
+              __FUNCTION__, err);
       abort();
    }
 }
@@ -90,7 +90,7 @@ unlock_context_list(void)
 
    if (err) {
       fprintf(stderr, "pthread_mutex_unlock failure in %s: %d\n",
-              __func__, err);
+              __FUNCTION__, err);
       abort();
    }
 }
@@ -200,7 +200,7 @@ apple_glx_create_context(void **ptr, Display * dpy, int screen,
    *ptr = ac;
 
    apple_glx_diagnostic("%s: ac %p ac->context_obj %p\n",
-                        __func__, (void *) ac, (void *) ac->context_obj);
+                        __FUNCTION__, (void *) ac, (void *) ac->context_obj);
 
    unlock_context_list();
 
@@ -216,11 +216,11 @@ apple_glx_destroy_context(void **ptr, Display * dpy)
       return;
 
    apple_glx_diagnostic("%s: ac %p ac->context_obj %p\n",
-                        __func__, (void *) ac, (void *) ac->context_obj);
+                        __FUNCTION__, (void *) ac, (void *) ac->context_obj);
 
    if (apple_cgl.get_current_context() == ac->context_obj) {
       apple_glx_diagnostic("%s: context ac->context_obj %p "
-                           "is still current!\n", __func__,
+                           "is still current!\n", __FUNCTION__,
                            (void *) ac->context_obj);
       if (apple_cgl.set_current_context(NULL)) {
          abort();
@@ -261,12 +261,12 @@ apple_glx_destroy_context(void **ptr, Display * dpy)
    }
 
    if (apple_cgl.destroy_pixel_format(ac->pixel_format_obj)) {
-      fprintf(stderr, "error: destroying pixel format in %s\n", __func__);
+      fprintf(stderr, "error: destroying pixel format in %s\n", __FUNCTION__);
       abort();
    }
 
    if (apple_cgl.destroy_context(ac->context_obj)) {
-      fprintf(stderr, "error: destroying context_obj in %s\n", __func__);
+      fprintf(stderr, "error: destroying context_obj in %s\n", __FUNCTION__);
       abort();
    }
 
@@ -291,10 +291,10 @@ apple_glx_make_current_context(Display * dpy, void *oldptr, void *ptr,
 
 #if 0
    apple_glx_diagnostic("%s: oldac %p ac %p drawable 0x%lx\n",
-                        __func__, (void *) oldac, (void *) ac, drawable);
+                        __FUNCTION__, (void *) oldac, (void *) ac, drawable);
 
    apple_glx_diagnostic("%s: oldac->context_obj %p ac->context_obj %p\n",
-                        __func__,
+                        __FUNCTION__,
                         (void *) (oldac ? oldac->context_obj : NULL),
                         (void *) (ac ? ac->context_obj : NULL));
 #endif
@@ -350,7 +350,7 @@ apple_glx_make_current_context(Display * dpy, void *oldptr, void *ptr,
       ac->last_surface_window = None;
 
       apple_glx_diagnostic("%s: drawable is None, error is: %d\n",
-                           __func__, error);
+                           __FUNCTION__, error);
 
       return error;
    }
@@ -566,7 +566,7 @@ apple_glx_context_update(Display * dpy, void *ptr)
       failed =
          apple_glx_make_current_context(dpy, ac, ac, ac->last_surface_window);
 
-      apple_glx_diagnostic("%s: surface recreation failed? %s\n", __func__,
+      apple_glx_diagnostic("%s: surface recreation failed? %s\n", __FUNCTION__,
                            failed ? "YES" : "NO");
    }
 
@@ -574,21 +574,21 @@ apple_glx_context_update(Display * dpy, void *ptr)
       xp_update_gl_context(ac->context_obj);
       ac->need_update = false;
 
-      apple_glx_diagnostic("%s: updating context %p\n", __func__, ptr);
+      apple_glx_diagnostic("%s: updating context %p\n", __FUNCTION__, ptr);
    }
 
    if (ac->drawable && APPLE_GLX_DRAWABLE_SURFACE == ac->drawable->type
        && ac->drawable->types.surface.pending_destroy) {
-      apple_glx_diagnostic("%s: clearing drawable %p\n", __func__, ptr);
+      apple_glx_diagnostic("%s: clearing drawable %p\n", __FUNCTION__, ptr);
       apple_cgl.clear_drawable(ac->context_obj);
 
       if (ac->drawable) {
          struct apple_glx_drawable *d;
 
          apple_glx_diagnostic("%s: attempting to destroy drawable %p\n",
-                              __func__, ptr);
+                              __FUNCTION__, ptr);
          apple_glx_diagnostic("%s: ac->drawable->drawable is 0x%lx\n",
-                              __func__, ac->drawable->drawable);
+                              __FUNCTION__, ac->drawable->drawable);
 
          d = ac->drawable;
 

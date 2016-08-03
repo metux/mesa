@@ -84,7 +84,7 @@ GalliumContext::CreateScreen()
 	struct sw_winsys* winsys = hgl_create_sw_winsys();
 
 	if (!winsys) {
-		ERROR("%s: Couldn't allocate sw_winsys!\n", __func__);
+		ERROR("%s: Couldn't allocate sw_winsys!\n", __FUNCTION__);
 		return B_ERROR;
 	}
 
@@ -99,7 +99,7 @@ GalliumContext::CreateScreen()
 	debug_screen_wrap(fScreen);
 
 	const char* driverName = fScreen->get_name(fScreen);
-	ERROR("%s: Using %s driver.\n", __func__, driverName);
+	ERROR("%s: Using %s driver.\n", __FUNCTION__, driverName);
 
 	return B_OK;
 }
@@ -128,7 +128,7 @@ GalliumContext::CreateContext(Bitmap *bitmap)
 	// Create st_gl_api
 	context->api = hgl_create_st_api();
 	if (!context->api) {
-		ERROR("%s: Couldn't obtain Mesa state tracker API!\n", __func__);
+		ERROR("%s: Couldn't obtain Mesa state tracker API!\n", __FUNCTION__);
 		return -1;
 	}
 
@@ -143,7 +143,7 @@ GalliumContext::CreateContext(Bitmap *bitmap)
 	context->read = hgl_create_st_framebuffer(context);
 
 	if (!context->draw || !context->read) {
-		ERROR("%s: Problem allocating framebuffer!\n", __func__);
+		ERROR("%s: Problem allocating framebuffer!\n", __FUNCTION__);
 		FREE(context->stVisual);
 		return -1;
 	}
@@ -165,28 +165,28 @@ GalliumContext::CreateContext(Bitmap *bitmap)
 
 	if (!context->st) {
 		ERROR("%s: Couldn't create mesa state tracker context!\n",
-			__func__);
+			__FUNCTION__);
 		switch (result) {
 			case ST_CONTEXT_SUCCESS:
-				ERROR("%s: State tracker error: SUCCESS?\n", __func__);
+				ERROR("%s: State tracker error: SUCCESS?\n", __FUNCTION__);
 				break;
 			case ST_CONTEXT_ERROR_NO_MEMORY:
-				ERROR("%s: State tracker error: NO_MEMORY\n", __func__);
+				ERROR("%s: State tracker error: NO_MEMORY\n", __FUNCTION__);
 				break;
 			case ST_CONTEXT_ERROR_BAD_API:
-				ERROR("%s: State tracker error: BAD_API\n", __func__);
+				ERROR("%s: State tracker error: BAD_API\n", __FUNCTION__);
 				break;
 			case ST_CONTEXT_ERROR_BAD_VERSION:
-				ERROR("%s: State tracker error: BAD_VERSION\n", __func__);
+				ERROR("%s: State tracker error: BAD_VERSION\n", __FUNCTION__);
 				break;
 			case ST_CONTEXT_ERROR_BAD_FLAG:
-				ERROR("%s: State tracker error: BAD_FLAG\n", __func__);
+				ERROR("%s: State tracker error: BAD_FLAG\n", __FUNCTION__);
 				break;
 			case ST_CONTEXT_ERROR_UNKNOWN_ATTRIBUTE:
-				ERROR("%s: State tracker error: BAD_ATTRIBUTE\n", __func__);
+				ERROR("%s: State tracker error: BAD_ATTRIBUTE\n", __FUNCTION__);
 				break;
 			case ST_CONTEXT_ERROR_UNKNOWN_FLAG:
-				ERROR("%s: State tracker error: UNKNOWN_FLAG\n", __func__);
+				ERROR("%s: State tracker error: UNKNOWN_FLAG\n", __FUNCTION__);
 				break;
 		}
 
@@ -218,7 +218,7 @@ GalliumContext::CreateContext(Bitmap *bitmap)
 
 	if (contextNext < 0) {
 		ERROR("%s: The next context is invalid... something went wrong!\n",
-			__func__);
+			__FUNCTION__);
 		//st_destroy_context(context->st);
 		FREE(context->stVisual);
 		FREE(context);
@@ -226,7 +226,7 @@ GalliumContext::CreateContext(Bitmap *bitmap)
 	}
 
 	TRACE("%s: context #%" B_PRIu64 " is the next available context\n",
-		__func__, contextNext);
+		__FUNCTION__, contextNext);
 
 	return contextNext;
 }
@@ -271,7 +271,7 @@ GalliumContext::SetCurrentContext(Bitmap *bitmap, context_id contextID)
 	CALLED();
 
 	if (contextID < 0 || contextID > CONTEXT_MAX) {
-		ERROR("%s: Invalid context ID range!\n", __func__);
+		ERROR("%s: Invalid context ID range!\n", __FUNCTION__);
 		return B_ERROR;
 	}
 
@@ -282,7 +282,7 @@ GalliumContext::SetCurrentContext(Bitmap *bitmap, context_id contextID)
 
 	if (!context) {
 		ERROR("%s: Invalid context provided (#%" B_PRIu64 ")!\n",
-			__func__, contextID);
+			__FUNCTION__, contextID);
 		return B_ERROR;
 	}
 
@@ -329,7 +329,7 @@ GalliumContext::SwapBuffers(context_id contextID)
 	Unlock();
 
 	if (!context) {
-		ERROR("%s: context not found\n", __func__);
+		ERROR("%s: context not found\n", __FUNCTION__);
 		return B_ERROR;
 	}
 
@@ -344,11 +344,11 @@ GalliumContext::SwapBuffers(context_id contextID)
 	for (unsigned i = 0; i < nColorBuffers; i++) {
 		pipe_surface* surface = stContext->state.framebuffer.cbufs[i];
 		if (!surface) {
-			ERROR("%s: Color buffer %d invalid!\n", __func__, i);
+			ERROR("%s: Color buffer %d invalid!\n", __FUNCTION__, i);
 			continue;
 		}
 
-		TRACE("%s: Flushing color buffer #%d\n", __func__, i);
+		TRACE("%s: Flushing color buffer #%d\n", __FUNCTION__, i);
 
 		// We pass our destination bitmap to flush_fronbuffer which passes it
 		// to the private winsys display call.

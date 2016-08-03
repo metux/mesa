@@ -38,7 +38,7 @@
 #include "vl/vl_video_buffer.h"
 
 #define RVID_ERR(fmt, args...) \
-	fprintf(stderr, "EE %s:%d %s UVD - "fmt, __FILE__, __LINE__, __func__, ##args)
+	fprintf(stderr, "EE %s:%d %s UVD - "fmt, __FILE__, __LINE__, __FUNCTION__, ##args)
 
 /* video buffer representation */
 struct rvid_buffer

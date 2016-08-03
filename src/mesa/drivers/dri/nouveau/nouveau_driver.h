@@ -67,7 +67,7 @@ struct nouveau_driver {
 };
 
 #define nouveau_error(format, ...) \
-	fprintf(stderr, "%s: " format, __func__, ## __VA_ARGS__)
+	fprintf(stderr, "%s: " format, __FUNCTION__, ## __VA_ARGS__)
 
 extern const char * const nouveau_vendor_string;
 

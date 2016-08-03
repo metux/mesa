@@ -333,7 +333,7 @@ ir_function::matching_signature(_mesa_glsl_parse_state *state,
                        sizeof(*inexact_matches) *
                        (num_inexact_matches + 1));
          if (inexact_matches_temp == NULL) {
-            _mesa_error_no_memory(__func__);
+            _mesa_error_no_memory(__FUNCTION__);
             free(inexact_matches);
             return NULL;
          }

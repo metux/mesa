@@ -2300,7 +2300,7 @@ st_ChooseTextureFormat(struct gl_context *ctx, GLenum target,
    /* Debugging aid */
    if (0) {
       debug_printf("%s(intFormat=%s, format=%s, type=%s) -> %s, %s\n",
-                   __func__,
+                   __FUNCTION__,
                    _mesa_enum_to_string(internalFormat),
                    _mesa_enum_to_string(format),
                    _mesa_enum_to_string(type),

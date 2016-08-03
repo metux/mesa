@@ -178,7 +178,7 @@ hgl_st_framebuffer_validate(struct st_context_iface *stctxi,
 
 	if (resized || newMask) {
 		boolean ret;
-		TRACE("%s: resize event. old:  %d x %d; new: %d x %d\n", __func__,
+		TRACE("%s: resize event. old:  %d x %d; new: %d x %d\n", __FUNCTION__,
 			buffer->width, buffer->height, context->width, context->height);
 
 		ret = hgl_st_framebuffer_validate_textures(stfbi, 
@@ -344,7 +344,7 @@ hgl_create_st_visual(ulong options)
 	if ((options & BGL_DEPTH) || (options & BGL_STENCIL))
 		visual->buffer_mask |= ST_ATTACHMENT_DEPTH_STENCIL_MASK;
 
-	TRACE("%s: Visual color format: %s\n", __func__,
+	TRACE("%s: Visual color format: %s\n", __FUNCTION__,
 		util_format_name(visual->color_format));
 
 	return visual;

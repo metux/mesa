@@ -138,7 +138,7 @@ wglCreatePbufferARB(HDC hCurrentDC,
       default:
          SetLastError(ERROR_INVALID_DATA);
          debug_printf("wgl: Unsupported attribute 0x%x in %s\n",
-                      *piAttrib, __func__);
+                      *piAttrib, __FUNCTION__);
          return 0;
       }
    }
