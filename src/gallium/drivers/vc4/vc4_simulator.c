@@ -87,9 +87,6 @@ vc4_simulator_pin_bos(struct drm_device *dev, struct vc4_exec_info *exec)
                 struct drm_gem_cma_object *obj = vc4_wrap_bo_with_cma(dev, bo);
 
                 struct drm_vc4_bo *drm_bo = to_vc4_bo(&obj->base);
-#if 0
-                fprintf(stderr, "bo hindex %d: %s\n", i, bo->name);
-#endif
 
                 vc4_bo_map(bo);
                 memcpy(obj->vaddr, bo->map, bo->size);
@@ -239,13 +236,6 @@ vc4_simulator_flush(struct vc4_context *vc4, struct drm_vc4_submit_cl *args)
         list_inithead(&exec.unref_list);
 
         if (ctex && ctex->bo->simulator_winsys_map) {
-#if 0
-                fprintf(stderr, "%dx%d %d %d %d\n",
-                        ctex->base.b.width0, ctex->base.b.height0,
-                        winsys_stride,
-                        sim_stride,
-                        ctex->bo->size);
-#endif
 
                 for (int y = 0; y < ctex->base.b.height0; y++) {
                         memcpy(ctex->bo->map + y * sim_stride,

@@ -48,65 +48,13 @@
 /**********************************************************************/
 
 
-/*
- * Render an array of points into a pixmap, any pixel format.
- */
-#if 000
-/* XXX don't use this, it doesn't dither correctly */
-static void draw_points_ANY_pixmap( struct gl_context *ctx, const SWvertex *vert )
-{
-   XMesaContext xmesa = XMESA_CONTEXT(ctx);
-   XMesaDisplay *dpy = xmesa->xm_visual->display;
-   XMesaDrawable buffer = xmesa->xm_buffer->buffer;
-   XMesaGC gc = xmesa->xm_buffer->gc;
-
-   if (xmesa->xm_visual->mesa_visual.RGBAflag) {
-      register int x, y;
-      const GLubyte *color = vert->color;
-      unsigned long pixel = xmesa_color_to_pixel( xmesa,
-						  color[0], color[1],
-						  color[2], color[3],
-						  xmesa->pixelformat);
-      XMesaSetForeground( dpy, gc, pixel );
-      x = (GLint) vert->win[0];
-      y = YFLIP( xrb, (GLint) vert->win[1] );
-      XMesaDrawPoint( dpy, buffer, gc, x, y);
-   }
-   else {
-      /* Color index mode */
-      register int x, y;
-      XMesaSetForeground( dpy, gc, vert->index );
-      x =                         (GLint) vert->win[0];
-      y = YFLIP( xrb, (GLint) vert->win[1] );
-      XMesaDrawPoint( dpy, buffer, gc, x, y);
-   }
-}
-#endif
-
-
 /* Override the swrast point-selection function.  Try to use one of
  * our internal point functions, otherwise fall back to the standard
  * swrast functions.
  */
 void xmesa_choose_point( struct gl_context *ctx )
 {
-#if 0
-   XMesaContext xmesa = XMESA_CONTEXT(ctx);
-   SWcontext *swrast = SWRAST_CONTEXT(ctx);
-
-   if (ctx->RenderMode == GL_RENDER
-       && ctx->Point.Size == 1.0F && !ctx->Point.SmoothFlag
-       && swrast->_RasterMask == 0
-       && ctx->Texture._MaxEnabledTexImageUnit == -1
-       && xmesa->xm_buffer->buffer != XIMAGE) {
-      swrast->Point = draw_points_ANY_pixmap;
-   }
-   else {
-      _swrast_choose_point( ctx );
-   }
-#else
    _swrast_choose_point( ctx );
-#endif
 }
 
 

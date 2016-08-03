@@ -401,12 +401,6 @@ static int tgsi_is_supported(struct r600_shader_ctx *ctx)
 		R600_ERR("predicate unsupported\n");
 		return -EINVAL;
 	}
-#if 0
-	if (i->Instruction.Label) {
-		R600_ERR("label unsupported\n");
-		return -EINVAL;
-	}
-#endif
 	for (j = 0; j < i->Instruction.NumSrcRegs; j++) {
 		if (i->Src[j].Register.Dimension) {
 		   switch (i->Src[j].Register.File) {
@@ -7316,23 +7310,6 @@ static int tgsi_tex(struct r600_shader_ctx *ctx)
 		r = r600_bytecode_add_alu(ctx->bc, &alu);
 		if (r)
 			return r;
-#if 0
-		/* visualize the FMASK */
-		for (i = 0; i < 4; i++) {
-			memset(&alu, 0, sizeof(struct r600_bytecode_alu));
-			alu.op = ALU_OP1_INT_TO_FLT;
-			alu.src[0].sel = src_gpr;
-			alu.src[0].chan = sample_chan;
-			alu.dst.sel = ctx->file_offset[inst->Dst[0].Register.File] + inst->Dst[0].Register.Index;
-			alu.dst.chan = i;
-			alu.dst.write = 1;
-			alu.last = 1;
-			r = r600_bytecode_add_alu(ctx->bc, &alu);
-			if (r)
-				return r;
-		}
-		return 0;
-#endif
 	}
 
 	/* does this shader want a num layers from TXQ for a cube array? */
@@ -7906,11 +7883,6 @@ static int tgsi_exp(struct r600_shader_ctx *ctx)
 		r600_bytecode_src(&alu.src[0], &ctx->src[0], 0);
 
 		alu.dst.sel = ctx->temp_reg;
-#if 0
-		r = tgsi_dst(ctx, &inst->Dst[0], i, &alu.dst);
-		if (r)
-			return r;
-#endif
 		alu.dst.write = 1;
 		alu.dst.chan = 1;
 
@@ -8580,54 +8552,6 @@ static void fc_poplevel(struct r600_shader_ctx *ctx)
 	sp->type = 0;
 	ctx->bc->fc_sp--;
 }
-
-#if 0
-static int emit_return(struct r600_shader_ctx *ctx)
-{
-	r600_bytecode_add_cfinst(ctx->bc, CF_OP_RETURN));
-	return 0;
-}
-
-static int emit_jump_to_offset(struct r600_shader_ctx *ctx, int pops, int offset)
-{
-
-	r600_bytecode_add_cfinst(ctx->bc, CF_OP_JUMP));
-	ctx->bc->cf_last->pop_count = pops;
-	/* XXX work out offset */
-	return 0;
-}
-
-static int emit_setret_in_loop_flag(struct r600_shader_ctx *ctx, unsigned flag_value)
-{
-	return 0;
-}
-
-static void emit_testflag(struct r600_shader_ctx *ctx)
-{
-
-}
-
-static void emit_return_on_flag(struct r600_shader_ctx *ctx, unsigned ifidx)
-{
-	emit_testflag(ctx);
-	emit_jump_to_offset(ctx, 1, 4);
-	emit_setret_in_loop_flag(ctx, V_SQ_ALU_SRC_0);
-	pops(ctx, ifidx + 1);
-	emit_return(ctx);
-}
-
-static void break_loop_on_flag(struct r600_shader_ctx *ctx, unsigned fc_sp)
-{
-	emit_testflag(ctx);
-
-	r600_bytecode_add_cfinst(ctx->bc, ctx->inst_info->op);
-	ctx->bc->cf_last->pop_count = 1;
-
-	fc_set_mid(ctx, fc_sp);
-
-	pops(ctx, 1);
-}
-#endif
 
 static int emit_if(struct r600_shader_ctx *ctx, int opcode)
 {

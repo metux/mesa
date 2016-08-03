@@ -684,38 +684,6 @@ struct pipe_screen *r600_screen_create(struct radeon_winsys *ws)
 	/* Create the auxiliary context. This must be done last. */
 	rscreen->b.aux_context = rscreen->b.b.context_create(&rscreen->b.b, NULL, 0);
 
-#if 0 /* This is for testing whether aux_context and buffer clearing work correctly. */
-	struct pipe_resource templ = {};
-
-	templ.width0 = 4;
-	templ.height0 = 2048;
-	templ.depth0 = 1;
-	templ.array_size = 1;
-	templ.target = PIPE_TEXTURE_2D;
-	templ.format = PIPE_FORMAT_R8G8B8A8_UNORM;
-	templ.usage = PIPE_USAGE_DEFAULT;
-
-	struct r600_resource *res = r600_resource(rscreen->screen.resource_create(&rscreen->screen, &templ));
-	unsigned char *map = ws->buffer_map(res->buf, NULL, PIPE_TRANSFER_WRITE);
-
-	memset(map, 0, 256);
-
-	r600_screen_clear_buffer(rscreen, &res->b.b, 4, 4, 0xCC);
-	r600_screen_clear_buffer(rscreen, &res->b.b, 8, 4, 0xDD);
-	r600_screen_clear_buffer(rscreen, &res->b.b, 12, 4, 0xEE);
-	r600_screen_clear_buffer(rscreen, &res->b.b, 20, 4, 0xFF);
-	r600_screen_clear_buffer(rscreen, &res->b.b, 32, 20, 0x87);
-
-	ws->buffer_wait(res->buf, RADEON_USAGE_WRITE);
-
-	int i;
-	for (i = 0; i < 256; i++) {
-		printf("%02X", map[i]);
-		if (i % 16 == 15)
-			printf("\n");
-	}
-#endif
-
 	if (rscreen->b.debug_flags & DBG_TEST_DMA)
 		r600_test_dma(&rscreen->b);
 

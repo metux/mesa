@@ -394,20 +394,8 @@ i915_update_tex_unit(struct intel_context *intel, GLuint unit, GLuint ss3)
     */
    I915_STATECHANGE(i915, I915_UPLOAD_TEX(unit));
 
-
-#if 0
-   DBG(TEXTURE, "state[I915_TEXREG_SS2] = 0x%x\n", state[I915_TEXREG_SS2]);
-   DBG(TEXTURE, "state[I915_TEXREG_SS3] = 0x%x\n", state[I915_TEXREG_SS3]);
-   DBG(TEXTURE, "state[I915_TEXREG_SS4] = 0x%x\n", state[I915_TEXREG_SS4]);
-   DBG(TEXTURE, "state[I915_TEXREG_MS2] = 0x%x\n", state[I915_TEXREG_MS2]);
-   DBG(TEXTURE, "state[I915_TEXREG_MS3] = 0x%x\n", state[I915_TEXREG_MS3]);
-   DBG(TEXTURE, "state[I915_TEXREG_MS4] = 0x%x\n", state[I915_TEXREG_MS4]);
-#endif
-
    return true;
 }
-
-
 
 
 void

@@ -165,18 +165,6 @@ draw(void)
 }
 
 
-#if 0
-static void
-resize(int w, int h)
-{
-   width = w;
-   height = h;
-
-   set_viewport(0, 0, width, height, 30, 1000);
-}
-#endif
-
-
 static void
 init(void)
 {

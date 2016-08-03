@@ -203,16 +203,12 @@ static void r200EmitPrim( struct gl_context *ctx,
 #define MAX_CONVERSION_SIZE 40
 /* Try & join small primitives
  */
-#if 0
-#define PREFER_DISCRETE_ELT_PRIM( NR, PRIM ) 0
-#else
 #define PREFER_DISCRETE_ELT_PRIM( NR, PRIM )			\
   ((NR) < 20 ||							\
    ((NR) < 40 &&						\
     rmesa->tcl.hw_primitive == (PRIM|				\
 			    R200_VF_TCL_OUTPUT_VTX_ENABLE|	\
 			        R200_VF_PRIM_WALK_IND)))
-#endif
 
 #ifdef MESA_BIG_ENDIAN
 /* We could do without (most of) this ugliness if dest was always 32 bit word aligned... */

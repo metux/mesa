@@ -707,60 +707,6 @@ _mesa_get_tex_max_num_levels(GLenum target, GLsizei width, GLsizei height,
 }
 
 
-#if 000 /* not used anymore */
-/*
- * glTexImage[123]D can accept a NULL image pointer.  In this case we
- * create a texture image with unspecified image contents per the OpenGL
- * spec.
- */
-static GLubyte *
-make_null_texture(GLint width, GLint height, GLint depth, GLenum format)
-{
-   const GLint components = _mesa_components_in_format(format);
-   const GLint numPixels = width * height * depth;
-   GLubyte *data = (GLubyte *) malloc(numPixels * components * sizeof(GLubyte));
-
-#ifdef DEBUG
-   /*
-    * Let's see if anyone finds this.  If glTexImage2D() is called with
-    * a NULL image pointer then load the texture image with something
-    * interesting instead of leaving it indeterminate.
-    */
-   if (data) {
-      static const char message[8][32] = {
-         "   X   X  XXXXX   XXX     X    ",
-         "   XX XX  X      X   X   X X   ",
-         "   X X X  X      X      X   X  ",
-         "   X   X  XXXX    XXX   XXXXX  ",
-         "   X   X  X          X  X   X  ",
-         "   X   X  X      X   X  X   X  ",
-         "   X   X  XXXXX   XXX   X   X  ",
-         "                               "
-      };
-
-      GLubyte *imgPtr = data;
-      GLint h, i, j, k;
-      for (h = 0; h < depth; h++) {
-         for (i = 0; i < height; i++) {
-            GLint srcRow = 7 - (i % 8);
-            for (j = 0; j < width; j++) {
-               GLint srcCol = j % 32;
-               GLubyte texel = (message[srcRow][srcCol]=='X') ? 255 : 70;
-               for (k = 0; k < components; k++) {
-                  *imgPtr++ = texel;
-               }
-            }
-         }
-      }
-   }
-#endif
-
-   return data;
-}
-#endif
-
-
-
 /**
  * Set the size and format-related fields of a gl_texture_image struct
  * to zero.  This is used when a proxy texture test fails.
@@ -2707,43 +2653,7 @@ check_gen_mipmap(struct gl_context *ctx, GLenum target,
 static GLenum
 override_internal_format(GLenum internalFormat, GLint width, GLint height)
 {
-#if 0
-   if (internalFormat == GL_RGBA16F_ARB ||
-       internalFormat == GL_RGBA32F_ARB) {
-      printf("Convert rgba float tex to int %d x %d\n", width, height);
-      return GL_RGBA;
-   }
-   else if (internalFormat == GL_RGB16F_ARB ||
-            internalFormat == GL_RGB32F_ARB) {
-      printf("Convert rgb float tex to int %d x %d\n", width, height);
-      return GL_RGB;
-   }
-   else if (internalFormat == GL_LUMINANCE_ALPHA16F_ARB ||
-            internalFormat == GL_LUMINANCE_ALPHA32F_ARB) {
-      printf("Convert luminance float tex to int %d x %d\n", width, height);
-      return GL_LUMINANCE_ALPHA;
-   }
-   else if (internalFormat == GL_LUMINANCE16F_ARB ||
-            internalFormat == GL_LUMINANCE32F_ARB) {
-      printf("Convert luminance float tex to int %d x %d\n", width, height);
-      return GL_LUMINANCE;
-   }
-   else if (internalFormat == GL_ALPHA16F_ARB ||
-            internalFormat == GL_ALPHA32F_ARB) {
-      printf("Convert luminance float tex to int %d x %d\n", width, height);
-      return GL_ALPHA;
-   }
-   /*
-   else if (internalFormat == GL_COMPRESSED_RGBA_S3TC_DXT1_EXT) {
-      internalFormat = GL_RGBA;
-   }
-   */
-   else {
-      return internalFormat;
-   }
-#else
    return internalFormat;
-#endif
 }
 
 

@@ -152,8 +152,6 @@ lp_scene_begin_rasterization(struct lp_scene *scene)
    const struct pipe_framebuffer_state *fb = &scene->fb;
    int i;
 
-   //LP_DBG(DEBUG_RAST, "%s\n", __FUNCTION__);
-
    for (i = 0; i < scene->fb.nr_cbufs; i++) {
       struct pipe_surface *cbuf = scene->fb.cbufs[i];
 

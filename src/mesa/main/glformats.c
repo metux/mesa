@@ -214,18 +214,6 @@ _mesa_compute_component_mapping(GLenum inFormat, GLenum outFormat, GLubyte *map)
 
    map[ZERO] = ZERO;
    map[ONE] = ONE;
-
-#if 0
-   printf("from %x/%s to %x/%s map %d %d %d %d %d %d\n",
-	  inFormat, _mesa_enum_to_string(inFormat),
-	  outFormat, _mesa_enum_to_string(outFormat),
-	  map[0],
-	  map[1],
-	  map[2],
-	  map[3],
-	  map[4],
-	  map[5]);
-#endif
 }
 
 /**
@@ -1944,9 +1932,6 @@ _mesa_error_check_format_and_type(const struct gl_context *ctx,
       case GL_GREEN:
       case GL_BLUE:
       case GL_ALPHA:
-#if 0 /* not legal!  see table 3.6 of the 1.5 spec */
-      case GL_INTENSITY:
-#endif
       case GL_LUMINANCE:
       case GL_LUMINANCE_ALPHA:
       case GL_DEPTH_COMPONENT:

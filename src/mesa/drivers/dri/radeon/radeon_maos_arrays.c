@@ -135,9 +135,6 @@ static void emit_tex_vector(struct gl_context *ctx, struct radeon_aos *aos,
    radeon_bo_unmap(aos->bo);
 }
 
-
-
-
 /* Emit any changed arrays to new GART memory, re-emit a packet to
  * update the arrays.  
  */
@@ -149,11 +146,6 @@ void radeonEmitArrays( struct gl_context *ctx, GLuint inputs )
    GLuint vfmt = 0;
    GLuint count = VB->Count;
    GLuint vtx, unit;
-   
-#if 0
-   if (RADEON_DEBUG & RADEON_VERTS)
-      _tnl_print_vert_flags( __FUNCTION__, inputs );
-#endif
 
    if (1) {
       if (!rmesa->tcl.obj.buf) 
@@ -173,7 +165,6 @@ void radeonEmitArrays( struct gl_context *ctx, GLuint inputs )
       }
       nr++;
    }
-   
 
    if (inputs & VERT_BIT_NORMAL) {
       if (!rmesa->tcl.norm.buf)
@@ -247,7 +238,7 @@ void radeonEmitArrays( struct gl_context *ctx, GLuint inputs )
 
    vtx = (rmesa->hw.tcl.cmd[TCL_OUTPUT_VTXFMT] &
 	  ~(RADEON_TCL_VTX_Q0|RADEON_TCL_VTX_Q1|RADEON_TCL_VTX_Q2));
-      
+
    for (unit = 0; unit < ctx->Const.MaxTextureUnits; unit++) {
       if (inputs & VERT_BIT_TEX(unit)) {
 	 if (!rmesa->tcl.tex[unit].buf)
@@ -287,4 +278,3 @@ void radeonEmitArrays( struct gl_context *ctx, GLuint inputs )
    rmesa->tcl.nr_aos_components = nr;
    rmesa->tcl.vertex_format = vfmt;
 }
-

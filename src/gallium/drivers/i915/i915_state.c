@@ -704,14 +704,7 @@ static void i915_set_constant_buffer(struct pipe_context *pipe,
       if (old_num == new_num) {
          if (old_num == 0)
             diff = FALSE;
-#if 0
-         /* XXX no point in running this code since st/mesa only uses user buffers */
-         /* Can't compare the buffer data since they are userbuffers */
-         else if (old && old->free_on_destroy)
-            diff = memcmp(old->data, ibuf->data, ibuf->b.b.width0);
-#else
          (void)old;
-#endif
       }
    } else {
       diff = i915->current.num_user_constants[shader] != 0;

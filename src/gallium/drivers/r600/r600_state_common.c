@@ -2503,12 +2503,6 @@ uint32_t r600_translate_texformat(struct pipe_screen *screen,
 	switch (desc->channel[i].type) {
 	case UTIL_FORMAT_TYPE_UNSIGNED:
 	case UTIL_FORMAT_TYPE_SIGNED:
-#if 0
-		if (!desc->channel[i].normalized &&
-		    desc->colorspace != UTIL_FORMAT_COLORSPACE_SRGB) {
-			goto out_unknown;
-		}
-#endif
 		if (desc->colorspace != UTIL_FORMAT_COLORSPACE_SRGB &&
 		    desc->channel[i].pure_integer)
 			word4 |= S_038010_NUM_FORMAT_ALL(V_038010_SQ_NUM_FORMAT_INT);

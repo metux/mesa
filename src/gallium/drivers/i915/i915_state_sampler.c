@@ -110,28 +110,6 @@ static void update_sampler(struct i915_context *i915,
     * XXX: Check if this is true on i945.  
     * XXX: Check if this bug got fixed in release silicon.
     */
-#if 0
-   {
-      const unsigned ws = sampler->templ->wrap_s;
-      const unsigned wt = sampler->templ->wrap_t;
-      const unsigned wr = sampler->templ->wrap_r;
-      if (pt->target == PIPE_TEXTURE_3D &&
-          (sampler->templ->min_img_filter != PIPE_TEX_FILTER_NEAREST ||
-           sampler->templ->mag_img_filter != PIPE_TEX_FILTER_NEAREST) &&
-          (ws == PIPE_TEX_WRAP_CLAMP ||
-           wt == PIPE_TEX_WRAP_CLAMP ||
-           wr == PIPE_TEX_WRAP_CLAMP ||
-           ws == PIPE_TEX_WRAP_CLAMP_TO_BORDER ||
-           wt == PIPE_TEX_WRAP_CLAMP_TO_BORDER || 
-           wr == PIPE_TEX_WRAP_CLAMP_TO_BORDER)) {
-         if (i915->conformance_mode > 0) {
-            assert(0);
-            /*             sampler->fallback = true; */
-            /* TODO */
-         }
-      }
-   }
-#endif
 
    /* See note at the top of file */
    minlod = sampler->minlod;
@@ -231,11 +209,6 @@ static uint translate_texture_format(enum pipe_format pipeFormat,
       return (MAPSURF_422 | MT_422_YCRCB_NORMAL);
    case PIPE_FORMAT_UYVY:
       return (MAPSURF_422 | MT_422_YCRCB_SWAPY);
-#if 0
-   case PIPE_FORMAT_RGB_FXT1:
-   case PIPE_FORMAT_RGBA_FXT1:
-      return (MAPSURF_COMPRESSED | MT_COMPRESS_FXT1);
-#endif
    case PIPE_FORMAT_Z16_UNORM:
       return (MAPSURF_16BIT | MT_16BIT_L16);
    case PIPE_FORMAT_DXT1_RGBA:

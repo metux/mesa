@@ -993,15 +993,6 @@ OSMesaMakeCurrent( OSMesaContext osmesa, void *buffer, GLenum type,
       return GL_FALSE;
    }
 
-#if 0
-   if (!(type == GL_UNSIGNED_BYTE ||
-         (type == GL_UNSIGNED_SHORT && CHAN_BITS >= 16) ||
-         (type == GL_FLOAT && CHAN_BITS == 32))) {
-      /* i.e. is sizeof(type) * 8 > CHAN_BITS? */
-      return GL_FALSE;
-   }
-#endif
-
    osmesa_update_state( &osmesa->mesa, 0 );
 
    /* Call this periodically to detect when the user has begun using

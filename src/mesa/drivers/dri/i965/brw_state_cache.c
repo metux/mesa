@@ -89,16 +89,6 @@ search_cache(struct brw_cache *cache, GLuint hash,
 {
    struct brw_cache_item *c;
 
-#if 0
-   int bucketcount = 0;
-
-   for (c = cache->items[hash % cache->size]; c; c = c->next)
-      bucketcount++;
-
-   fprintf(stderr, "bucket %d/%d = %d/%d items\n", hash % cache->size,
-	   cache->size, bucketcount, cache->n_items);
-#endif
-
    for (c = cache->items[hash % cache->size]; c; c = c->next) {
       if (brw_cache_item_equals(lookup, c))
 	 return c;

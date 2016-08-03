@@ -61,18 +61,6 @@ hgl_st_framebuffer_flush_front(struct st_context_iface *stctxi,
 {
 	CALLED();
 
-	//struct hgl_context* context = hgl_st_context(stctxi);
-	//struct hgl_buffer* buffer = hgl_st_context(stfbi);
-
-	#if 0
-	struct stw_st_framebuffer *stwfb = stw_st_framebuffer(stfb);
-	pipe_mutex_lock(stwfb->fb->mutex);
-
-	struct pipe_resource* resource = textures[statt];
-	if (resource)
-		stw_framebuffer_present_locked(...);
-	#endif
-
 	return TRUE;
 }
 
@@ -332,14 +320,6 @@ hgl_create_st_visual(ulong options)
 		visual->buffer_mask |= ST_ATTACHMENT_BACK_LEFT_MASK;
 		visual->render_buffer = ST_ATTACHMENT_BACK_LEFT;
 	}
-
-	#if 0
-	if ((options & BGL_STEREO) != 0) {
-		visual->buffer_mask |= ST_ATTACHMENT_FRONT_RIGHT_MASK;
-		if ((options & BGL_DOUBLE) != 0)
-			visual->buffer_mask |= ST_ATTACHMENT_BACK_RIGHT_MASK;
-    }
-	#endif
 
 	if ((options & BGL_DEPTH) || (options & BGL_STENCIL))
 		visual->buffer_mask |= ST_ATTACHMENT_DEPTH_STENCIL_MASK;

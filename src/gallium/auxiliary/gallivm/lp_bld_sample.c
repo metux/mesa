@@ -1992,17 +1992,11 @@ lp_build_sample_partial_offset(struct lp_build_context *bld,
        * (using roughly extract, shift/and, mov, unpack) (llvm 2.7).
        * The generated code looks seriously unfunny and is quite expensive.
        */
-#if 0
-      LLVMValueRef block_width = lp_build_const_int_vec(bld->type, block_length);
-      subcoord = LLVMBuildURem(builder, coord, block_width, "");
-      coord    = LLVMBuildUDiv(builder, coord, block_width, "");
-#else
       unsigned logbase2 = util_logbase2(block_length);
       LLVMValueRef block_shift = lp_build_const_int_vec(bld->gallivm, bld->type, logbase2);
       LLVMValueRef block_mask = lp_build_const_int_vec(bld->gallivm, bld->type, block_length - 1);
       subcoord = LLVMBuildAnd(builder, coord, block_mask, "");
       coord = LLVMBuildLShr(builder, coord, block_shift, "");
-#endif
    }
 
    offset = lp_build_mul(bld, coord, stride);

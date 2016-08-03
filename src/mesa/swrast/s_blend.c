@@ -796,14 +796,7 @@ blend_general_float(struct gl_context *ctx, GLuint n, const GLubyte mask[],
          }
 
          /* final clamping */
-#if 0
-         rgba[i][RCOMP] = MAX2( r, 0.0F );
-         rgba[i][GCOMP] = MAX2( g, 0.0F );
-         rgba[i][BCOMP] = MAX2( b, 0.0F );
-         rgba[i][ACOMP] = CLAMP( a, 0.0F, 1.0F );
-#else
          ASSIGN_4V(rgba[i], r, g, b, a);
-#endif
       }
    }
 }

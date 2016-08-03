@@ -136,14 +136,6 @@ static void upload_S5(struct i915_context *i915)
     */
    LIS5 |= i915->blend->LIS5;
 
-#if 0
-   /* I915_NEW_RASTERIZER
-    */
-   if (i915->rasterizer->LIS7) {
-      LIS5 |= S5_GLOBAL_DEPTH_OFFSET_ENABLE;
-   }
-#endif
-
    set_immediate(i915, I915_IMMEDIATE_S5, LIS5);
 }
 
@@ -189,15 +181,6 @@ const struct i915_tracked_state i915_upload_S6 = {
  */
 static void upload_S7(struct i915_context *i915)
 {
-#if 0
-   unsigned LIS7;
-
-   /* I915_NEW_RASTERIZER
-    */
-   LIS7 = i915->rasterizer->LIS7;
-
-   set_immediate(i915, I915_IMMEDIATE_S7, LIS7);
-#endif
 }
 
 const struct i915_tracked_state i915_upload_S7 = {

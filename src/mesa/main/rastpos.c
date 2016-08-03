@@ -878,45 +878,6 @@ _mesa_WindowPos4svMESA(const GLshort *v)
 }
 
 
-#if 0
-
-/*
- * OpenGL implementation of glWindowPos*MESA()
- */
-void glWindowPos4fMESA( GLfloat x, GLfloat y, GLfloat z, GLfloat w )
-{
-   GLfloat fx, fy;
-
-   /* Push current matrix mode and viewport attributes */
-   glPushAttrib( GL_TRANSFORM_BIT | GL_VIEWPORT_BIT );
-
-   /* Setup projection parameters */
-   glMatrixMode( GL_PROJECTION );
-   glPushMatrix();
-   glLoadIdentity();
-   glMatrixMode( GL_MODELVIEW );
-   glPushMatrix();
-   glLoadIdentity();
-
-   glDepthRange( z, z );
-   glViewport( (int) x - 1, (int) y - 1, 2, 2 );
-
-   /* set the raster (window) position */
-   fx = x - (int) x;
-   fy = y - (int) y;
-   glRasterPos4f( fx, fy, 0.0, w );
-
-   /* restore matrices, viewport and matrix mode */
-   glPopMatrix();
-   glMatrixMode( GL_PROJECTION );
-   glPopMatrix();
-
-   glPopAttrib();
-}
-
-#endif
-
-
 /**********************************************************************/
 /** \name Initialization                                              */
 /**********************************************************************/

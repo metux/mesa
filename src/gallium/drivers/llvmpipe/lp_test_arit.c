@@ -154,13 +154,6 @@ const float exp2_values[] = {
 
 
 const float log2_values[] = {
-#if 0
-   /* 
-    * Smallest denormalized number; meant just for experimentation, but not
-    * validation.
-    */
-   1.4012984643248171e-45,
-#endif
    -INFINITY,
    0,
    1e-007,

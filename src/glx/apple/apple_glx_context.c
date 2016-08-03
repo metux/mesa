@@ -289,16 +289,6 @@ apple_glx_make_current_context(Display * dpy, void *oldptr, void *ptr,
    CGLError cglerr;
    bool same_drawable = false;
 
-#if 0
-   apple_glx_diagnostic("%s: oldac %p ac %p drawable 0x%lx\n",
-                        __FUNCTION__, (void *) oldac, (void *) ac, drawable);
-
-   apple_glx_diagnostic("%s: oldac->context_obj %p ac->context_obj %p\n",
-                        __FUNCTION__,
-                        (void *) (oldac ? oldac->context_obj : NULL),
-                        (void *) (ac ? ac->context_obj : NULL));
-#endif
-
    /* This a common path for GLUT and other apps, so special case it. */
    if (ac && ac->drawable && ac->drawable->drawable == drawable) {
       same_drawable = true;

@@ -91,25 +91,7 @@ static GLuint check_input_changes( struct gl_context *ctx )
 
 static GLuint check_output_changes( struct gl_context *ctx )
 {
-#if 0
-   TNLcontext *tnl = TNL_CONTEXT(ctx);
-   
-   for (i = 0; i < VARYING_SLOT_MAX; i++) {
-      if (tnl->vb.ResultPtr[i]->size != tnl->last_result_size[i] ||
-	  tnl->vb.ResultPtr[i]->stride != tnl->last_result_stride[i]) {
-	 tnl->last_result_size[i] = tnl->vb.ResultPtr[i]->size;
-	 tnl->last_result_stride[i] = tnl->vb.ResultPtr[i]->stride;
-	 tnl->pipeline.output_changes |= 1<<i;
-      }
-   }
-
-   if (tnl->pipeline.output_changes) 
-      tnl->Driver.NotifyOutputChanges( ctx, tnl->pipeline.output_changes );
-   
-   return tnl->pipeline.output_changes;
-#else
    return ~0;
-#endif
 }
 
 /**

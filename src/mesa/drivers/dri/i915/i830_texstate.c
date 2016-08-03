@@ -249,13 +249,6 @@ i830_update_tex_unit(struct intel_context *intel, GLuint unit, GLuint ss3)
       
       state[I830_TEXREG_TM0S3] = ((lodbias << TM0S3_LOD_BIAS_SHIFT) & 
                                   TM0S3_LOD_BIAS_MASK);
-#if 0
-      /* YUV conversion:
-       */
-      if (firstImage->TexFormat->MesaFormat == MESA_FORMAT_YCBCR ||
-          firstImage->TexFormat->MesaFormat == MESA_FORMAT_YCBCR_REV)
-         state[I830_TEXREG_TM0S3] |= SS2_COLORSPACE_CONVERSION;
-#endif
 
       /* We get one field with fraction bits for the maximum
        * addressable (smallest resolution) LOD.  Use it to cover both

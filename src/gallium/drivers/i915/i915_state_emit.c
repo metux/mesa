@@ -404,14 +404,6 @@ emit_constants(struct i915_context *i915)
             /* emit program constant */
             c = (uint *) i915->fs->constants[i];
          }
-#if 0 /* debug */
-         {
-            float *f = (float *) c;
-            printf("Const %2d: %f %f %f %f %s\n", i, f[0], f[1], f[2], f[3],
-                   (i915->fs->constant_flags[i] == I915_CONSTFLAG_USER
-                    ? "user" : "immediate"));
-         }
-#endif
          OUT_BATCH(*c++);
          OUT_BATCH(*c++);
          OUT_BATCH(*c++);
@@ -499,22 +491,11 @@ i915_validate_state(struct i915_context *i915, unsigned *batch_space)
    else
       *batch_space = 0;
 
-#if 0
-static int counter_total = 0;
-#define VALIDATE_ATOM(atom, hw_dirty) \
-   if (i915->hardware_dirty & hw_dirty) { \
-      static int counter_##atom = 0;\
-      validate_##atom(i915, &tmp); \
-      *batch_space += tmp;\
-      counter_##atom += tmp;\
-      counter_total += tmp;\
-      printf("%s: \t%d/%d \t%2.2f\n",#atom, counter_##atom, counter_total, counter_##atom*100.f/counter_total);}
-#else
 #define VALIDATE_ATOM(atom, hw_dirty) \
    if (i915->hardware_dirty & hw_dirty) { \
       validate_##atom(i915, &tmp); \
       *batch_space += tmp; }
-#endif
+
    VALIDATE_ATOM(flush, I915_HW_FLUSH);
    VALIDATE_ATOM(immediate, I915_HW_IMMEDIATE);
    VALIDATE_ATOM(dynamic, I915_HW_DYNAMIC);

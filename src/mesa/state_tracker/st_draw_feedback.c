@@ -54,31 +54,6 @@
 static void
 set_feedback_vertex_format(struct gl_context *ctx)
 {
-#if 0
-   struct st_context *st = st_context(ctx);
-   struct vertex_info vinfo;
-   GLuint i;
-
-   memset(&vinfo, 0, sizeof(vinfo));
-
-   if (ctx->RenderMode == GL_SELECT) {
-      assert(ctx->RenderMode == GL_SELECT);
-      vinfo.num_attribs = 1;
-      vinfo.format[0] = FORMAT_4F;
-      vinfo.interp_mode[0] = INTERP_LINEAR;
-   }
-   else {
-      /* GL_FEEDBACK, or glRasterPos */
-      /* emit all attribs (pos, color, texcoord) as GLfloat[4] */
-      vinfo.num_attribs = st->state.vs->cso->state.num_outputs;
-      for (i = 0; i < vinfo.num_attribs; i++) {
-         vinfo.format[i] = FORMAT_4F;
-         vinfo.interp_mode[i] = INTERP_LINEAR;
-      }
-   }
-
-   draw_set_vertex_info(st->draw, &vinfo);
-#endif
 }
 
 
@@ -229,9 +204,6 @@ st_feedback_draw_vbo(struct gl_context *ctx,
       assert(velements[attr].src_format);
 
       /* tell draw about this attribute */
-#if 0
-      draw_set_vertex_buffer(draw, attr, &vbuffer[attr]);
-#endif
    }
 
    draw_set_vertex_buffers(draw, 0, vp->num_inputs, vbuffers);

@@ -122,19 +122,6 @@ IDirect3DAuthenticatedChannel9Vtbl LockAuthenticatedChannel9_vtable = {
     (void *)LockAuthenticatedChannel9_Configure
 };
 
-#if 0
-static HRESULT NINE_WINAPI
-LockResource9_GetDevice( struct NineResource9 *This,
-                         IDirect3DDevice9 **ppDevice )
-{
-    HRESULT r;
-    pipe_mutex_lock(d3dlock_global);
-    r = NineUnknown_GetDevice(NineUnknown(This), ppDevice);
-    pipe_mutex_unlock(d3dlock_global);
-    return r;
-}
-#endif
-
 static HRESULT NINE_WINAPI
 LockResource9_SetPrivateData( struct NineResource9 *This,
                               REFGUID refguid,
@@ -193,28 +180,6 @@ LockResource9_GetPriority( struct NineResource9 *This )
     pipe_mutex_unlock(d3dlock_global);
     return r;
 }
-
-#if 0
-static void NINE_WINAPI
-LockResource9_PreLoad( struct NineResource9 *This )
-{
-    pipe_mutex_lock(d3dlock_global);
-    NineResource9_PreLoad(This);
-    pipe_mutex_unlock(d3dlock_global);
-}
-#endif
-
-#if 0
-static D3DRESOURCETYPE NINE_WINAPI
-LockResource9_GetType( struct NineResource9 *This )
-{
-    D3DRESOURCETYPE r;
-    pipe_mutex_lock(d3dlock_global);
-    r = NineResource9_GetType(This);
-    pipe_mutex_unlock(d3dlock_global);
-    return r;
-}
-#endif
 
 static DWORD NINE_WINAPI
 LockBaseTexture9_SetLOD( struct NineBaseTexture9 *This,
@@ -410,35 +375,6 @@ IDirect3DCryptoSession9Vtbl LockCryptoSession9_vtable = {
     (void *)LockCryptoSession9_GetEncryptionBltKey
 };
 
-#if 0
-static HRESULT NINE_WINAPI
-LockCubeTexture9_GetLevelDesc( struct NineCubeTexture9 *This,
-                               UINT Level,
-                               D3DSURFACE_DESC *pDesc )
-{
-    HRESULT r;
-    pipe_mutex_lock(d3dlock_global);
-    r = NineCubeTexture9_GetLevelDesc(This, Level, pDesc);
-    pipe_mutex_unlock(d3dlock_global);
-    return r;
-}
-#endif
-
-#if 0
-static HRESULT NINE_WINAPI
-LockCubeTexture9_GetCubeMapSurface( struct NineCubeTexture9 *This,
-                                    D3DCUBEMAP_FACES FaceType,
-                                    UINT Level,
-                                    IDirect3DSurface9 **ppCubeMapSurface )
-{
-    HRESULT r;
-    pipe_mutex_lock(d3dlock_global);
-    r = NineCubeTexture9_GetCubeMapSurface(This, FaceType, Level, ppCubeMapSurface);
-    pipe_mutex_unlock(d3dlock_global);
-    return r;
-}
-#endif
-
 static HRESULT NINE_WINAPI
 LockCubeTexture9_LockRect( struct NineCubeTexture9 *This,
                            D3DCUBEMAP_FACES FaceType,
@@ -544,19 +480,6 @@ LockDevice9_GetDirect3D( struct NineDevice9 *This,
     return r;
 }
 
-#if 0
-static HRESULT NINE_WINAPI
-LockDevice9_GetDeviceCaps( struct NineDevice9 *This,
-                           D3DCAPS9 *pCaps )
-{
-    HRESULT r;
-    pipe_mutex_lock(d3dlock_global);
-    r = NineDevice9_GetDeviceCaps(This, pCaps);
-    pipe_mutex_unlock(d3dlock_global);
-    return r;
-}
-#endif
-
 static HRESULT NINE_WINAPI
 LockDevice9_GetDisplayMode( struct NineDevice9 *This,
                             UINT iSwapChain,
@@ -568,19 +491,6 @@ LockDevice9_GetDisplayMode( struct NineDevice9 *This,
     pipe_mutex_unlock(d3dlock_global);
     return r;
 }
-
-#if 0
-static HRESULT NINE_WINAPI
-LockDevice9_GetCreationParameters( struct NineDevice9 *This,
-                                   D3DDEVICE_CREATION_PARAMETERS *pParameters )
-{
-    HRESULT r;
-    pipe_mutex_lock(d3dlock_global);
-    r = NineDevice9_GetCreationParameters(This, pParameters);
-    pipe_mutex_unlock(d3dlock_global);
-    return r;
-}
-#endif
 
 static HRESULT NINE_WINAPI
 LockDevice9_SetCursorProperties( struct NineDevice9 *This,
@@ -2477,19 +2387,6 @@ LockIndexBuffer9_Unlock( struct NineIndexBuffer9 *This )
     return r;
 }
 
-#if 0
-static HRESULT NINE_WINAPI
-LockIndexBuffer9_GetDesc( struct NineIndexBuffer9 *This,
-                          D3DINDEXBUFFER_DESC *pDesc )
-{
-    HRESULT r;
-    pipe_mutex_lock(d3dlock_global);
-    r = NineIndexBuffer9_GetDesc(This, pDesc);
-    pipe_mutex_unlock(d3dlock_global);
-    return r;
-}
-#endif
-
 IDirect3DIndexBuffer9Vtbl LockIndexBuffer9_vtable = {
     (void *)NineUnknown_QueryInterface,
     (void *)NineUnknown_AddRef,
@@ -2506,19 +2403,6 @@ IDirect3DIndexBuffer9Vtbl LockIndexBuffer9_vtable = {
     (void *)LockIndexBuffer9_Unlock,
     (void *)NineIndexBuffer9_GetDesc /* immutable */
 };
-
-#if 0
-static HRESULT NINE_WINAPI
-LockPixelShader9_GetDevice( struct NinePixelShader9 *This,
-                            IDirect3DDevice9 **ppDevice )
-{
-    HRESULT r;
-    pipe_mutex_lock(d3dlock_global);
-    r = NineUnknown_GetDevice(NineUnknown(This), ppDevice);
-    pipe_mutex_unlock(d3dlock_global);
-    return r;
-}
-#endif
 
 static HRESULT NINE_WINAPI
 LockPixelShader9_GetFunction( struct NinePixelShader9 *This,
@@ -2539,43 +2423,6 @@ IDirect3DPixelShader9Vtbl LockPixelShader9_vtable = {
     (void *)NineUnknown_GetDevice,
     (void *)LockPixelShader9_GetFunction
 };
-
-#if 0
-static HRESULT NINE_WINAPI
-LockQuery9_GetDevice( struct NineQuery9 *This,
-                      IDirect3DDevice9 **ppDevice )
-{
-    HRESULT r;
-    pipe_mutex_lock(d3dlock_global);
-    r = NineUnknown_GetDevice(NineUnknown(This), ppDevice);
-    pipe_mutex_unlock(d3dlock_global);
-    return r;
-}
-#endif
-
-#if 0
-static D3DQUERYTYPE NINE_WINAPI
-LockQuery9_GetType( struct NineQuery9 *This )
-{
-    D3DQUERYTYPE r;
-    pipe_mutex_lock(d3dlock_global);
-    r = NineQuery9_GetType(This);
-    pipe_mutex_unlock(d3dlock_global);
-    return r;
-}
-#endif
-
-#if 0
-static DWORD NINE_WINAPI
-LockQuery9_GetDataSize( struct NineQuery9 *This )
-{
-    DWORD r;
-    pipe_mutex_lock(d3dlock_global);
-    r = NineQuery9_GetDataSize(This);
-    pipe_mutex_unlock(d3dlock_global);
-    return r;
-}
-#endif
 
 static HRESULT NINE_WINAPI
 LockQuery9_Issue( struct NineQuery9 *This,
@@ -2611,19 +2458,6 @@ IDirect3DQuery9Vtbl LockQuery9_vtable = {
     (void *)LockQuery9_Issue,
     (void *)LockQuery9_GetData
 };
-
-#if 0
-static HRESULT NINE_WINAPI
-LockStateBlock9_GetDevice( struct NineStateBlock9 *This,
-                           IDirect3DDevice9 **ppDevice )
-{
-    HRESULT r;
-    pipe_mutex_lock(d3dlock_global);
-    r = NineUnknown_GetDevice(NineUnknown(This), ppDevice);
-    pipe_mutex_unlock(d3dlock_global);
-    return r;
-}
-#endif
 
 static HRESULT NINE_WINAPI
 LockStateBlock9_Capture( struct NineStateBlock9 *This )
@@ -2665,19 +2499,6 @@ LockSurface9_GetContainer( struct NineSurface9 *This,
     pipe_mutex_unlock(d3dlock_global);
     return r;
 }
-
-#if 0
-static HRESULT NINE_WINAPI
-LockSurface9_GetDesc( struct NineSurface9 *This,
-                      D3DSURFACE_DESC *pDesc )
-{
-    HRESULT r;
-    pipe_mutex_lock(d3dlock_global);
-    r = NineSurface9_GetDesc(This, pDesc);
-    pipe_mutex_unlock(d3dlock_global);
-    return r;
-}
-#endif
 
 static HRESULT NINE_WINAPI
 LockSurface9_LockRect( struct NineSurface9 *This,
@@ -2805,19 +2626,6 @@ LockSwapChain9_GetDisplayMode( struct NineSwapChain9 *This,
     return r;
 }
 
-#if 0
-static HRESULT NINE_WINAPI
-LockSwapChain9_GetDevice( struct NineSwapChain9 *This,
-                          IDirect3DDevice9 **ppDevice )
-{
-    HRESULT r;
-    pipe_mutex_lock(d3dlock_global);
-    r = NineUnknown_GetDevice(NineUnknown(This), ppDevice);
-    pipe_mutex_unlock(d3dlock_global);
-    return r;
-}
-#endif
-
 static HRESULT NINE_WINAPI
 LockSwapChain9_GetPresentParameters( struct NineSwapChain9 *This,
                                      D3DPRESENT_PARAMETERS *pPresentationParameters )
@@ -2891,34 +2699,6 @@ IDirect3DSwapChain9ExVtbl LockSwapChain9Ex_vtable = {
     (void *)LockSwapChain9Ex_GetPresentStats,
     (void *)LockSwapChain9Ex_GetDisplayModeEx
 };
-
-#if 0
-static HRESULT NINE_WINAPI
-LockTexture9_GetLevelDesc( struct NineTexture9 *This,
-                           UINT Level,
-                           D3DSURFACE_DESC *pDesc )
-{
-    HRESULT r;
-    pipe_mutex_lock(d3dlock_global);
-    r = NineTexture9_GetLevelDesc(This, Level, pDesc);
-    pipe_mutex_unlock(d3dlock_global);
-    return r;
-}
-#endif
-
-#if 0
-static HRESULT NINE_WINAPI
-LockTexture9_GetSurfaceLevel( struct NineTexture9 *This,
-                              UINT Level,
-                              IDirect3DSurface9 **ppSurfaceLevel )
-{
-    HRESULT r;
-    pipe_mutex_lock(d3dlock_global);
-    r = NineTexture9_GetSurfaceLevel(This, Level, ppSurfaceLevel);
-    pipe_mutex_unlock(d3dlock_global);
-    return r;
-}
-#endif
 
 static HRESULT NINE_WINAPI
 LockTexture9_LockRect( struct NineTexture9 *This,
@@ -3005,19 +2785,6 @@ LockVertexBuffer9_Unlock( struct NineVertexBuffer9 *This )
     return r;
 }
 
-#if 0
-static HRESULT NINE_WINAPI
-LockVertexBuffer9_GetDesc( struct NineVertexBuffer9 *This,
-                           D3DVERTEXBUFFER_DESC *pDesc )
-{
-    HRESULT r;
-    pipe_mutex_lock(d3dlock_global);
-    r = NineVertexBuffer9_GetDesc(This, pDesc);
-    pipe_mutex_unlock(d3dlock_global);
-    return r;
-}
-#endif
-
 IDirect3DVertexBuffer9Vtbl LockVertexBuffer9_vtable = {
     (void *)NineUnknown_QueryInterface,
     (void *)NineUnknown_AddRef,
@@ -3034,19 +2801,6 @@ IDirect3DVertexBuffer9Vtbl LockVertexBuffer9_vtable = {
     (void *)LockVertexBuffer9_Unlock,
     (void *)NineVertexBuffer9_GetDesc /* immutable */
 };
-
-#if 0
-static HRESULT NINE_WINAPI
-LockVertexDeclaration9_GetDevice( struct NineVertexDeclaration9 *This,
-                                  IDirect3DDevice9 **ppDevice )
-{
-    HRESULT r;
-    pipe_mutex_lock(d3dlock_global);
-    r = NineUnknown_GetDevice(NineUnknown(This), ppDevice);
-    pipe_mutex_unlock(d3dlock_global);
-    return r;
-}
-#endif
 
 static HRESULT NINE_WINAPI
 LockVertexDeclaration9_GetDeclaration( struct NineVertexDeclaration9 *This,
@@ -3068,19 +2822,6 @@ IDirect3DVertexDeclaration9Vtbl LockVertexDeclaration9_vtable = {
     (void *)LockVertexDeclaration9_GetDeclaration
 };
 
-#if 0
-static HRESULT NINE_WINAPI
-LockVertexShader9_GetDevice( struct NineVertexShader9 *This,
-                             IDirect3DDevice9 **ppDevice )
-{
-    HRESULT r;
-    pipe_mutex_lock(d3dlock_global);
-    r = NineUnknown_GetDevice(NineUnknown(This), ppDevice);
-    pipe_mutex_unlock(d3dlock_global);
-    return r;
-}
-#endif
-
 static HRESULT NINE_WINAPI
 LockVertexShader9_GetFunction( struct NineVertexShader9 *This,
                                void *pData,
@@ -3100,19 +2841,6 @@ IDirect3DVertexShader9Vtbl LockVertexShader9_vtable = {
     (void *)NineUnknown_GetDevice,
     (void *)LockVertexShader9_GetFunction
 };
-
-#if 0
-static HRESULT NINE_WINAPI
-LockVolume9_GetDevice( struct NineVolume9 *This,
-                       IDirect3DDevice9 **ppDevice )
-{
-    HRESULT r;
-    pipe_mutex_lock(d3dlock_global);
-    r = NineUnknown_GetDevice(NineUnknown(This), ppDevice);
-    pipe_mutex_unlock(d3dlock_global);
-    return r;
-}
-#endif
 
 static HRESULT NINE_WINAPI
 LockVolume9_SetPrivateData( struct NineVolume9 *This,
@@ -3164,19 +2892,6 @@ LockVolume9_GetContainer( struct NineVolume9 *This,
     return r;
 }
 
-#if 0
-static HRESULT NINE_WINAPI
-LockVolume9_GetDesc( struct NineVolume9 *This,
-                     D3DVOLUME_DESC *pDesc )
-{
-    HRESULT r;
-    pipe_mutex_lock(d3dlock_global);
-    r = NineVolume9_GetDesc(This, pDesc);
-    pipe_mutex_unlock(d3dlock_global);
-    return r;
-}
-#endif
-
 static HRESULT NINE_WINAPI
 LockVolume9_LockBox( struct NineVolume9 *This,
                      D3DLOCKED_BOX *pLockedVolume,
@@ -3213,34 +2928,6 @@ IDirect3DVolume9Vtbl LockVolume9_vtable = {
     (void *)LockVolume9_LockBox,
     (void *)LockVolume9_UnlockBox
 };
-
-#if 0
-static HRESULT NINE_WINAPI
-LockVolumeTexture9_GetLevelDesc( struct NineVolumeTexture9 *This,
-                                 UINT Level,
-                                 D3DVOLUME_DESC *pDesc )
-{
-    HRESULT r;
-    pipe_mutex_lock(d3dlock_global);
-    r = NineVolumeTexture9_GetLevelDesc(This, Level, pDesc);
-    pipe_mutex_unlock(d3dlock_global);
-    return r;
-}
-#endif
-
-#if 0
-static HRESULT NINE_WINAPI
-LockVolumeTexture9_GetVolumeLevel( struct NineVolumeTexture9 *This,
-                                   UINT Level,
-                                   IDirect3DVolume9 **ppVolumeLevel )
-{
-    HRESULT r;
-    pipe_mutex_lock(d3dlock_global);
-    r = NineVolumeTexture9_GetVolumeLevel(This, Level, ppVolumeLevel);
-    pipe_mutex_unlock(d3dlock_global);
-    return r;
-}
-#endif
 
 static HRESULT NINE_WINAPI
 LockVolumeTexture9_LockBox( struct NineVolumeTexture9 *This,

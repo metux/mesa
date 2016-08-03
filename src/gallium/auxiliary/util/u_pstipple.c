@@ -406,11 +406,6 @@ util_pstipple_create_fragment_shader(const struct tgsi_token *tokens,
 
    tgsi_transform_shader(tokens, new_tokens, newLen, &transform.base);
 
-#if 0 /* DEBUG */
-   tgsi_dump(fs->tokens, 0);
-   tgsi_dump(new_fs->tokens, 0);
-#endif
-
    if (samplerUnitOut) {
       assert(transform.freeSampler < PIPE_MAX_SAMPLERS);
       *samplerUnitOut = transform.freeSampler;

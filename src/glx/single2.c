@@ -762,23 +762,6 @@ __indirect_glGetString(GLenum name)
              * variable to enable it.
              */
 
-#if 0
-            /* Call glGetString just to make sure that gc->server_major and
-             * gc->server_minor are set.  This version may be higher than we
-             * can completely support, but it may imply support for some
-             * extensions that we can support.
-             *
-             * For example, at the time of this writing, the client-side
-             * library only supports upto core GL version 1.2.  However, cubic
-             * textures, multitexture, multisampling, and some other 1.3
-             * features are supported.  If the server reports back version
-             * 1.3, but does not report all of those extensions, we will
-             * enable them.
-             */
-            (void *) glGetString(GL_VERSION);
-            major = gc->server_major, minor = gc->server_minor;
-#endif
-
             __glXCalculateUsableGLExtensions(gc, (char *) s, major, minor);
             free(s);
             s = gc->extensions;

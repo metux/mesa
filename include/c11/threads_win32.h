@@ -51,16 +51,6 @@ Configuration macro:
     Max registerable TSS dtor number.
 */
 
-// XXX: Retain XP compatability
-#if 0
-#if _WIN32_WINNT >= 0x0600
-// Prefer native WindowsAPI on newer environment.
-#if !defined(__MINGW32__)
-#define EMULATED_THREADS_USE_NATIVE_CALL_ONCE 
-#endif
-#define EMULATED_THREADS_USE_NATIVE_CV
-#endif
-#endif
 #define EMULATED_THREADS_TSS_DTOR_SLOTNUM 64  // see TLS_MINIMUM_AVAILABLE
 
 
@@ -493,43 +483,6 @@ thrd_create(thrd_t *thr, thrd_start_t func, void *arg)
     *thr = (thrd_t)handle;
     return thrd_success;
 }
-
-#if 0
-// 7.25.5.2
-static inline thrd_t
-thrd_current(void)
-{
-    HANDLE hCurrentThread;
-    BOOL bRet;
-
-    /* GetCurrentThread() returns a pseudo-handle, which is useless.  We need
-     * to call DuplicateHandle to get a real handle.  However the handle value
-     * will not match the one returned by thread_create.
-     *
-     * Other potential solutions would be:
-     * - define thrd_t as a thread Ids, but this would mean we'd need to OpenThread for many operations
-     * - use malloc'ed memory for thrd_t. This would imply using TLS for current thread.
-     *
-     * Neither is particularly nice.
-     *
-     * Life would be much easier if C11 threads had different abstractions for
-     * threads and thread IDs, just like C++11 threads does...
-     */
-
-    bRet = DuplicateHandle(GetCurrentProcess(), // source process (pseudo) handle
-                           GetCurrentThread(), // source (pseudo) handle
-                           GetCurrentProcess(), // target process
-                           &hCurrentThread, // target handle
-                           0,
-                           FALSE,
-                           DUPLICATE_SAME_ACCESS);
-    assert(bRet);
-    if (!bRet) {
-	hCurrentThread = GetCurrentThread();
-    }
-    return hCurrentThread;
-}
-#endif
 
 // 7.25.5.3
 static inline int

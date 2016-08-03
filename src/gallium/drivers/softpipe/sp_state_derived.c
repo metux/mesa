@@ -365,15 +365,6 @@ update_fragment_shader(struct softpipe_context *softpipe, unsigned prim)
     * but that doesn't work.  So we use a single draw fragment shader
     * per fragment shader, not per variant.
     */
-#if 0
-   if (softpipe->fs_variant) {
-      draw_bind_fragment_shader(softpipe->draw,
-                                softpipe->fs_variant->draw_shader);
-   }
-   else {
-      draw_bind_fragment_shader(softpipe->draw, NULL);
-   }
-#endif
 }
 
 

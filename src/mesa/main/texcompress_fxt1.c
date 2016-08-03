@@ -336,18 +336,6 @@ static GLint
 fxt1_choose (GLfloat vec[][MAX_COMP], GLint nv,
              GLubyte input[N_TEXELS][MAX_COMP], GLint nc, GLint n)
 {
-#if 0
-   /* Choose colors from a grid.
-    */
-   GLint i, j;
-
-   for (j = 0; j < nv; j++) {
-      GLint m = j * (n - 1) / (nv - 1);
-      for (i = 0; i < nc; i++) {
-         vec[j][i] = input[m][i];
-      }
-   }
-#else
    /* Our solution here is to find the darkest and brightest colors in
     * the 8x4 tile and use those as the two representative colors.
     * There are probably better algorithms to use (histogram-based).
@@ -420,7 +408,6 @@ fxt1_choose (GLfloat vec[][MAX_COMP], GLint nv,
          vec[j][i] = ((nv - 1 - j) * input[minCol][i] + j * input[maxCol][i] + (nv - 1) / 2) / (GLfloat)(nv - 1);
       }
    }
-#endif
 
    return !0;
 }
@@ -1006,47 +993,6 @@ fxt1_quantize_MIXED0 (GLuint *cc,
 
    GLint minColL = 0, maxColL = 0;
    GLint minColR = 0, maxColR = 0;
-#if 0
-   GLint minSum;
-   GLint maxSum;
-
-   /* Our solution here is to find the darkest and brightest colors in
-    * the 4x4 tile and use those as the two representative colors.
-    * There are probably better algorithms to use (histogram-based).
-    */
-   minSum = 2000; /* big enough */
-   maxSum = -1; /* small enough */
-   for (k = 0; k < N_TEXELS / 2; k++) {
-      GLint sum = 0;
-      for (i = 0; i < n_comp; i++) {
-         sum += input[k][i];
-      }
-      if (minSum > sum) {
-         minSum = sum;
-         minColL = k;
-      }
-      if (maxSum < sum) {
-         maxSum = sum;
-         maxColL = k;
-      }
-   }
-   minSum = 2000; /* big enough */
-   maxSum = -1; /* small enough */
-   for (; k < N_TEXELS; k++) {
-      GLint sum = 0;
-      for (i = 0; i < n_comp; i++) {
-         sum += input[k][i];
-      }
-      if (minSum > sum) {
-         minSum = sum;
-         minColR = k;
-      }
-      if (maxSum < sum) {
-         maxSum = sum;
-         maxColR = k;
-      }
-   }
-#else
    GLint minVal;
    GLint maxVal;
    GLint maxVarL = fxt1_variance(NULL, input, n_comp, N_TEXELS / 2);
@@ -1081,7 +1027,6 @@ fxt1_quantize_MIXED0 (GLuint *cc,
          maxColR = k;
       }
    }
-#endif
 
    /* left microtile */
    cc[0] = 0;
@@ -1218,21 +1163,6 @@ fxt1_quantize (GLuint *cc, const GLubyte *lines[], GLint comps)
       }
    }
 
-#if 0
-   if (trualpha) {
-      fxt1_quantize_ALPHA0(cc, input, reord, l);
-   } else if (l == 0) {
-      cc[0] = cc[1] = cc[2] = -1;
-      cc[3] = 0;
-   } else if (l < N_TEXELS) {
-      fxt1_quantize_HI(cc, input, reord, l);
-   } else {
-      fxt1_quantize_CHROMA(cc, input);
-   }
-   (void)fxt1_quantize_ALPHA1;
-   (void)fxt1_quantize_MIXED1;
-   (void)fxt1_quantize_MIXED0;
-#else
    if (trualpha) {
       fxt1_quantize_ALPHA1(cc, input);
    } else if (l == 0) {
@@ -1246,7 +1176,6 @@ fxt1_quantize (GLuint *cc, const GLubyte *lines[], GLint comps)
    (void)fxt1_quantize_ALPHA0;
    (void)fxt1_quantize_HI;
    (void)fxt1_quantize_CHROMA;
-#endif
 }
 
 
@@ -1266,11 +1195,6 @@ upscale_teximage2d(GLsizei inWidth, GLsizei inHeight,
 
    assert(outWidth >= inWidth);
    assert(outHeight >= inHeight);
-#if 0
-   assert(inWidth == 1 || inWidth == 2 || inHeight == 1 || inHeight == 2);
-   assert((outWidth & 3) == 0);
-   assert((outHeight & 3) == 0);
-#endif
 
    for (i = 0; i < outHeight; i++) {
       const GLint ii = i % inHeight;

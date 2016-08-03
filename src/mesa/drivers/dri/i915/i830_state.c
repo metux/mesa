@@ -960,19 +960,6 @@ i830_init_packets(struct i830_context *i830)
                                              DISABLE_COLOR_BLEND |
                                              DISABLE_DEPTH_TEST);
 
-#if 000                         /* XXX all the stencil enable state is set in i830Enable(), right? */
-   if (i830->intel.hw_stencil) {
-      i830->state.Ctx[I830_CTXREG_ENABLES_2] = (_3DSTATE_ENABLES_2_CMD |
-                                                ENABLE_STENCIL_WRITE |
-                                                ENABLE_TEX_CACHE |
-                                                ENABLE_DITHER |
-                                                ENABLE_COLOR_MASK |
-                                                /* set no color comps disabled */
-                                                ENABLE_COLOR_WRITE |
-                                                ENABLE_DEPTH_WRITE);
-   }
-   else
-#endif
    {
       i830->state.Ctx[I830_CTXREG_ENABLES_2] = (_3DSTATE_ENABLES_2_CMD |
                                                 DISABLE_STENCIL_WRITE |

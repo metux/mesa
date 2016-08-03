@@ -77,16 +77,6 @@ create_fs_variant(struct softpipe_context *softpipe,
       tgsi_scan_shader(var->tokens, &var->info);
 
       /* See comments elsewhere about draw fragment shaders */
-#if 0
-      /* draw's fs state */
-      var->draw_shader = draw_create_fragment_shader(softpipe->draw,
-                                                     &fs->shader);
-      if (!var->draw_shader) {
-         var->delete(var);
-         FREE((void *) var->tokens);
-         return NULL;
-      }
-#endif
 
       /* insert variant into linked list */
       var->next = fs->variants;
@@ -186,10 +176,6 @@ softpipe_delete_fs_state(struct pipe_context *pipe, void *fs)
       assert(var != softpipe->fs_variant);
 
       /* See comments elsewhere about draw fragment shaders */
-#if 0
-      draw_delete_fragment_shader(softpipe->draw, var->draw_shader);
-#endif
-
       var->delete(var, softpipe->fs_machine);
    }
 

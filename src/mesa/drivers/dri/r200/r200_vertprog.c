@@ -122,7 +122,6 @@ static GLboolean r200VertexProgUpdateParams(struct gl_context *ctx, struct r200_
    for(pi = 0; pi < paramList->NumParameters; pi++) {
       switch(paramList->Parameters[pi].Type) {
       case PROGRAM_STATE_VAR:
-      //fprintf(stderr, "%s", vp->Parameters->Parameters[pi].Name);
       case PROGRAM_CONSTANT:
 	 *fcmd++ = paramList->ParameterValues[pi][0].f;
 	 *fcmd++ = paramList->ParameterValues[pi][1].f;
@@ -213,10 +212,6 @@ static unsigned long t_src_class(gl_register_file file)
    case PROGRAM_CONSTANT:
    case PROGRAM_STATE_VAR:
       return VSF_IN_CLASS_PARAM;
-   /*
-   case PROGRAM_OUTPUT:
-   case PROGRAM_ADDRESS:
-   */
    default:
       fprintf(stderr, "problem in %s", __FUNCTION__);
       exit(0);
@@ -229,41 +224,9 @@ static inline unsigned long t_swizzle(GLubyte swizzle)
    return swizzle;
 }
 
-#if 0
-static void vp_dump_inputs(struct r200_vertex_program *vp, char *caller)
-{
-   int i;
-
-   if(vp == NULL){
-      fprintf(stderr, "vp null in call to %s from %s\n", __FUNCTION__, caller);
-      return ;
-   }
-
-   fprintf(stderr, "%s:<", caller);
-   for(i=0; i < VERT_ATTRIB_MAX; i++)
-   fprintf(stderr, "%d ", vp->inputs[i]);
-   fprintf(stderr, ">\n");
-
-}
-#endif
-
 static unsigned long t_src_index(struct r200_vertex_program *vp, struct prog_src_register *src)
 {
-/*
-   int i;
-   int max_reg = -1;
-*/
    if(src->File == PROGRAM_INPUT){
-/*      if(vp->inputs[src->Index] != -1)
-	 return vp->inputs[src->Index];
-
-      for(i=0; i < VERT_ATTRIB_MAX; i++)
-	 if(vp->inputs[i] > max_reg)
-	    max_reg = vp->inputs[i];
-
-      vp->inputs[src->Index] = max_reg+1;*/
-
-      //vp_dump_inputs(vp, __FUNCTION__);
       assert(vp->inputs[src->Index] != -1);
       return vp->inputs[src->Index];
    } else {
@@ -411,19 +374,6 @@ static GLboolean r200_translate_vertex_program(struct gl_context *ctx, struct r2
 
    if (mesa_vp->Base.NumInstructions == 0)
       return GL_FALSE;
-
-#if 0
-   if ((mesa_vp->Base.InputsRead &
-      ~(VERT_BIT_POS | VERT_BIT_NORMAL | VERT_BIT_COLOR0 | VERT_BIT_COLOR1 |
-      VERT_BIT_FOG | VERT_BIT_TEX0 | VERT_BIT_TEX1 | VERT_BIT_TEX2 |
-      VERT_BIT_TEX3 | VERT_BIT_TEX4 | VERT_BIT_TEX5)) != 0) {
-      if (R200_DEBUG & RADEON_FALLBACKS) {
-	 fprintf(stderr, "can't handle vert prog inputs 0x%x\n",
-	    mesa_vp->Base.InputsRead);
-      }
-      return GL_FALSE;
-   }
-#endif
 
    if ((mesa_vp->Base.OutputsWritten &
       ~((1 << VARYING_SLOT_POS) | (1 << VARYING_SLOT_COL0) | (1 << VARYING_SLOT_COL1) |
@@ -765,26 +715,8 @@ static GLboolean r200_translate_vertex_program(struct gl_context *ctx, struct r2
 	 o_inst->op = MAKE_VSF_OP(hw_op, t_dst(&dst),
 	    t_dst_mask(dst.WriteMask));
 	 o_inst->src0 = t_src(vp, &src[0]);
-#if 0
-if ((o_inst - vp->instr) == 31) {
-/* fix up the broken vertex program of quake4 demo... */
-o_inst->src1 = MAKE_VSF_SOURCE(t_src_index(vp, &src[1]),
-			SWIZZLE_X, SWIZZLE_X, SWIZZLE_X, SWIZZLE_X,
-			t_src_class(src[1].File),
-			src[1].Negate) | (src[1].RelAddr << 4);
-o_inst->src2 = MAKE_VSF_SOURCE(t_src_index(vp, &src[1]),
-			SWIZZLE_Y, SWIZZLE_Y, SWIZZLE_Y, SWIZZLE_Y,
-			t_src_class(src[1].File),
-			src[1].Negate) | (src[1].RelAddr << 4);
-}
-else {
 	 o_inst->src1 = t_src(vp, &src[1]);
 	 o_inst->src2 = t_src(vp, &src[2]);
-}
-#else
-	 o_inst->src1 = t_src(vp, &src[1]);
-	 o_inst->src2 = t_src(vp, &src[2]);
-#endif
 	 goto next;
 
       case OPCODE_DP3://DOT RESULT 1.X Y Z W PARAM 0{} {X Y Z ZERO} PARAM 0{} {X Y Z ZERO} 
@@ -1095,11 +1027,6 @@ else {
 
    vp->native = GL_TRUE;
    mesa_vp->Base.NumNativeInstructions = (o_inst - vp->instr);
-#if 0
-   fprintf(stderr, "hw program:\n");
-   for(i=0; i < vp->program.length; i++)
-      fprintf(stderr, "%08x\n", vp->instr[i]);
-#endif
    return GL_TRUE;
 }
 
@@ -1232,7 +1159,6 @@ r200ProgramStringNotify(struct gl_context *ctx, GLenum target, struct gl_program
    case GL_VERTEX_PROGRAM_ARB:
       vp->translated = GL_FALSE;
       vp->fogpidx = 0;
-/*      memset(&vp->translated, 0, sizeof(struct r200_vertex_program) - sizeof(struct gl_vertex_program));*/
       r200_translate_vertex_program(ctx, vp);
       rmesa->curr_vp_hw = NULL;
       break;

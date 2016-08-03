@@ -277,11 +277,6 @@ src_vector(struct i915_fp_compile *p,
    }
 
    /* no abs() */
-#if 0
-   /* XXX assertions disabled to allow arbfplight.c to run */
-   /* XXX enable these assertions, or fix things */
-   assert(!source->Register.Absolute);
-#endif
    if (source->Register.Absolute)
       debug_printf("Unhandled absolute value\n");
 
@@ -1349,10 +1344,6 @@ i915_translate_fragment_program( struct i915_context *i915,
    const struct tgsi_token *tokens = fs->state.tokens;
    struct i915_token_list* i_tokens;
 
-#if 0
-   tgsi_dump(tokens, 0);
-#endif
-
    /* hw doesn't seem to like empty frag programs, even when the depth write
     * fixup gets emitted below - may that one is fishy, too? */
    if (fs->info.num_instructions == 1) {
@@ -1369,8 +1360,4 @@ i915_translate_fragment_program( struct i915_context *i915,
 
    i915_fini_compile(i915, p);
    i915_optimize_free(i_tokens);
-
-#if 0
-   i915_disassemble_program(NULL, fs->program, fs->program_len);
-#endif
 }

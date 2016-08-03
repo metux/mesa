@@ -57,27 +57,11 @@
 #define NAME(func)  gl##func
 #endif
 
-#if 0  /* Use this to log GL calls to stdout (for DEBUG only!) */
-
-#define F stdout
-#define DISPATCH(FUNC, ARGS, MESSAGE)		\
-   fprintf MESSAGE;				\
-   GET_DISPATCH()->FUNC ARGS
-
-#define RETURN_DISPATCH(FUNC, ARGS, MESSAGE) 	\
-   fprintf MESSAGE;				\
-   return GET_DISPATCH()->FUNC ARGS
-
-#else
-
 #define DISPATCH(FUNC, ARGS, MESSAGE)		\
    GET_DISPATCH()->FUNC ARGS
 
 #define RETURN_DISPATCH(FUNC, ARGS, MESSAGE) 	\
    return GET_DISPATCH()->FUNC ARGS
-
-#endif /* logging */
-
 
 #ifndef GLAPIENTRY
 #define GLAPIENTRY

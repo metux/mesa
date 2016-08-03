@@ -138,15 +138,6 @@ nvc0_2d_texture_set(struct nouveau_pushbuf *push, bool dst,
       PUSH_DATA (push, bo->offset + offset);
    }
 
-#if 0
-   if (dst) {
-      BEGIN_NVC0(push, SUBC_2D(NVC0_2D_CLIP_X), 4);
-      PUSH_DATA (push, 0);
-      PUSH_DATA (push, 0);
-      PUSH_DATA (push, width);
-      PUSH_DATA (push, height);
-   }
-#endif
    return 0;
 }
 
@@ -1604,12 +1595,7 @@ nvc0_blit(struct pipe_context *pipe, const struct pipe_blit_info *info)
    if (info->src.resource->nr_samples == 8 &&
        info->dst.resource->nr_samples <= 1)
       eng3d = true;
-#if 0
-   /* FIXME: can't make this work with eng2d anymore, at least not on nv50 */
-   if (info->src.resource->nr_samples > 1 ||
-       info->dst.resource->nr_samples > 1)
-      eng3d = true;
-#endif
+
    /* FIXME: find correct src coordinates adjustments */
    if ((info->src.box.width !=  info->dst.box.width &&
         info->src.box.width != -info->dst.box.width) ||

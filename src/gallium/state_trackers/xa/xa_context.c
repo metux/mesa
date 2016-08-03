@@ -312,14 +312,6 @@ xa_solid_prepare(struct xa_context *ctx, struct xa_surface *dst,
 
     ctx->dst = dst;
 
-#if 0
-    debug_printf("Color Pixel=(%d, %d, %d, %d), RGBA=(%f, %f, %f, %f)\n",
-		 (fg >> 24) & 0xff, (fg >> 16) & 0xff,
-		 (fg >> 8) & 0xff,  (fg >> 0) & 0xff,
-		 exa->solid_color[0], exa->solid_color[1],
-		 exa->solid_color[2], exa->solid_color[3]);
-#endif
-
     vs_traits = VS_SOLID_FILL;
     fs_traits = FS_SOLID_FILL;
 

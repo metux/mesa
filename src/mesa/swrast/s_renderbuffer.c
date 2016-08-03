@@ -500,19 +500,7 @@ _swrast_add_soft_renderbuffers(struct gl_framebuffer *fb,
                               frontRight, backRight);
    }
 
-#if 0
-   /* This is pretty much for debugging purposes only since there's a perf
-    * hit for using combined depth/stencil in swrast.
-    */
-   if (depth && fb->Visual.depthBits == 24 &&
-       stencil && fb->Visual.stencilBits == 8) {
-      /* use combined depth/stencil buffer */
-      add_depth_stencil_renderbuffer(NULL, fb);
-   }
-   else
-#else
    (void) add_depth_stencil_renderbuffer;
-#endif
    {
       if (depth) {
          assert(fb->Visual.depthBits > 0);
@@ -542,13 +530,7 @@ _swrast_add_soft_renderbuffers(struct gl_framebuffer *fb,
                             fb->Visual.numAuxBuffers);
    }
 
-#if 0
-   if (multisample) {
-      /* maybe someday */
-   }
-#endif
 }
-
 
 
 static void

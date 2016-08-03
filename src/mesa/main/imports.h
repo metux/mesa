@@ -94,16 +94,6 @@ typedef union { GLfloat f; GLint i; GLuint u; } fi_type;
  ***/
 static inline GLfloat LOG2(GLfloat x)
 {
-#if 0
-   /* This is pretty fast, but not accurate enough (only 2 fractional bits).
-    * Based on code from http://www.stereopsis.com/log2.html
-    */
-   const GLfloat y = x * x * x * x;
-   const GLuint ix = *((GLuint *) &y);
-   const GLuint exp = (ix >> 23) & 0xFF;
-   const GLint log2 = ((GLint) exp) - 127;
-   return (GLfloat) log2 * (1.0 / 4.0);  /* 4, because of x^4 above */
-#endif
    /* Pretty fast, and accurate.
     * Based on code from http://www.flipcode.com/totd/
     */

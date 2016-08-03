@@ -242,15 +242,6 @@ calculate_tiles(struct fd_batch *batch)
 		pipe->x = pipe->y = pipe->w = pipe->h = 0;
 	}
 
-#if 0 /* debug */
-	printf("%dx%d ... tpp=%dx%d\n", nbins_x, nbins_y, tpp_x, tpp_y);
-	for (i = 0; i < 8; i++) {
-		struct fd_vsc_pipe *pipe = &ctx->pipe[i];
-		printf("pipe[%d]: %ux%u @ %u,%u\n", i,
-				pipe->w, pipe->h, pipe->x, pipe->y);
-	}
-#endif
-
 	/* configure tiles: */
 	t = 0;
 	yoff = miny;
@@ -289,17 +280,6 @@ calculate_tiles(struct fd_batch *batch)
 
 		yoff += bh;
 	}
-
-#if 0 /* debug */
-	t = 0;
-	for (i = 0; i < nbins_y; i++) {
-		for (j = 0; j < nbins_x; j++) {
-			struct fd_tile *tile = &ctx->tile[t++];
-			printf("|p:%u n:%u|", tile->p, tile->n);
-		}
-		printf("\n");
-	}
-#endif
 }
 
 static void

@@ -216,12 +216,6 @@ sp_find_cached_tile_tex(struct softpipe_tex_tile_cache *tc,
        * texture.  Currently we effectively flush the cache on texture
        * bind.
        */
-#if 0
-      _debug_printf("miss at %u:  x=%d y=%d z=%d face=%d level=%d\n"
-                    "   tile %u:  x=%d y=%d z=%d face=%d level=%d\n",
-                    pos, x/TILE_SIZE, y/TILE_SIZE, z, face, level,
-                    pos, tile->addr.bits.x, tile->addr.bits.y, tile->z, tile->face, tile->level);
-#endif
 
       /* check if we need to get a new transfer */
       if (!tc->tex_trans ||

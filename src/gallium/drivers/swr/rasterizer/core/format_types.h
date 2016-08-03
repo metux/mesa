@@ -851,17 +851,6 @@ template<> struct TypeTraits<SWR_TYPE_FLOAT, 16> : PackTraits<16>
         // Pack to lower 128-bits
         vDst = _mm256_castsi128_si256(_mm_packus_epi32(_mm256_castsi256_si128(vDst), _mm256_extractf128_si256(vDst, 1)));
 
-#if 0
-#if !defined(NDEBUG)
-        simdscalari vCheck = _mm256_castsi128_si256(_mm256_cvtps_ph(in, _MM_FROUND_TRUNC));
-
-        for (uint32_t i = 0; i < 4; ++i)
-        {
-            SWR_ASSERT(vCheck.m256i_i32[i] == vDst.m256i_i32[i]);
-        }
-#endif
-#endif
-
         return _simd_castsi_ps(vDst);
 
 #else

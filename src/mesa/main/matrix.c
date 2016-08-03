@@ -168,14 +168,6 @@ _mesa_MatrixMode( GLenum mode )
        * do error checking in other places when we actually try to access
        * texture matrices beyond MaxTextureCoordUnits.
        */
-#if 0
-      if (ctx->Texture.CurrentUnit >= ctx->Const.MaxTextureCoordUnits) {
-         _mesa_error(ctx, GL_INVALID_OPERATION,
-                     "glMatrixMode(invalid tex unit %d)",
-                     ctx->Texture.CurrentUnit);
-         return;
-      }
-#endif
       assert(ctx->Texture.CurrentUnit < ARRAY_SIZE(ctx->TextureMatrixStack));
       ctx->CurrentStack = &ctx->TextureMatrixStack[ctx->Texture.CurrentUnit];
       break;

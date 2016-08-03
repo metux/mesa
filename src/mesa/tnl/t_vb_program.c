@@ -327,24 +327,6 @@ run_vp( struct gl_context *ctx, struct tnl_pipeline_stage *stage )
 
       init_machine(ctx, machine, tnl->CurInstance);
 
-#if 0
-      printf("Input  %d: %f, %f, %f, %f\n", i,
-             VB->AttribPtr[0]->data[i][0],
-             VB->AttribPtr[0]->data[i][1],
-             VB->AttribPtr[0]->data[i][2],
-             VB->AttribPtr[0]->data[i][3]);
-      printf("   color: %f, %f, %f, %f\n",
-             VB->AttribPtr[3]->data[i][0],
-             VB->AttribPtr[3]->data[i][1],
-             VB->AttribPtr[3]->data[i][2],
-             VB->AttribPtr[3]->data[i][3]);
-      printf("  normal: %f, %f, %f, %f\n",
-             VB->AttribPtr[2]->data[i][0],
-             VB->AttribPtr[2]->data[i][1],
-             VB->AttribPtr[2]->data[i][2],
-             VB->AttribPtr[2]->data[i][3]);
-#endif
-
       /* the vertex array case */
       for (attr = 0; attr < VERT_ATTRIB_MAX; attr++) {
 	 if (program->Base.InputsRead & BITFIELD64_BIT(attr)) {
@@ -385,13 +367,6 @@ run_vp( struct gl_context *ctx, struct tnl_pipeline_stage *stage )
       }
 #ifdef NAN_CHECK
       assert(machine->Outputs[0][3] != 0.0F);
-#endif
-#if 0
-      printf("HPOS: %f %f %f %f\n",
-             machine->Outputs[0][0], 
-             machine->Outputs[0][1], 
-             machine->Outputs[0][2], 
-             machine->Outputs[0][3]);
 #endif
    }
 

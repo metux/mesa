@@ -352,14 +352,6 @@ void r300_draw_init_vertex_shader(struct r300_context *r300,
                           (struct tgsi_token*)new_vs.tokens,
                           newLen, &transform.base);
 
-#if 0
-    printf("----------------------------------------------\norig shader:\n");
-    tgsi_dump(vs->state.tokens, 0);
-    printf("----------------------------------------------\nnew shader:\n");
-    tgsi_dump(new_vs.tokens, 0);
-    printf("----------------------------------------------\n");
-#endif
-
     /* Free old tokens. */
     FREE((void*)vs->state.tokens);
 

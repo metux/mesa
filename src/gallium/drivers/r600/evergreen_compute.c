@@ -544,14 +544,6 @@ static void compute_emit_cs(struct r600_context *rctx,
 		radeon_emit(cs, PKT3C(PKT3_DEALLOC_STATE, 0, 0));
 		radeon_emit(cs, 0);
 	}
-
-#if 0
-	COMPUTE_DBG(rctx->screen, "cdw: %i\n", cs->cdw);
-	for (i = 0; i < cs->cdw; i++) {
-		COMPUTE_DBG(rctx->screen, "%4i : 0x%08X\n", i, cs->buf[i]);
-	}
-#endif
-
 }
 
 

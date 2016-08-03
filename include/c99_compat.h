@@ -108,17 +108,6 @@
 #endif
 
 
-/* Simple test case for debugging */
-#if 0
-static inline const char *
-test_c99_compat_h(const void * restrict a,
-                  const void * restrict b)
-{
-   return __FUNCTION__;
-}
-#endif
-
-
 /* Fallback definitions, for build systems other than autoconfig which don't
  * auto-detect these things. */
 #ifdef HAVE_NO_AUTOCONF

@@ -271,33 +271,6 @@ static void decrease_dependencies(struct schedule_state * s, struct schedule_ins
 /* These functions provide different heuristics for scheduling instructions.
  * The default is calc_score_readers. */
 
-#if 0
-
-static void calc_score_zero(struct schedule_instruction * sinst)
-{
-	sinst->Score = 0;
-}
-
-static void calc_score_deps(struct schedule_instruction * sinst)
-{
-	int i;
-	sinst->Score = 0;
-	for (i = 0; i < sinst->NumWriteValues; i++) {
-		struct reg_value * v = sinst->WriteValues[i];
-		if (v->NumReaders) {
-			struct reg_value_reader * r;
-			for (r = v->Readers; r; r = r->Next) {
-				if (r->Reader->NumDependencies == 1) {
-					sinst->Score += 100;
-				}
-				sinst->Score += r->Reader->NumDependencies;
-			}
-		}
-	}
-}
-
-#endif
-
 #define NO_OUTPUT_SCORE (1 << 24)
 
 static void score_no_output(struct schedule_instruction * sinst)

@@ -238,20 +238,6 @@ svga_tgsi_vgpu9_translate(struct svga_context *svga,
    variant->constant_color_output =
       emit.constant_color_output && emit.num_output_writes == 1;
 
-#if 0
-   if (!svga_shader_verify(variant->tokens, variant->nr_tokens) ||
-       SVGA_DEBUG & DEBUG_TGSI) {
-      debug_printf("#####################################\n");
-      debug_printf("Shader %u below\n", shader->id);
-      tgsi_dump(shader->tokens, 0);
-      if (SVGA_DEBUG & DEBUG_TGSI) {
-         debug_printf("Shader %u compiled below\n", shader->id);
-         svga_shader_dump(variant->tokens, variant->nr_tokens, FALSE);
-      }
-      debug_printf("#####################################\n");
-   }
-#endif
-
    return variant;
 
  fail:

@@ -72,10 +72,6 @@ static void util_slab_add_new_page(struct util_slab_mempool *pool)
    block->magic = UTIL_SLAB_MAGIC;
    pool->first_free = util_slab_get_block(pool, page, 0);
    pool->num_pages++;
-
-#if 0
-   fprintf(stderr, "New page! Num of pages: %i\n", pool->num_pages);
-#endif
 }
 
 static void *util_slab_alloc_st(struct util_slab_mempool *pool)

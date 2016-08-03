@@ -348,13 +348,6 @@ generate_aaline_fs(struct aaline_stage *aaline)
                          (struct tgsi_token *) aaline_fs.tokens,
                          newLen, &transform.base);
 
-#if 0 /* DEBUG */
-   debug_printf("draw_aaline, orig shader:\n");
-   tgsi_dump(orig_fs->tokens, 0);
-   debug_printf("draw_aaline, new shader:\n");
-   tgsi_dump(aaline_fs.tokens, 0);
-#endif
-
    aaline->fs->sampler_unit = transform.freeSampler;
 
    aaline->fs->aaline_fs = aaline->driver_create_fs_state(pipe, &aaline_fs);

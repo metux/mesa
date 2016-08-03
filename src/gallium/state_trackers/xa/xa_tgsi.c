@@ -463,11 +463,7 @@ create_fs(struct pipe_context *pipe, unsigned fs_traits)
     unsigned mask_luminance = (fs_traits & FS_MASK_LUMINANCE) != 0;
     unsigned dst_luminance = (fs_traits & FS_DST_LUMINANCE) != 0;
 
-#if 0
-    print_fs_traits(fs_traits);
-#else
     (void)print_fs_traits;
-#endif
 
     ureg = ureg_create(PIPE_SHADER_FRAGMENT);
     if (ureg == NULL)
@@ -514,15 +510,6 @@ create_fs(struct pipe_context *pipe, unsigned fs_traits)
 				      TGSI_SEMANTIC_GENERIC, 1,
 				      TGSI_INTERPOLATE_PERSPECTIVE);
     }
-#if 0				/* unused right now */
-    dst_sampler = ureg_DECL_sampler(ureg, 2);
-    ureg_DECL_sampler_view(ureg, 2, TGSI_TEXTURE_2D,
-                           TGSI_RETURN_TYPE_FLOAT, TGSI_RETURN_TYPE_FLOAT,
-                           TGSI_RETURN_TYPE_FLOAT, TGSI_RETURN_TYPE_FLOAT);
-    dst_pos = ureg_DECL_fs_input(ureg,
-				 TGSI_SEMANTIC_POSITION, 2,
-				 TGSI_INTERPOLATE_PERSPECTIVE);
-#endif
 
     if (is_composite) {
 	if (has_mask || src_luminance || dst_luminance)

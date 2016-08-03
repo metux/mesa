@@ -78,17 +78,6 @@ softpipe_flush( struct pipe_context *pipe,
    softpipe->dirty_render_cache = FALSE;
 
    /* Enable to dump BMPs of the color/depth buffers each frame */
-#if 0
-   if (flags & PIPE_FLUSH_END_OF_FRAME) {
-      static unsigned frame_no = 1;
-      static char filename[256];
-      util_snprintf(filename, sizeof(filename), "cbuf_%u.bmp", frame_no);
-      debug_dump_surface_bmp(pipe, filename, softpipe->framebuffer.cbufs[0]);
-      util_snprintf(filename, sizeof(filename), "zsbuf_%u.bmp", frame_no);
-      debug_dump_surface_bmp(pipe, filename, softpipe->framebuffer.zsbuf);
-      ++frame_no;
-   }
-#endif
 
    if (fence)
       *fence = (void*)(intptr_t)1;

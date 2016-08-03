@@ -786,15 +786,6 @@ static struct ruvd_vc1 get_vc1_msg(struct pipe_vc1_picture_desc *pic)
 
 	result.chroma_format = 1;
 
-#if 0
-//(((unsigned int)(pPicParams->advance.reserved1))        << SPS_INFO_VC1_RESERVED_SHIFT)
-uint32_t 	slice_count
-uint8_t 	picture_type
-uint8_t 	frame_coding_mode
-uint8_t 	deblockEnable
-uint8_t 	pquant
-#endif
-
 	return result;
 }
 

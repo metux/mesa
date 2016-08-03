@@ -2255,14 +2255,6 @@ _mesa_CreateShaderProgramv(GLenum type, GLsizei count,
 	    attach_shader(ctx, program, shader);
 	    _mesa_link_program(ctx, shProg);
 	    detach_shader(ctx, program, shader);
-
-#if 0
-	    /* Possibly... */
-	    if (active-user-defined-varyings-in-linked-program) {
-	       append-error-to-info-log;
-	       shProg->LinkStatus = GL_FALSE;
-	    }
-#endif
 	 }
          if (sh->InfoLog)
             ralloc_strcat(&shProg->InfoLog, sh->InfoLog);

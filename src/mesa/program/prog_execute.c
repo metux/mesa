@@ -327,14 +327,6 @@ store_vector4(const struct prog_instruction *inst,
    GLfloat clampedValue[4];
    GLfloat *dst = get_dst_register_pointer(dstReg, machine);
 
-#if 0
-   if (value[0] > 1.0e10 ||
-       IS_INF_OR_NAN(value[0]) ||
-       IS_INF_OR_NAN(value[1]) ||
-       IS_INF_OR_NAN(value[2]) || IS_INF_OR_NAN(value[3]))
-      printf("store %g %g %g %g\n", value[0], value[1], value[2], value[3]);
-#endif
-
    if (clamp) {
       clampedValue[0] = CLAMP(value[0], 0.0F, 1.0F);
       clampedValue[1] = CLAMP(value[1], 0.0F, 1.0F);

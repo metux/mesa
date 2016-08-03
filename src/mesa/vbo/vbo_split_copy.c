@@ -1,4 +1,3 @@
-
 /*
  * Mesa 3-D graphics library
  *
@@ -181,17 +180,7 @@ flush( struct copy_context *copy )
     */
    copy->dstib.count = copy->dstelt_nr;
 
-#if 0
-   dump_draw_info(copy->ctx,
-                  copy->dstarray_ptr,
-                  copy->dstprim,
-                  copy->dstprim_nr,
-                  &copy->dstib,
-                  0,
-                  copy->dstbuf_nr);
-#else
    (void) dump_draw_info;
-#endif
 
    ctx->Array._DrawArrays = copy->dstarray_ptr;
    ctx->NewDriverState |= ctx->DriverFlags.NewArray;

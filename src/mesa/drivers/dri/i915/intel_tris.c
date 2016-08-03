@@ -236,12 +236,6 @@ void intel_flush_prim(struct intel_context *intel)
       intel_batchbuffer_emit_mi_flush(intel);
    }
 
-#if 0
-   printf("emitting %d..%d=%d vertices size %d\n", offset,
-	  intel->prim.current_offset, count,
-	  intel->vertex_size * 4);
-#endif
-
    if (intel->gen >= 3) {
       struct i915_context *i915 = i915_context(&intel->ctx);
       unsigned int cmd = 0, len = 0;

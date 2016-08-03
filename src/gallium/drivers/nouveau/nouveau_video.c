@@ -55,15 +55,6 @@ nouveau_vpe_init(struct nouveau_decoder *dec) {
 static void
 nouveau_vpe_synch(struct nouveau_decoder *dec) {
    struct nouveau_pushbuf *push = dec->push;
-#if 0
-   if (dec->fence_map) {
-      BEGIN_NV04(push, NV84_MPEG(QUERY_COUNTER), 1);
-      PUSH_DATA (push, ++dec->fence_seq);
-      PUSH_KICK (push);
-      while (dec->fence_map[0] != dec->fence_seq)
-         usleep(1000);
-   } else
-#endif
       PUSH_KICK(push);
 }
 
@@ -577,16 +568,6 @@ nouveau_create_decoder(struct pipe_context *context,
       goto fail;
 
    /* we don't need the fence, the kernel sync's for us */
-#if 0
-   ret = nouveau_bo_new(dec->screen->device, NOUVEAU_BO_GART | NOUVEAU_BO_MAP,
-                        0, 4096, NULL, &dec->fence_bo);
-   if (ret)
-      goto fail;
-   nouveau_bo_map(dec->fence_bo, NOUVEAU_BO_RDWR, NULL);
-   dec->fence_map = dec->fence_bo->map;
-   dec->fence_map[0] = 0;
-#endif
-
    nouveau_pushbuf_bufctx(dec->push, dec->bufctx);
    nouveau_pushbuf_space(push, 32, 4, 0);
 
@@ -617,11 +598,6 @@ nouveau_create_decoder(struct pipe_context *context,
    if (is8274) {
       BEGIN_NV04(push, NV84_MPEG(DMA_QUERY), 1);
       PUSH_DATA (push, nv04_data.vram);
-#if 0
-      BEGIN_NV04(push, NV84_MPEG(QUERY_OFFSET), 2);
-      PUSH_DATA (push, dec->fence_bo->offset);
-      PUSH_DATA (push, dec->fence_seq);
-#endif
    }
 
    ret = nouveau_vpe_init(dec);

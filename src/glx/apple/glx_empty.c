@@ -204,67 +204,6 @@ glXCreateGLXPbufferSGIX(Display * dpy, GLXFBConfig config,
    return None;
 }
 
-#if 0
-/* GLX_SGIX_fbconfig */
-_X_EXPORT int
-glXGetFBConfigAttribSGIX(Display * dpy, void *config, int a, int *b)
-{
-   (void) dpy;
-   (void) config;
-   (void) a;
-   (void) b;
-   return 0;
-}
-
-_X_EXPORT void *
-glXChooseFBConfigSGIX(Display * dpy, int a, int *b, int *c)
-{
-   (void) dpy;
-   (void) a;
-   (void) b;
-   (void) c;
-   return NULL;
-}
-
-_X_EXPORT GLXPixmap
-glXCreateGLXPixmapWithConfigSGIX(Display * dpy, void *config, Pixmap p)
-{
-   (void) dpy;
-   (void) config;
-   (void) p;
-   return None;
-}
-
-_X_EXPORT GLXContext
-glXCreateContextWithConfigSGIX(Display * dpy, void *config, int a,
-                               GLXContext b, Bool c)
-{
-   (void) dpy;
-   (void) config;
-   (void) a;
-   (void) b;
-   (void) c;
-   return NULL;
-}
-
-_X_EXPORT XVisualInfo *
-glXGetVisualFromFBConfigSGIX(Display * dpy, void *config)
-{
-   (void) dpy;
-   (void) config;
-   return NULL;
-}
-
-_X_EXPORT void *
-glXGetFBConfigFromVisualSGIX(Display * dpy, XVisualInfo * visinfo)
-{
-   (void) dpy;
-   (void) visinfo;
-   return NULL;
-}
-#endif
-
-
 _X_EXPORT
 GLX_ALIAS_VOID(glXDestroyGLXPbufferSGIX,
                (Display * dpy, GLXDrawable pbuf),

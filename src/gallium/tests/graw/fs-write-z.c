@@ -166,32 +166,8 @@ draw(void)
    util_draw_arrays(info.ctx, PIPE_PRIM_QUADS, 0, NUM_VERTS);
    info.ctx->flush(info.ctx, NULL, 0);
 
-#if 0
-   /* At the moment, libgraw leaks out/makes available some of the
-    * symbols from gallium/auxiliary, including these debug helpers.
-    * Will eventually want to bless some of these paths, and lock the
-    * others down so they aren't accessible from test programs.
-    *
-    * This currently just happens to work on debug builds - a release
-    * build will probably fail to link here:
-    */
-   debug_dump_surface_bmp(info.ctx, "result.bmp", surf);
-#endif
-
    graw_util_flush_front(&info);
 }
-
-
-#if 0
-static void
-resize(int w, int h)
-{
-   width = w;
-   height = h;
-
-   graw_util_viewport(&info, 0, 0, width, height, -1.0, 1.0);
-}
-#endif
 
 
 static void

@@ -139,11 +139,6 @@ st_BlitFramebuffer(struct gl_context *ctx,
       blit.scissor.miny = MIN2(clip.dstY0, clip.dstY1);
       blit.scissor.maxx = MAX2(clip.dstX0, clip.dstX1);
       blit.scissor.maxy = MAX2(clip.dstY0, clip.dstY1);
-#if 0
-      debug_printf("scissor = (%i,%i)-(%i,%i)\n",
-                   blit.scissor.minx,blit.scissor.miny,
-                   blit.scissor.maxx,blit.scissor.maxy);
-#endif
    }
 
    if (st_fb_orientation(readFB) == Y_0_TOP) {

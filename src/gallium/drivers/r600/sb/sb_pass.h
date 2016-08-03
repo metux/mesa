@@ -568,10 +568,6 @@ public:
 
 	void split_packed_ins(alu_packed_node *n);
 
-#if 0
-	void split_pinned_outs(node *n);
-#endif
-
 	void split_vec(vvec &vv, vvec &v1, vvec &v2, bool allow_swz);
 
 	void split_phi_src(container_node *loc, container_node *c, unsigned id,

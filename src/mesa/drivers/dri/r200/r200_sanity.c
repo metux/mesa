@@ -989,47 +989,6 @@ static int radeon_emit_veclinear(
    return 0;
 }
 
-#if 0
-static int print_vertex_format( int vfmt )
-{
-   if (NORMAL) {
-      fprintf(stderr, "   %s(%x): %s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
-	      "vertex format",
-	      vfmt,
-	      "xy,",
-	      (vfmt & R200_VTX_Z0) ? "z," : "",
-	      (vfmt & R200_VTX_W0) ? "w0," : "",
-	      (vfmt & R200_VTX_FPCOLOR) ? "fpcolor," : "",
-	      (vfmt & R200_VTX_FPALPHA) ? "fpalpha," : "",
-	      (vfmt & R200_VTX_PKCOLOR) ? "pkcolor," : "",
-	      (vfmt & R200_VTX_FPSPEC) ? "fpspec," : "",
-	      (vfmt & R200_VTX_FPFOG) ? "fpfog," : "",
-	      (vfmt & R200_VTX_PKSPEC) ? "pkspec," : "",
-	      (vfmt & R200_VTX_ST0) ? "st0," : "",
-	      (vfmt & R200_VTX_ST1) ? "st1," : "",
-	      (vfmt & R200_VTX_Q1) ? "q1," : "",
-	      (vfmt & R200_VTX_ST2) ? "st2," : "",
-	      (vfmt & R200_VTX_Q2) ? "q2," : "",
-	      (vfmt & R200_VTX_ST3) ? "st3," : "",
-	      (vfmt & R200_VTX_Q3) ? "q3," : "",
-	      (vfmt & R200_VTX_Q0) ? "q0," : "",
-	      (vfmt & R200_VTX_N0) ? "n0," : "",
-	      (vfmt & R200_VTX_XY1) ? "xy1," : "",
-	      (vfmt & R200_VTX_Z1) ? "z1," : "",
-	      (vfmt & R200_VTX_W1) ? "w1," : "",
-	      (vfmt & R200_VTX_N1) ? "n1," : "");
-
-   
-      if (!find_or_add_value( &others[V_VTXFMT], vfmt ))
-	 fprintf(stderr, " *** NEW VALUE");
-
-      fprintf(stderr, "\n");
-   }
-
-   return 0;
-}
-#endif
-
 static char *primname[0x10] = {
    "NONE",
    "POINTS",

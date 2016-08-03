@@ -1205,16 +1205,6 @@ _mesa_reallocate_registers(struct gl_program *prog)
 }
 
 
-#if 0
-static void
-print_it(struct gl_context *ctx, struct gl_program *program, const char *txt) {
-   fprintf(stderr, "%s (%u inst):\n", txt, program->NumInstructions);
-   _mesa_print_program(program);
-   _mesa_print_program_parameters(ctx, program);
-   fprintf(stderr, "\n\n");
-}
-#endif
-
 /**
  * This pass replaces CMP T0, T1 T2 T0 with MOV T0, T2 when the CMP
  * instruction is the first instruction to write to register T0.  The are

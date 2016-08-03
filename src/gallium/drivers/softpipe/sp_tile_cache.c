@@ -127,10 +127,6 @@ sp_create_tile_cache( struct pipe_context *pipe )
        * However, it breaks clearing in other situations (such as in
        * progs/tests/drawbuffers, see bug 24402).
        */
-#if 0
-      /* set flags to indicate all the tiles are cleared */
-      memset(tc->clear_flags, 255, sizeof(tc->clear_flags));
-#endif
    }
    return tc;
 }
@@ -390,11 +386,6 @@ sp_tile_cache_flush_clear(struct softpipe_tile_cache *tc, int layer)
          }
       }
    }
-
-
-#if 0
-   debug_printf("num cleared: %u\n", numCleared);
-#endif
 }
 
 static void
@@ -469,10 +460,6 @@ sp_flush_tile_cache(struct softpipe_tile_cache *tc)
 
       tc->last_tile_addr.bits.invalid = 1;
    }
-
-#if 0
-   debug_printf("flushed tiles in use: %d\n", inuse);
-#endif
 }
 
 static struct softpipe_cached_tile *

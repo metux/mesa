@@ -122,29 +122,6 @@ int eg_bytecode_cf_build(struct r600_bytecode *bc, struct r600_bytecode_cf *cf)
 	return 0;
 }
 
-#if 0
-void eg_bytecode_export_read(struct r600_bytecode *bc,
-		struct r600_bytecode_output *output, uint32_t word0, uint32_t word1)
-{
-	output->array_base = G_SQ_CF_ALLOC_EXPORT_WORD0_ARRAY_BASE(word0);
-	output->type = G_SQ_CF_ALLOC_EXPORT_WORD0_TYPE(word0);
-	output->gpr = G_SQ_CF_ALLOC_EXPORT_WORD0_RW_GPR(word0);
-	output->elem_size = G_SQ_CF_ALLOC_EXPORT_WORD0_ELEM_SIZE(word0);
-
-	output->swizzle_x = G_SQ_CF_ALLOC_EXPORT_WORD1_SWIZ_SEL_X(word1);
-	output->swizzle_y = G_SQ_CF_ALLOC_EXPORT_WORD1_SWIZ_SEL_Y(word1);
-	output->swizzle_z = G_SQ_CF_ALLOC_EXPORT_WORD1_SWIZ_SEL_Z(word1);
-	output->swizzle_w = G_SQ_CF_ALLOC_EXPORT_WORD1_SWIZ_SEL_W(word1);
-	output->burst_count = G_SQ_CF_ALLOC_EXPORT_WORD1_BURST_COUNT(word1);
-	output->end_of_program = G_SQ_CF_ALLOC_EXPORT_WORD1_END_OF_PROGRAM(word1);
-	output->op = r600_isa_cf_by_opcode(bc->isa,
-			G_SQ_CF_ALLOC_EXPORT_WORD1_CF_INST(word1), /* is_cf_alu = */ 0 );
-	output->barrier = G_SQ_CF_ALLOC_EXPORT_WORD1_BARRIER(word1);
-	output->array_size = G_SQ_CF_ALLOC_EXPORT_WORD1_BUF_ARRAY_SIZE(word1);
-	output->comp_mask = G_SQ_CF_ALLOC_EXPORT_WORD1_BUF_COMP_MASK(word1);
-}
-#endif
-
 int egcm_load_index_reg(struct r600_bytecode *bc, unsigned id, bool inside_alu_clause)
 {
 	struct r600_bytecode_alu alu;

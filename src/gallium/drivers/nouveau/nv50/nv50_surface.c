@@ -135,15 +135,6 @@ nv50_2d_texture_set(struct nouveau_pushbuf *push, int dst,
       PUSH_DATA (push, mt->base.address + offset);
    }
 
-#if 0
-   if (dst) {
-      BEGIN_NV04(push, SUBC_2D(NV50_2D_CLIP_X), 4);
-      PUSH_DATA (push, 0);
-      PUSH_DATA (push, 0);
-      PUSH_DATA (push, width);
-      PUSH_DATA (push, height);
-   }
-#endif
    return 0;
 }
 

@@ -98,14 +98,6 @@ vc4_get_bcl(struct drm_device *dev, struct vc4_exec_info *exec)
 	}
 
 	exec->exec_bo = drm_gem_cma_create(dev, exec_size);
-#if 0
-	if (IS_ERR(exec->exec_bo)) {
-		DRM_ERROR("Couldn't allocate BO for exec\n");
-		ret = PTR_ERR(exec->exec_bo);
-		exec->exec_bo = NULL;
-		goto fail;
-	}
-#endif
 
 	list_addtail(&to_vc4_bo(&exec->exec_bo->base)->unref_head,
 		     &exec->unref_list);

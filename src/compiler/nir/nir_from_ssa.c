@@ -92,29 +92,6 @@ typedef struct merge_set {
    nir_register *reg;
 } merge_set;
 
-#if 0
-static void
-merge_set_dump(merge_set *set, FILE *fp)
-{
-   nir_ssa_def *dom[set->size];
-   int dom_idx = -1;
-
-   foreach_list_typed(merge_node, node, node, &set->nodes) {
-      while (dom_idx >= 0 && !ssa_def_dominates(dom[dom_idx], node->def))
-         dom_idx--;
-
-      for (int i = 0; i <= dom_idx; i++)
-         fprintf(fp, "  ");
-
-      if (node->def->name)
-         fprintf(fp, "ssa_%d /* %s */\n", node->def->index, node->def->name);
-      else
-         fprintf(fp, "ssa_%d\n", node->def->index);
-
-      dom[++dom_idx] = node->def;
-   }
-}
-#endif
 
 static merge_node *
 get_merge_node(nir_ssa_def *def, struct from_ssa_state *state)

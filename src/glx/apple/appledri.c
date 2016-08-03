@@ -117,14 +117,6 @@ wire_to_event(Display *dpy, XEvent *re, xEvent *event)
  *                                                                           *
  *****************************************************************************/
 
-#if 0
-#include <stdio.h>
-#define TRACE(msg)  fprintf(stderr, "AppleDRI%s\n", msg);
-#else
-#define TRACE(msg)
-#endif
-
-
 Bool
 XAppleDRIQueryExtension(dpy, event_basep, error_basep)
      Display *dpy;

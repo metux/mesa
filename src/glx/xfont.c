@@ -69,13 +69,6 @@ dump_font_struct(XFontStruct * font)
           font->default_char);
    dump_char_struct(&font->min_bounds, "min> ");
    dump_char_struct(&font->max_bounds, "max> ");
-#if 0
-   for (c = font->min_char_or_byte2; c <= font->max_char_or_byte2; c++) {
-      char prefix[8];
-      sprintf(prefix, "%d> ", c);
-      dump_char_struct(&font->per_char[c], prefix);
-   }
-#endif
 }
 
 static void
@@ -261,15 +254,6 @@ DRI_glXUseXFont(struct glx_context *CC, Font font, int first, int count, int lis
       __glXSetError(CC, GL_OUT_OF_MEMORY);
       return;
    }
-
-#if 0
-   /* get the page info */
-   pages = fs->max_char_or_byte2 - fs->min_char_or_byte2 + 1;
-   firstchar = (fs->min_byte1 << 8) + fs->min_char_or_byte2;
-   lastchar = (fs->max_byte1 << 8) + fs->max_char_or_byte2;
-   rows = fs->max_byte1 - fs->min_byte1 + 1;
-   unsigned int first_char, last_char, pages, rows;
-#endif
 
    /* Save the current packing mode for bitmaps.  */
    glGetIntegerv(GL_UNPACK_SWAP_BYTES, &swapbytes);

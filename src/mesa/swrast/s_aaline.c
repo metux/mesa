@@ -91,23 +91,6 @@ static void
 compute_plane(GLfloat x0, GLfloat y0, GLfloat x1, GLfloat y1,
               GLfloat z0, GLfloat z1, GLfloat plane[4])
 {
-#if 0
-   /* original */
-   const GLfloat px = x1 - x0;
-   const GLfloat py = y1 - y0;
-   const GLfloat pz = z1 - z0;
-   const GLfloat qx = -py;
-   const GLfloat qy = px;
-   const GLfloat qz = 0;
-   const GLfloat a = py * qz - pz * qy;
-   const GLfloat b = pz * qx - px * qz;
-   const GLfloat c = px * qy - py * qx;
-   const GLfloat d = -(a * x0 + b * y0 + c * z0);
-   plane[0] = a;
-   plane[1] = b;
-   plane[2] = c;
-   plane[3] = d;
-#else
    /* simplified */
    const GLfloat px = x1 - x0;
    const GLfloat py = y1 - y0;
@@ -128,7 +111,6 @@ compute_plane(GLfloat x0, GLfloat y0, GLfloat x1, GLfloat y1,
       plane[2] = c;
       plane[3] = d;
    }
-#endif
 }
 
 
@@ -277,13 +259,6 @@ compute_coveragef(const struct LineInfo *info,
       make_sample_table(SUB_PIXEL, SUB_PIXEL, samples);
       haveSamples = GL_TRUE;
    }
-
-#if 0 /*DEBUG*/
-   {
-      const GLfloat area = dx0 * dy1 - dx1 * dy0;
-      assert(area >= 0.0);
-   }
-#endif
 
    for (i = 0; i < stop; i++) {
       const GLfloat sx = x + samples[i][0];

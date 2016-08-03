@@ -87,15 +87,6 @@ st_print_current(void)
    GET_CURRENT_CONTEXT(ctx);
    struct st_context *st = st_context(ctx);
 
-#if 0
-   int i;
-
-   printf("Vertex Transform Inputs:\n");
-   for (i = 0; i < st->vp->state.num_inputs; i++) {
-      printf("  Slot %d:  VERT_ATTRIB_%d\n", i, st->vp->index_to_input[i]);
-   }
-#endif
-
    if (st->vp->variants)
       tgsi_dump( st->vp->variants[0].tgsi.tokens, 0 );
    if (st->vp->Base.Base.Parameters)

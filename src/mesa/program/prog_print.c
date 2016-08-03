@@ -516,13 +516,6 @@ fprint_dst_reg(FILE * f,
 	   reg_string((gl_register_file) dstReg->File,
 		      dstReg->Index, mode, dstReg->RelAddr, prog),
 	   _mesa_writemask_string(dstReg->WriteMask));
-   
-#if 0
-   fprintf(f, "%s[%d]%s",
-	   _mesa_register_file_name((gl_register_file) dstReg->File),
-	   dstReg->Index,
-	   _mesa_writemask_string(dstReg->WriteMask));
-#endif
 }
 
 
@@ -537,13 +530,6 @@ fprint_src_reg(FILE *f,
 		      srcReg->Index, mode, srcReg->RelAddr, prog),
 	   _mesa_swizzle_string(srcReg->Swizzle,
 				srcReg->Negate, GL_FALSE));
-#if 0
-   fprintf(f, "%s[%d]%s",
-	   _mesa_register_file_name((gl_register_file) srcReg->File),
-	   srcReg->Index,
-	   _mesa_swizzle_string(srcReg->Swizzle,
-				srcReg->Negate, GL_FALSE));
-#endif
 }
 
 
@@ -888,13 +874,6 @@ _mesa_fprint_program_parameters(FILE *f,
 
    _mesa_load_state_parameters(ctx, prog->Parameters);
 
-#if 0
-   fprintf(f, "Local Params:\n");
-   for (i = 0; i < MAX_PROGRAM_LOCAL_PARAMS; i++){
-      const GLfloat *p = prog->LocalParams[i];
-      fprintf(f, "%2d: %f, %f, %f, %f\n", i, p[0], p[1], p[2], p[3]);
-   }
-#endif	
    _mesa_print_parameter_list(prog->Parameters);
 }
 

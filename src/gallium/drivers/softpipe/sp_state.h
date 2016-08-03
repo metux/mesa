@@ -77,9 +77,6 @@ struct sp_fragment_shader_variant
    unsigned stipple_sampler_unit;
 
    /* See comments about this elsewhere */
-#if 0
-   struct draw_fragment_shader *draw_shader;
-#endif
 
    void (*prepare)(const struct sp_fragment_shader_variant *shader,
 		   struct tgsi_exec_machine *machine,

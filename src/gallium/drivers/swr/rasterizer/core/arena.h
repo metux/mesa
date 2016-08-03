@@ -119,15 +119,6 @@ struct CachingAllocatorT : DefaultAllocator
             }
 
             m_totalAllocated += size;
-
-#if 0
-            {
-                static uint32_t count = 0;
-                char buf[128];
-                sprintf_s(buf, "Arena Alloc %d 0x%llx bytes - 0x%llx total\n", ++count, uint64_t(size), uint64_t(m_totalAllocated));
-                OutputDebugStringA(buf);
-            }
-#endif
         }
 
         if (bucket && bucket < (CACHE_NUM_BUCKETS - 1))

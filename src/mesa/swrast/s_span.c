@@ -429,34 +429,6 @@ _swrast_compute_lambda(GLfloat dsdx, GLfloat dsdy, GLfloat dtdx, GLfloat dtdy,
 
 
 /**
- * Compute mipmap LOD from partial derivatives.
- * This is a faster approximation than above function.
- */
-#if 0
-GLfloat
-_swrast_compute_lambda(GLfloat dsdx, GLfloat dsdy, GLfloat dtdx, GLfloat dtdy,
-                     GLfloat dqdx, GLfloat dqdy, GLfloat texW, GLfloat texH,
-                     GLfloat s, GLfloat t, GLfloat q, GLfloat invQ)
-{
-   GLfloat dsdx2 = (s + dsdx) / (q + dqdx) - s * invQ;
-   GLfloat dtdx2 = (t + dtdx) / (q + dqdx) - t * invQ;
-   GLfloat dsdy2 = (s + dsdy) / (q + dqdy) - s * invQ;
-   GLfloat dtdy2 = (t + dtdy) / (q + dqdy) - t * invQ;
-   GLfloat maxU, maxV, rho, lambda;
-   dsdx2 = fabsf(dsdx2);
-   dsdy2 = fabsf(dsdy2);
-   dtdx2 = fabsf(dtdx2);
-   dtdy2 = fabsf(dtdy2);
-   maxU = MAX2(dsdx2, dsdy2) * texW;
-   maxV = MAX2(dtdx2, dtdy2) * texH;
-   rho = MAX2(maxU, maxV);
-   lambda = LOG2(rho);
-   return lambda;
-}
-#endif
-
-
-/**
  * Fill in the span.array->attrib[VARYING_SLOT_TEXn] arrays from the
  * using the attrStart/Step values.
  *
@@ -996,11 +968,7 @@ shade_texture_span(struct gl_context *ctx, SWspan *span)
       if (!(span->arrayMask & SPAN_Z))
          _swrast_span_interpolate_z (ctx, span);
 
-#if 0
-      if (inputsRead & VARYING_BIT_POS)
-#else
       /* XXX always interpolate wpos so that DDX/DDY work */
-#endif
          interpolate_wpos(ctx, span);
 
       /* Run fragment program/shader now */

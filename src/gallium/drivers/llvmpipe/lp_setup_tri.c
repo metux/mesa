@@ -361,15 +361,6 @@ do_triangle_ccw(struct lp_setup_context *setup,
    if (!tri)
       return FALSE;
 
-#if 0
-   tri->v[0][0] = v0[0][0];
-   tri->v[1][0] = v1[0][0];
-   tri->v[2][0] = v2[0][0];
-   tri->v[0][1] = v0[0][1];
-   tri->v[1][1] = v1[0][1];
-   tri->v[2][1] = v2[0][1];
-#endif
-
    LP_COUNT(nr_tris);
 
    /* Setup parameter interpolants:

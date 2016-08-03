@@ -211,14 +211,6 @@ t_utile_address(uint32_t utile_x, uint32_t utile_y,
 
         uint32_t utile_offset = 64 * ((utile_y & 3) * 4 + (utile_x & 3));
 
-#if 0
-        fprintf(stderr, "utile %d,%d -> %d + %d + %d (stride %d,%d) = %d\n",
-                utile_x, utile_y,
-                tile_offset, stile_offset, utile_offset,
-                utile_stride, tile_stride,
-                tile_offset + stile_offset + utile_offset);
-#endif
-
         return tile_offset + stile_offset + utile_offset;
 }
 

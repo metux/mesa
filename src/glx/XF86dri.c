@@ -87,12 +87,7 @@ XEXT_GENERATE_CLOSE_DISPLAY(close_display, xf86dri_info)
  *		    public XFree86-DRI Extension routines                    *
  *                                                                           *
  *****************************************************************************/
-#if 0
-#include <stdio.h>
-#define TRACE(msg)  fprintf(stderr,"XF86DRI%s\n", msg);
-#else
 #define TRACE(msg)
-#endif
 
 Bool
 XF86DRIQueryExtension(Display * dpy, int *event_basep,
@@ -507,23 +502,6 @@ XF86DRIGetDrawableInfo(Display * dpy, int screen, Drawable drawable,
    *backY = rep.backY;
    *numBackClipRects = rep.numBackClipRects;
    total_rects += *numBackClipRects;
-
-#if 0
-   /* Because of the fix in Xserver/GL/dri/xf86dri.c, this check breaks
-    * backwards compatibility (Because of the >> 2 shift) but the fix
-    * enables multi-threaded apps to work.
-    */
-   if (rep.length != ((((SIZEOF(xXF86DRIGetDrawableInfoReply) -
-                         SIZEOF(xGenericReply) +
-                         total_rects * sizeof(drm_clip_rect_t)) +
-                        3) & ~3) >> 2)) {
-      _XEatData(dpy, rep.length);
-      UnlockDisplay(dpy);
-      SyncHandle();
-      TRACE("GetDrawableInfo... return False");
-      return False;
-   }
-#endif
 
    if (*numClipRects) {
       int len = sizeof(drm_clip_rect_t) * (*numClipRects);

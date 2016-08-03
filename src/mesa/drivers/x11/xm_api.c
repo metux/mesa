@@ -1653,12 +1653,6 @@ PUBLIC void
 XMesaBindTexImage(XMesaDisplay *dpy, XMesaBuffer drawable, int buffer,
                   const int *attrib_list)
 {
-#if 0
-   GET_CURRENT_CONTEXT(ctx);
-   const GLuint unit = ctx->Texture.CurrentUnit;
-   struct gl_texture_unit *texUnit = &ctx->Texture.Unit[unit];
-   struct gl_texture_object *texObj;
-#endif
    struct gl_renderbuffer *rb;
    struct xmesa_renderbuffer *xrb;
    GLint b;
@@ -1678,22 +1672,6 @@ XMesaBindTexImage(XMesaDisplay *dpy, XMesaBuffer drawable, int buffer,
       return;
    }
    xrb = xmesa_renderbuffer(rb);
-
-#if 0
-   switch (drawable->TextureTarget) {
-   case GLX_TEXTURE_1D_EXT:
-      texObj = texUnit->CurrentTex[TEXTURE_1D_INDEX];
-      break;
-   case GLX_TEXTURE_2D_EXT:
-      texObj = texUnit->CurrentTex[TEXTURE_2D_INDEX];
-      break;
-   case GLX_TEXTURE_RECTANGLE_EXT:
-      texObj = texUnit->CurrentTex[TEXTURE_RECT_INDEX];
-      break;
-   default:
-      return; /* BadMatch error */
-   }
-#endif
 
    /*
     * The following is a quick and simple way to implement

@@ -9,13 +9,6 @@
 #define DISASSEM 0
 #define X86_TWOB 0x0f
 
-#if 0
-static unsigned char *cptr( void (*label)() )
-{
-   return (unsigned char *)(unsigned long)label;
-}
-#endif
-
 
 static void do_realloc( struct x86_function *p )
 {
@@ -281,23 +274,11 @@ void x86_jmp( struct x86_function *p, unsigned char *label)
    emit_1i(p, label - x86_get_label(p) - 4);
 }
 
-#if 0
-/* This doesn't work once we start reallocating & copying the
- * generated code on buffer fills, because the call is relative to the
- * current pc.
- */
-void x86_call( struct x86_function *p, void (*label)())
-{
-   emit_1ub(p, 0xe8);
-   emit_1i(p, cptr(label) - x86_get_label(p) - 4);
-}
-#else
 void x86_call( struct x86_function *p, struct x86_reg reg)
 {
    emit_1ub(p, 0xff);
    emit_modrm_noreg(p, 2, reg);
 }
-#endif
 
 
 /* michal:

@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2003 VMware, Inc.
  * All Rights Reserved.
@@ -35,12 +34,7 @@
 #include "t_vertex.h"
 
 
-#if 0
-#define DEBUG_INSERT printf("%s\n", __FUNCTION__)
-#else
 #define DEBUG_INSERT
-#endif
-
 
 /*
  * These functions take the NDC coordinates pointed to by 'in', apply the

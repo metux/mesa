@@ -489,11 +489,6 @@ __glXExtensionsCtr(void)
             SET_BIT(client_gl_only, bit);
          }
       }
-
-#if 0
-      fprintf(stderr, "[%s:%u] Maximum client library version: %u.%u\n",
-              __FUNCTION__, __LINE__, gl_major, gl_minor);
-#endif
    }
 }
 

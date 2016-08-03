@@ -139,25 +139,6 @@ genX(graphics_pipeline_create)(
 
    const struct brw_vs_prog_data *vs_prog_data = get_vs_prog_data(pipeline);
 
-#if 0 
-   /* From gen7_vs_state.c */
-
-   /**
-    * From Graphics BSpec: 3D-Media-GPGPU Engine > 3D Pipeline Stages >
-    * Geometry > Geometry Shader > State:
-    *
-    *     "Note: Because of corruption in IVB:GT2, software needs to flush the
-    *     whole fixed function pipeline when the GS enable changes value in
-    *     the 3DSTATE_GS."
-    *
-    * The hardware architects have clarified that in this context "flush the
-    * whole fixed function pipeline" means to emit a PIPE_CONTROL with the "CS
-    * Stall" bit set.
-    */
-   if (!brw->is_haswell && !brw->is_baytrail)
-      gen7_emit_vs_workaround_flush(brw);
-#endif
-
    if (pipeline->vs_vec4 == NO_KERNEL || (extra && extra->disable_vs))
       anv_batch_emit(&pipeline->batch, GENX(3DSTATE_VS), vs);
    else

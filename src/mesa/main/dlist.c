@@ -9767,25 +9767,8 @@ _mesa_initialize_save_table(const struct gl_context *ctx)
    SET_BlendColor(table, save_BlendColor);
    SET_BlendEquation(table, save_BlendEquation);
 
-   /* 2. GL_EXT_blend_color */
-#if 0
-   SET_BlendColorEXT(table, save_BlendColorEXT);
-#endif
-
    /* 3. GL_EXT_polygon_offset */
    SET_PolygonOffsetEXT(table, save_PolygonOffsetEXT);
-
-   /* 6. GL_EXT_texture3d */
-#if 0
-   SET_CopyTexSubImage3DEXT(table, save_CopyTexSubImage3D);
-   SET_TexImage3DEXT(table, save_TexImage3DEXT);
-   SET_TexSubImage3DEXT(table, save_TexSubImage3D);
-#endif
-
-   /* 37. GL_EXT_blend_minmax */
-#if 0
-   SET_BlendEquationEXT(table, save_BlendEquationEXT);
-#endif
 
    /* 54. GL_EXT_point_parameters */
    SET_PointParameterf(table, save_PointParameterfEXT);
@@ -9936,16 +9919,6 @@ _mesa_initialize_save_table(const struct gl_context *ctx)
    SET_ClearBufferuiv(table, save_ClearBufferuiv);
    SET_ClearBufferfv(table, save_ClearBufferfv);
    SET_ClearBufferfi(table, save_ClearBufferfi);
-#if 0
-   SET_Uniform1ui(table, save_Uniform1ui);
-   SET_Uniform2ui(table, save_Uniform2ui);
-   SET_Uniform3ui(table, save_Uniform3ui);
-   SET_Uniform4ui(table, save_Uniform4ui);
-   SET_Uniform1uiv(table, save_Uniform1uiv);
-   SET_Uniform2uiv(table, save_Uniform2uiv);
-   SET_Uniform3uiv(table, save_Uniform3uiv);
-   SET_Uniform4uiv(table, save_Uniform4uiv);
-#else
    (void) save_Uniform1ui;
    (void) save_Uniform2ui;
    (void) save_Uniform3ui;
@@ -9954,7 +9927,6 @@ _mesa_initialize_save_table(const struct gl_context *ctx)
    (void) save_Uniform2uiv;
    (void) save_Uniform3uiv;
    (void) save_Uniform4uiv;
-#endif
 
    /* These are: */
    SET_BeginTransformFeedback(table, save_BeginTransformFeedback);

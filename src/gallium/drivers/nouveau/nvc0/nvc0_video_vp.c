@@ -29,15 +29,6 @@ static void dump_comm_vp(struct nouveau_vp3_decoder *dec, struct comm *comm, u32
 {
    unsigned i, idx = comm->pvp_cur_index & 0xf;
    debug_printf("Status: %08x, stage: %08x\n", comm->status_vp[idx], comm->pvp_stage);
-#if 0
-   debug_printf("Acked byte ofs: %x, bsp byte ofs: %x\n", comm->acked_byte_ofs, comm->byte_ofs);
-   debug_printf("Irq/parse indexes: %i %i\n", comm->irq_index, comm->parse_endpos_index);
-
-   for (i = 0; i != comm->irq_index; ++i)
-      debug_printf("irq[%i] = { @ %08x -> %04x }\n", i, comm->irq_pos[i], comm->irq_470[i]);
-   for (i = 0; i != comm->parse_endpos_index; ++i)
-      debug_printf("parse_endpos[%i] = { @ %08x}\n", i, comm->parse_endpos[i]);
-#endif
    debug_printf("mb_y = %u\n", comm->mb_y[idx]);
    if (comm->status_vp[idx] <= 1)
       return;

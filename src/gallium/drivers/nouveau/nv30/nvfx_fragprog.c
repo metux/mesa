@@ -323,37 +323,7 @@ nv40_fp_rep(struct nvfx_fpc *fpc, unsigned count, unsigned target)
         reloc.target = target;
         reloc.location = fpc->inst_offset + 3;
         util_dynarray_append(&fpc->label_relocs, struct nvfx_relocation, reloc);
-        //util_dynarray_append(&fpc->loop_stack, unsigned, target);
 }
-
-#if 0
-/* documentation only */
-/* warning: this only works forward, and probably only if not inside any IF */
-static void
-nv40_fp_bra(struct nvfx_fpc *fpc, unsigned target)
-{
-        struct nvfx_relocation reloc;
-        uint32_t *hw;
-        fpc->inst_offset = fpc->fp->insn_len;
-        grow_insns(fpc, 4);
-        hw = &fpc->fp->insn[fpc->inst_offset];
-        /* I really wonder why fp16 precision is used. Presumably the hardware ignores it? */
-        hw[0] = (NV40_FP_OP_BRA_OPCODE_IF << NVFX_FP_OP_OPCODE_SHIFT) |
-                NV40_FP_OP_OUT_NONE |
-                (NVFX_FP_PRECISION_FP16 << NVFX_FP_OP_PRECISION_SHIFT);
-        /* Use .xxxx swizzle so that we check only src[0].x*/
-        hw[1] = (NVFX_SWZ_IDENTITY << NVFX_FP_OP_COND_SWZ_X_SHIFT) |
-                        (NVFX_FP_OP_COND_FL << NVFX_FP_OP_COND_SHIFT);
-        hw[2] = NV40_FP_OP_OPCODE_IS_BRANCH; /* | else_offset */
-        hw[3] = 0; /* | endif_offset */
-        reloc.target = target;
-        reloc.location = fpc->inst_offset + 2;
-        util_dynarray_append(&fpc->label_relocs, struct nvfx_relocation, reloc);
-        reloc.target = target;
-        reloc.location = fpc->inst_offset + 3;
-        util_dynarray_append(&fpc->label_relocs, struct nvfx_relocation, reloc);
-}
-#endif
 
 static void
 nv40_fp_brk(struct nvfx_fpc *fpc)

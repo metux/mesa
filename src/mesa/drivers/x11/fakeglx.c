@@ -1257,9 +1257,6 @@ Fake_glXCreateContext( Display *dpy, XVisualInfo *visinfo,
       return 0;
 
    /* deallocate unused windows/buffers */
-#if 0
-   XMesaGarbageCollect(dpy);
-#endif
 
    xmvis = find_glx_visual( dpy, visinfo );
    if (!xmvis) {

@@ -383,9 +383,6 @@ nouveau_fallback(struct gl_context *ctx, enum nouveau_fallback mode)
 
 	if (mode < SWRAST) {
 		nouveau_state_emit(ctx);
-#if 0
-		nouveau_bo_state_emit(ctx);
-#endif
 	} else {
 		PUSH_KICK(context_push(ctx));
 	}

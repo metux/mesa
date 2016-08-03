@@ -1853,36 +1853,6 @@ ilo_set_shader_images(struct pipe_context *pipe, unsigned shader,
                       unsigned start, unsigned count,
                       const struct pipe_image_view *views)
 {
-#if 0
-   struct ilo_state_vector *vec = &ilo_context(pipe)->state_vector;
-   struct ilo_resource_state *dst = &vec->resource;
-   unsigned i;
-
-   assert(start + count <= ARRAY_SIZE(dst->states));
-
-   if (surfaces) {
-      for (i = 0; i < count; i++)
-         pipe_surface_reference(&dst->states[start + i], surfaces[i]);
-   }
-   else {
-      for (i = 0; i < count; i++)
-         pipe_surface_reference(&dst->states[start + i], NULL);
-   }
-
-   if (dst->count <= start + count) {
-      if (surfaces)
-         count += start;
-      else
-         count = start;
-
-      while (count > 0 && !dst->states[count - 1])
-         count--;
-
-      dst->count = count;
-   }
-
-   vec->dirty |= ILO_DIRTY_RESOURCE;
-#endif
 }
 
 static void

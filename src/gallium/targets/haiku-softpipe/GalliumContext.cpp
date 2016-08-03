@@ -18,8 +18,6 @@
 
 #include "glapi/glapi.h"
 #include "pipe/p_format.h"
-//#include "state_tracker/st_cb_fbo.h"
-//#include "state_tracker/st_cb_flush.h"
 #include "state_tracker/st_context.h"
 #include "state_tracker/st_gl_api.h"
 #include "state_tracker/sw_winsys.h"
@@ -303,17 +301,7 @@ GalliumContext::SetCurrentContext(Bitmap *bitmap, context_id contextID)
 	context->api->make_current(context->api, context->st, context->draw->stfbi,
 		context->read->stfbi);
 
-	//if (context->textures[ST_ATTACHMENT_BACK_LEFT]
-	//	&& context->textures[ST_ATTACHMENT_DEPTH_STENCIL]
-	//	&& context->postProcess) {
-	//	TRACE("Postprocessing textures...\n");
-	//	pp_init_fbos(context->postProcess,
-	//		context->textures[ST_ATTACHMENT_BACK_LEFT]->width0,
-	//		context->textures[ST_ATTACHMENT_BACK_LEFT]->height0);
-	//}
-
 	context->bitmap = bitmap;
-	//context->st->pipe->priv = context;
 
 	return B_OK;
 }
@@ -355,13 +343,6 @@ GalliumContext::SwapBuffers(context_id contextID)
 		fScreen->flush_frontbuffer(fScreen, surface->texture, 0, 0,
 			context->bitmap, NULL);
 	}
-
-	#if 0
-	// TODO... should we flush the z stencil buffer?
-	pipe_surface* zSurface = stContext->state.framebuffer.zsbuf;
-	fScreen->flush_frontbuffer(fScreen, zSurface->texture, 0, 0,
-		context->bitmap, NULL);
-	#endif
 
 	return B_OK;
 }

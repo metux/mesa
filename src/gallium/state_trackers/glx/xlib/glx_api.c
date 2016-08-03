@@ -1117,9 +1117,6 @@ create_context(Display *dpy, XMesaVisual xmvis,
       return 0;
 
    /* deallocate unused windows/buffers */
-#if 0
-   XMesaGarbageCollect();
-#endif
 
    glxCtx->xmesaContext = XMesaCreateContext(xmvis, shareCtx, major, minor,
                                              profileMask, contextFlags);
@@ -1893,16 +1890,12 @@ glXGetVisualFromFBConfig( Display *dpy, GLXFBConfig config )
 {
    if (dpy && config) {
       XMesaVisual xmvis = (XMesaVisual) config;
-#if 0      
-      return xmvis->vishandle;
-#else
       /* create a new vishandle - the cached one may be stale */
       xmvis->vishandle = malloc(sizeof(XVisualInfo));
       if (xmvis->vishandle) {
          memcpy(xmvis->vishandle, xmvis->visinfo, sizeof(XVisualInfo));
       }
       return xmvis->vishandle;
-#endif
    }
    else {
       return NULL;

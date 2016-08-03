@@ -1489,10 +1489,6 @@ static uint32_t si_translate_texformat(struct pipe_screen *screen,
 	switch (desc->channel[first_non_void].size) {
 	case 4:
 		switch (desc->nr_channels) {
-#if 0 /* Not supported for render targets */
-		case 2:
-			return V_008F14_IMG_DATA_FORMAT_4_4;
-#endif
 		case 4:
 			return V_008F14_IMG_DATA_FORMAT_4_4_4_4;
 		}
@@ -1523,10 +1519,6 @@ static uint32_t si_translate_texformat(struct pipe_screen *screen,
 			return V_008F14_IMG_DATA_FORMAT_32;
 		case 2:
 			return V_008F14_IMG_DATA_FORMAT_32_32;
-#if 0 /* Not supported for render targets */
-		case 3:
-			return V_008F14_IMG_DATA_FORMAT_32_32_32;
-#endif
 		case 4:
 			return V_008F14_IMG_DATA_FORMAT_32_32_32_32;
 		}

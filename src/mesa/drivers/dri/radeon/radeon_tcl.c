@@ -193,16 +193,12 @@ static void radeonEmitPrim( struct gl_context *ctx,
 
 /* Try & join small primitives
  */
-#if 0
-#define PREFER_DISCRETE_ELT_PRIM( NR, PRIM ) 0
-#else
 #define PREFER_DISCRETE_ELT_PRIM( NR, PRIM )			\
   ((NR) < 20 ||							\
    ((NR) < 40 &&						\
     rmesa->tcl.hw_primitive == (PRIM|				\
 			    RADEON_CP_VC_CNTL_PRIM_WALK_IND|	\
 			    RADEON_CP_VC_CNTL_TCL_ENABLE)))
-#endif
 
 #ifdef MESA_BIG_ENDIAN
 /* We could do without (most of) this ugliness if dest was always 32 bit word aligned... */

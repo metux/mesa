@@ -204,13 +204,6 @@ _tnl_wakeup( struct gl_context *ctx )
    /* Assume we haven't been getting state updates either:
     */
    _tnl_InvalidateState( ctx, ~0 );
-
-#if 0
-   if (ctx->Light.ColorMaterialEnabled) {
-      _mesa_update_color_material( ctx, 
-				   ctx->Current.Attrib[VERT_ATTRIB_COLOR0] );
-   }
-#endif
 }
 
 

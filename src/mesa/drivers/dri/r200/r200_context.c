@@ -373,12 +373,6 @@ GLboolean r200CreateContext( gl_api api,
       ctx->Extensions.ANGLE_texture_compression_dxt = true;
    }
 
-#if 0
-   r200InitDriverFuncs( ctx );
-   r200InitIoctlFuncs( ctx );
-   r200InitStateFuncs( ctx );
-   r200InitTextureFuncs( ctx );
-#endif
    /* plug in a few more device driver functions */
    /* XXX these should really go right after _mesa_init_driver_functions() */
    radeon_fbo_init(&rmesa->radeon);

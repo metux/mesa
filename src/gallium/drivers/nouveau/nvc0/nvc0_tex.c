@@ -885,20 +885,9 @@ nve4_set_surface_info(struct nouveau_pushbuf *push,
 
    info[1] = nve4_su_format_map[view->format];
 
-#if 0
-   switch (util_format_get_blocksizebits(view->format)) {
-   case  16: info[1] |= 1 << 16; break;
-   case  32: info[1] |= 2 << 16; break;
-   case  64: info[1] |= 3 << 16; break;
-   case 128: info[1] |= 4 << 16; break;
-   default:
-      break;
-   }
-#else
    info[1] |= log2cpp << 16;
    info[1] |=  0x4000;
    info[1] |= (0x0f00 & nve4_su_format_aux_map[view->format]);
-#endif
 
    if (res->base.target == PIPE_BUFFER) {
       unsigned blocksize = util_format_get_blocksize(view->format);

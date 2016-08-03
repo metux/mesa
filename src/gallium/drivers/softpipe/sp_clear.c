@@ -62,10 +62,6 @@ softpipe_clear(struct pipe_context *pipe, unsigned buffers,
    if (!softpipe_check_render_cond(softpipe))
       return;
 
-#if 0
-   softpipe_update_derived(softpipe, PIPE_PRIM_TRIANGLES); /* not needed?? */
-#endif
-
    if (buffers & PIPE_CLEAR_COLOR) {
       for (i = 0; i < softpipe->framebuffer.nr_cbufs; i++) {
          sp_tile_cache_clear(softpipe->cbuf_cache[i], color, 0);

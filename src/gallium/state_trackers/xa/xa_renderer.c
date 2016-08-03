@@ -597,21 +597,6 @@ renderer_texture(struct xa_context *r,
 {
     struct pipe_sampler_view **sampler_view = r->bound_sampler_views;
 
-#if 0
-    if (src_matrix) {
-	debug_printf("src_matrix = \n");
-	debug_printf("%f, %f, %f\n", src_matrix[0], src_matrix[1], src_matrix[2]);
-	debug_printf("%f, %f, %f\n", src_matrix[3], src_matrix[4], src_matrix[5]);
-	debug_printf("%f, %f, %f\n", src_matrix[6], src_matrix[7], src_matrix[8]);
-    }
-    if (mask_matrix) {
-	debug_printf("mask_matrix = \n");
-	debug_printf("%f, %f, %f\n", mask_matrix[0], mask_matrix[1], mask_matrix[2]);
-	debug_printf("%f, %f, %f\n", mask_matrix[3], mask_matrix[4], mask_matrix[5]);
-	debug_printf("%f, %f, %f\n", mask_matrix[6], mask_matrix[7], mask_matrix[8]);
-    }
-#endif
-
     switch(r->attrs_per_vertex) {
     case 2:
 	renderer_draw_conditional(r, 4 * 8);

@@ -438,7 +438,7 @@ USE OR OTHER DEALINGS IN THE SOFTWARE.
  * These are obsolete defines form r300_context.h, but they might give some
  * clues when investigating the addresses further...
  */
-#if 0
+/*
 #define VSF_DEST_PROGRAM        0x0
 #define VSF_DEST_MATRIX0        0x200
 #define VSF_DEST_MATRIX1        0x204
@@ -447,7 +447,7 @@ USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define VSF_DEST_VECTOR1        0x20d
 #define VSF_DEST_UNKNOWN1       0x400
 #define VSF_DEST_UNKNOWN2       0x406
-#endif
+*/
 
 /* gap */
 

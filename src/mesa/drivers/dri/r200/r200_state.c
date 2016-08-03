@@ -1827,26 +1827,6 @@ static void r200Enable( struct gl_context *ctx, GLenum cap, GLboolean state )
       /* These don't really do anything, as we don't use the 3vtx
        * primitives yet.
        */
-#if 0
-   case GL_POLYGON_OFFSET_POINT:
-      R200_STATECHANGE( rmesa, set );
-      if ( state ) {
-	 rmesa->hw.set.cmd[SET_SE_CNTL] |=  R200_ZBIAS_ENABLE_POINT;
-      } else {
-	 rmesa->hw.set.cmd[SET_SE_CNTL] &= ~R200_ZBIAS_ENABLE_POINT;
-      }
-      break;
-
-   case GL_POLYGON_OFFSET_LINE:
-      R200_STATECHANGE( rmesa, set );
-      if ( state ) {
-	 rmesa->hw.set.cmd[SET_SE_CNTL] |=  R200_ZBIAS_ENABLE_LINE;
-      } else {
-	 rmesa->hw.set.cmd[SET_SE_CNTL] &= ~R200_ZBIAS_ENABLE_LINE;
-      }
-      break;
-#endif
-
    case GL_POINT_SPRITE_ARB:
       R200_STATECHANGE( rmesa, spr );
       if ( state ) {
@@ -1963,37 +1943,9 @@ static void r200Enable( struct gl_context *ctx, GLenum cap, GLboolean state )
 	    if (ctx->Transform.ClipPlanesEnabled & (1 << i)) {
 	       rmesa->hw.tcl.cmd[TCL_UCP_VERT_BLEND_CTL] |= (R200_UCP_ENABLE_0 << i);
 	    }
-/*	    else {
-	       rmesa->hw.tcl.cmd[TCL_UCP_VERT_BLEND_CTL] &= ~(R200_UCP_ENABLE_0 << i);
-	    }*/
 	 }
 	 /* ugly. Need to call everything which might change compsel. */
 	 r200UpdateSpecular( ctx );
-#if 0
-	/* shouldn't be necessary, as it's picked up anyway in r200ValidateState (_NEW_PROGRAM),
-	   but without it doom3 locks up at always the same places. Why? */
-	/* FIXME: This can (and should) be replaced by a call to the TCL_STATE_FLUSH reg before
-	   accessing VAP_SE_VAP_CNTL. Requires drm changes (done). Remove after some time... */
-	 r200UpdateTextureState( ctx );
-	 /* if we call r200UpdateTextureState we need the code below because we are calling it with
-	    non-current derived enabled values which may revert the state atoms for frag progs even when
-	    they already got disabled... ugh
-	    Should really figure out why we need to call r200UpdateTextureState in the first place */
-	 GLuint unit;
-	 for (unit = 0; unit < R200_MAX_TEXTURE_UNITS; unit++) {
-	    R200_STATECHANGE( rmesa, pix[unit] );
-	    R200_STATECHANGE( rmesa, tex[unit] );
-	    rmesa->hw.tex[unit].cmd[TEX_PP_TXFORMAT] &=
-		~(R200_TXFORMAT_ST_ROUTE_MASK | R200_TXFORMAT_LOOKUP_DISABLE);
-	    rmesa->hw.tex[unit].cmd[TEX_PP_TXFORMAT] |= unit << R200_TXFORMAT_ST_ROUTE_SHIFT;
-	    /* need to guard this with drmSupportsFragmentShader? Should never get here if
-	       we don't announce ATI_fs, right? */
-	    rmesa->hw.tex[unit].cmd[TEX_PP_TXMULTI_CTL] = 0;
-         }
-	 R200_STATECHANGE( rmesa, cst );
-	 R200_STATECHANGE( rmesa, tf );
-	 rmesa->hw.cst.cmd[CST_PP_CNTL_X] = 0;
-#endif
       }
       else {
 	 /* picked up later */

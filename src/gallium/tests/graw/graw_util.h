@@ -253,27 +253,6 @@ graw_util_create_tex2d(const struct graw_info *info,
 
    /* Possibly read back & compare against original data:
     */
-#if 0
-   {
-      struct pipe_transfer *t;
-      uint32_t *ptr;
-      t = pipe_transfer_map(info->ctx, samptex,
-                            0, 0, /* level, layer */
-                            PIPE_TRANSFER_READ,
-                            0, 0, SIZE, SIZE); /* x, y, width, height */
-
-      ptr = info->ctx->transfer_map(info->ctx, t);
-
-      if (memcmp(ptr, tex2d, sizeof tex2d) != 0) {
-         assert(0);
-         exit(9);
-      }
-
-      info->ctx->transfer_unmap(info->ctx, t);
-
-      info->ctx->transfer_destroy(info->ctx, t);
-   }
-#endif
 
    return tex;
 }

@@ -245,10 +245,6 @@ svga_create_rasterizer_state(struct pipe_context *pipe,
        * line smooth state, where there is very little visual improvement.
        * Smooth lines will still be drawn for wide lines.
        */
-#if 0
-      rast->need_pipeline |= SVGA_PIPELINE_FLAG_LINES;
-      rast->need_pipeline_lines_str = "smooth lines";
-#endif
    }
 
    {

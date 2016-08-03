@@ -681,27 +681,6 @@ compute_min_mag_ranges(const struct gl_sampler_object *samp,
       minMagThresh = 0.0F;
    }
 
-#if 0
-   /* DEBUG CODE: Verify that lambda[] is monotonic.
-    * We can't really use this because the inaccuracy in the LOG2 function
-    * causes this test to fail, yet the resulting texturing is correct.
-    */
-   if (n > 1) {
-      GLuint i;
-      printf("lambda delta = %g\n", lambda[0] - lambda[n-1]);
-      if (lambda[0] >= lambda[n-1]) { /* decreasing */
-         for (i = 0; i < n - 1; i++) {
-            assert((GLint) (lambda[i] * 10) >= (GLint) (lambda[i+1] * 10));
-         }
-      }
-      else { /* increasing */
-         for (i = 0; i < n - 1; i++) {
-            assert((GLint) (lambda[i] * 10) <= (GLint) (lambda[i+1] * 10));
-         }
-      }
-   }
-#endif /* DEBUG */
-
    if (lambda[0] <= minMagThresh && (n <= 1 || lambda[n-1] <= minMagThresh)) {
       /* magnification for whole span */
       *magStart = 0;
@@ -740,27 +719,6 @@ compute_min_mag_ranges(const struct gl_sampler_object *samp,
          *minEnd = n;
       }
    }
-
-#if 0
-   /* Verify the min/mag Start/End values
-    * We don't use this either (see above)
-    */
-   {
-      GLint i;
-      for (i = 0; i < n; i++) {
-         if (lambda[i] > minMagThresh) {
-            /* minification */
-            assert(i >= *minStart);
-            assert(i < *minEnd);
-         }
-         else {
-            /* magnification */
-            assert(i >= *magStart);
-            assert(i < *magEnd);
-         }
-      }
-   }
-#endif
 }
 
 

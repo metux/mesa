@@ -455,11 +455,6 @@ llvmpipe_resource_from_handle(struct pipe_screen *screen,
     * Looks like unaligned displaytargets work just fine,
     * at least sampler/render ones.
     */
-#if 0
-   assert(lpr->base.width0 == width);
-   assert(lpr->base.height0 == height);
-#endif
-
    lpr->dt = winsys->displaytarget_from_handle(winsys,
                                                template,
                                                whandle,

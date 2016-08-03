@@ -186,11 +186,6 @@ vc4_generate_code_block(struct vc4_compile *c,
         int last_vpm_read_index = -1;
 
         qir_for_each_inst(qinst, block) {
-#if 0
-                fprintf(stderr, "translating qinst to qpu: ");
-                qir_dump_inst(qinst);
-                fprintf(stderr, "\n");
-#endif
 
                 static const struct {
                         uint32_t op;
