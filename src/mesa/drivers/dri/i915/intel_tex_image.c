@@ -42,7 +42,7 @@ intel_miptree_create_for_teximage(struct intel_context *intel,
    intel_miptree_get_dimensions_for_image(&intelImage->base.Base,
                                           &width, &height, &depth);
 
-   DBG("%s\n", __func__);
+   DBG("%s\n", __FUNCTION__);
 
    if (intelImage->base.Base.Level > intelObj->base.BaseLevel &&
        (width == 1 ||
@@ -122,28 +122,28 @@ try_pbo_upload(struct gl_context *ctx,
 
    if (intel->ctx._ImageTransferState ||
        unpack->SkipPixels || unpack->SkipRows) {
-      DBG("%s: image transfer\n", __func__);
+      DBG("%s: image transfer\n", __FUNCTION__);
       return false;
    }
 
    ctx->Driver.AllocTextureImageBuffer(ctx, image);
 
    if (!intelImage->mt) {
-      DBG("%s: no miptree\n", __func__);
+      DBG("%s: no miptree\n", __FUNCTION__);
       return false;
    }
 
    if (!_mesa_format_matches_format_and_type(intelImage->mt->format,
                                              format, type, false, NULL)) {
       DBG("%s: format mismatch (upload to %s with format 0x%x, type 0x%x)\n",
-	  __func__, _mesa_get_format_name(intelImage->mt->format),
+	  __FUNCTION__, _mesa_get_format_name(intelImage->mt->format),
 	  format, type);
       return false;
    }
 
    if (image->TexObject->Target == GL_TEXTURE_1D_ARRAY ||
        image->TexObject->Target == GL_TEXTURE_2D_ARRAY) {
-      DBG("%s: no support for array textures\n", __func__);
+      DBG("%s: no support for array textures\n", __FUNCTION__);
       return false;
    }
 
@@ -170,14 +170,14 @@ try_pbo_upload(struct gl_context *ctx,
                            intelImage->mt, image->Level, image->Face,
                            0, 0, false,
                            image->Width, image->Height, GL_COPY)) {
-      DBG("%s: blit failed\n", __func__);
+      DBG("%s: blit failed\n", __FUNCTION__);
       intel_miptree_release(&pbo_mt);
       return false;
    }
 
    intel_miptree_release(&pbo_mt);
 
-   DBG("%s: success\n", __func__);
+   DBG("%s: success\n", __FUNCTION__);
    return true;
 }
 
@@ -188,7 +188,7 @@ intelTexImage(struct gl_context * ctx,
               GLenum format, GLenum type, const void *pixels,
               const struct gl_pixelstore_attrib *unpack)
 {
-   DBG("%s target %s level %d %dx%dx%d\n", __func__,
+   DBG("%s target %s level %d %dx%dx%d\n", __FUNCTION__,
        _mesa_enum_to_string(texImage->TexObject->Target),
        texImage->Level, texImage->Width, texImage->Height, texImage->Depth);
 
@@ -200,7 +200,7 @@ intelTexImage(struct gl_context * ctx,
    }
 
    DBG("%s: upload image %dx%dx%d pixels %p\n",
-       __func__, texImage->Width, texImage->Height, texImage->Depth,
+       __FUNCTION__, texImage->Width, texImage->Height, texImage->Depth,
        pixels);
 
    _mesa_store_teximage(ctx, dims, texImage,
@@ -258,7 +258,7 @@ intel_set_texture_image_region(struct gl_context *ctx,
     */
    if (!has_surface_tile_offset &&
        (draw_x != 0 || draw_y != 0)) {
-      _mesa_error(ctx, GL_INVALID_OPERATION, __func__);
+      _mesa_error(ctx, GL_INVALID_OPERATION, __FUNCTION__);
       intel_miptree_release(&intel_image->mt);
       return;
    }

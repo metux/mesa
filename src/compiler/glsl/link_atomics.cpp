@@ -61,7 +61,7 @@ namespace {
                     (num_uniforms + 1));
 
          if (new_uniforms == NULL) {
-            _mesa_error_no_memory(__func__);
+            _mesa_error_no_memory(__FUNCTION__);
             return;
          }
 

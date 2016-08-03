@@ -636,7 +636,7 @@ vc4_dump_surface_non_msaa(struct pipe_surface *psurf)
 
         if (rsc->vc4_format != VC4_TEXTURE_TYPE_RGBA32R) {
                 fprintf(stderr, "%s: Unsupported format %s\n",
-                        __func__, util_format_short_name(psurf->format));
+                        __FUNCTION__, util_format_short_name(psurf->format));
                 return;
         }
 

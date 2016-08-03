@@ -201,7 +201,7 @@ static void r200SetVertexFormat( struct gl_context *ctx )
 static void r200_predict_emit_size( r200ContextPtr rmesa )
 {
    if (RADEON_DEBUG & RADEON_VERTS)
-      fprintf(stderr, "%s\n", __func__);
+      fprintf(stderr, "%s\n", __FUNCTION__);
    const int vertex_array_size = 7;
    const int prim_size = 3;
    if (!rmesa->radeon.swtcl.emit_prediction) {
@@ -209,7 +209,7 @@ static void r200_predict_emit_size( r200ContextPtr rmesa )
       if (rcommonEnsureCmdBufSpace(&rmesa->radeon,
 	       state_size +
 	       vertex_array_size + prim_size,
-	       __func__))
+	       __FUNCTION__))
 	 rmesa->radeon.swtcl.emit_prediction = radeonCountStateEmitSize(&rmesa->radeon);
       else
 	 rmesa->radeon.swtcl.emit_prediction = state_size;
@@ -223,7 +223,7 @@ static void r200RenderStart( struct gl_context *ctx )
 {
    r200SetVertexFormat( ctx );
    if (RADEON_DEBUG & RADEON_VERTS)
-      fprintf(stderr, "%s\n", __func__);
+      fprintf(stderr, "%s\n", __FUNCTION__);
 }
 
 
@@ -292,7 +292,7 @@ void r200_swtcl_flush(struct gl_context *ctx, uint32_t current_offset)
 {
    r200ContextPtr rmesa = R200_CONTEXT(ctx);
    if (RADEON_DEBUG & RADEON_VERTS)
-      fprintf(stderr, "%s\n", __func__);
+      fprintf(stderr, "%s\n", __FUNCTION__);
 
 
    radeonEmitState(&rmesa->radeon);

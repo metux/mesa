@@ -327,7 +327,7 @@ tgsi_get_processor_type(const struct tgsi_token *tokens)
    struct tgsi_parse_context parse;
 
    if (tgsi_parse_init( &parse, tokens ) != TGSI_PARSE_OK) {
-      debug_printf("tgsi_parse_init() failed in %s:%i!\n", __func__, __LINE__);
+      debug_printf("tgsi_parse_init() failed in %s:%i!\n", __FUNCTION__, __LINE__);
       return ~0;
    }
    return parse.FullHeader.Processor.Processor;

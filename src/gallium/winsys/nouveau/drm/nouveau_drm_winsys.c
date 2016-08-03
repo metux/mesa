@@ -127,7 +127,7 @@ nouveau_drm_screen_create(int fd)
 		init = nvc0_screen_create;
 		break;
 	default:
-		debug_printf("%s: unknown chipset nv%02x\n", __func__,
+		debug_printf("%s: unknown chipset nv%02x\n", __FUNCTION__,
 			     dev->chipset);
 		goto err;
 	}

@@ -684,7 +684,7 @@ static void update_light_colors( struct gl_context *ctx, GLuint p )
 {
    struct gl_light *l = &ctx->Light.Light[p];
 
-/*     fprintf(stderr, "%s\n", __func__); */
+/*     fprintf(stderr, "%s\n", __FUNCTION__); */
 
    if (l->Enabled) {
       r100ContextPtr rmesa = R100_CONTEXT(ctx);
@@ -800,7 +800,7 @@ void radeonUpdateMaterial( struct gl_context *ctx )
       mask &= ~ctx->Light._ColorMaterialBitmask;
 
    if (RADEON_DEBUG & RADEON_STATE)
-      fprintf(stderr, "%s\n", __func__);
+      fprintf(stderr, "%s\n", __FUNCTION__);
 
 
    if (mask & MAT_BIT_FRONT_EMISSION) {
@@ -1450,7 +1450,7 @@ static void radeonEnable( struct gl_context *ctx, GLenum cap, GLboolean state )
    GLuint p, flag;
 
    if ( RADEON_DEBUG & RADEON_STATE )
-      fprintf( stderr, "%s( %s = %s )\n", __func__,
+      fprintf( stderr, "%s( %s = %s )\n", __FUNCTION__,
 	       _mesa_enum_to_string( cap ),
 	       state ? "GL_TRUE" : "GL_FALSE" );
 
@@ -1744,7 +1744,7 @@ static void radeonLightingSpaceChange( struct gl_context *ctx )
    RADEON_STATECHANGE( rmesa, tcl );
 
    if (RADEON_DEBUG & RADEON_STATE)
-      fprintf(stderr, "%s %d BEFORE %x\n", __func__, ctx->_NeedEyeCoords,
+      fprintf(stderr, "%s %d BEFORE %x\n", __FUNCTION__, ctx->_NeedEyeCoords,
 	      rmesa->hw.tcl.cmd[TCL_LIGHT_MODEL_CTL]);
 
    if (ctx->_NeedEyeCoords)
@@ -1759,7 +1759,7 @@ static void radeonLightingSpaceChange( struct gl_context *ctx )
    }
 
    if (RADEON_DEBUG & RADEON_STATE)
-      fprintf(stderr, "%s %d AFTER %x\n", __func__, ctx->_NeedEyeCoords,
+      fprintf(stderr, "%s %d AFTER %x\n", __FUNCTION__, ctx->_NeedEyeCoords,
 	      rmesa->hw.tcl.cmd[TCL_LIGHT_MODEL_CTL]);
 }
 
@@ -2080,7 +2080,7 @@ static void radeonWrapRunPipeline( struct gl_context *ctx )
    GLboolean has_material;
 
    if (0)
-      fprintf(stderr, "%s, newstate: %x\n", __func__, rmesa->radeon.NewGLState);
+      fprintf(stderr, "%s, newstate: %x\n", __FUNCTION__, rmesa->radeon.NewGLState);
 
    /* Validate state:
     */

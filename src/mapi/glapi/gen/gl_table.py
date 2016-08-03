@@ -110,7 +110,7 @@ class PrintRemapTable(gl_XML.gl_print_base):
         print '    do { \\'
         print '        if ( (offset) < 0 ) { \\'
         print '            /* fprintf( stderr, "[%s:%u] SET_by_offset(%p, %d, %s)!\\n", */ \\'
-        print '            /*         __func__, __LINE__, disp, offset, # fn); */ \\'
+        print '            /*         __FUNCTION__, __LINE__, disp, offset, # fn); */ \\'
         print '            /* abort(); */ \\'
         print '        } \\'
         print '        else { \\'

@@ -436,7 +436,7 @@ format_array_format_table_init(void)
                                                        array_formats_equal);
 
    if (!format_array_format_table) {
-      _mesa_error_no_memory(__func__);
+      _mesa_error_no_memory(__FUNCTION__);
       return;
    }
 

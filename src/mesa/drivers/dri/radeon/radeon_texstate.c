@@ -213,7 +213,7 @@ static GLboolean radeonUpdateTextureEnv( struct gl_context *ctx, int unit )
 
 
    if ( RADEON_DEBUG & RADEON_TEXTURE ) {
-      fprintf( stderr, "%s( %p, %d )\n", __func__, (void *)ctx, unit );
+      fprintf( stderr, "%s( %p, %d )\n", __FUNCTION__, (void *)ctx, unit );
    }
 
    /* Set the texture environment state.  Isn't this nice and clean?
@@ -931,7 +931,7 @@ static GLboolean setup_hardware_state(r100ContextPtr rmesa, radeonTexObj *t, int
 	 t->pp_txfilter |= table[ firstImage->TexFormat ].filter;
       } else {
 	 _mesa_problem(NULL, "unexpected texture format in %s",
-		       __func__);
+		       __FUNCTION__);
 	 return GL_FALSE;
       }
    }

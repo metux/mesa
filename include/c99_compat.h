@@ -108,29 +108,13 @@
 #endif
 
 
-/*
- * C99 __func__ macro
- */
-#ifndef __func__
-#  if (__STDC_VERSION__ >= 199901L)
-     /* C99 */
-#  elif defined(__GNUC__)
-#    define __func__ __FUNCTION__
-#  elif defined(_MSC_VER)
-#    define __func__ __FUNCTION__
-#  else
-#    define __func__ "<unknown>"
-#  endif
-#endif
-
-
 /* Simple test case for debugging */
 #if 0
 static inline const char *
 test_c99_compat_h(const void * restrict a,
                   const void * restrict b)
 {
-   return __func__;
+   return __FUNCTION__;
 }
 #endif
 

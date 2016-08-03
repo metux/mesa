@@ -360,7 +360,7 @@ brw_clear_cache(struct brw_context *brw, struct brw_cache *cache)
    struct brw_cache_item *c, *next;
    GLuint i;
 
-   DBG("%s\n", __func__);
+   DBG("%s\n", __FUNCTION__);
 
    for (i = 0; i < cache->size; i++) {
       for (c = cache->items[i]; c; c = next) {
@@ -430,7 +430,7 @@ static void
 brw_destroy_cache(struct brw_context *brw, struct brw_cache *cache)
 {
 
-   DBG("%s\n", __func__);
+   DBG("%s\n", __FUNCTION__);
 
    if (brw->has_llc)
       drm_intel_bo_unmap(cache->bo);

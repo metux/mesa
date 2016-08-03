@@ -706,7 +706,7 @@ glXCreatePbuffer(Display * dpy, GLXFBConfig config, const int *attrib_list)
    width = 0;
    height = 0;
 
-   WARN_ONCE_GLX_1_3(dpy, __func__);
+   WARN_ONCE_GLX_1_3(dpy, __FUNCTION__);
 
 #ifdef GLX_USE_APPLEGL
    for (i = 0; attrib_list[i]; ++i) {
@@ -789,7 +789,7 @@ _GLX_PUBLIC void
 glXQueryDrawable(Display * dpy, GLXDrawable drawable,
                  int attribute, unsigned int *value)
 {
-   WARN_ONCE_GLX_1_3(dpy, __func__);
+   WARN_ONCE_GLX_1_3(dpy, __FUNCTION__);
 #ifdef GLX_USE_APPLEGL
    Window root;
    int x, y;
@@ -919,7 +919,7 @@ _GLX_PUBLIC GLXPixmap
 glXCreatePixmap(Display * dpy, GLXFBConfig config, Pixmap pixmap,
                 const int *attrib_list)
 {
-   WARN_ONCE_GLX_1_3(dpy, __func__);
+   WARN_ONCE_GLX_1_3(dpy, __FUNCTION__);
 
 #ifdef GLX_USE_APPLEGL
    const struct glx_config *modes = (const struct glx_config *) config;
@@ -939,7 +939,7 @@ _GLX_PUBLIC GLXWindow
 glXCreateWindow(Display * dpy, GLXFBConfig config, Window win,
                 const int *attrib_list)
 {
-   WARN_ONCE_GLX_1_3(dpy, __func__);
+   WARN_ONCE_GLX_1_3(dpy, __FUNCTION__);
 #ifdef GLX_USE_APPLEGL
    XWindowAttributes xwattr;
    XVisualInfo *visinfo;
@@ -973,7 +973,7 @@ glXCreateWindow(Display * dpy, GLXFBConfig config, Window win,
 _GLX_PUBLIC void
 glXDestroyPixmap(Display * dpy, GLXPixmap pixmap)
 {
-   WARN_ONCE_GLX_1_3(dpy, __func__);
+   WARN_ONCE_GLX_1_3(dpy, __FUNCTION__);
 #ifdef GLX_USE_APPLEGL
    if (apple_glx_pixmap_destroy(dpy, pixmap))
       __glXSendError(dpy, GLXBadPixmap, pixmap, X_GLXDestroyPixmap, false);
@@ -986,7 +986,7 @@ glXDestroyPixmap(Display * dpy, GLXPixmap pixmap)
 _GLX_PUBLIC void
 glXDestroyWindow(Display * dpy, GLXWindow win)
 {
-   WARN_ONCE_GLX_1_3(dpy, __func__);
+   WARN_ONCE_GLX_1_3(dpy, __FUNCTION__);
 #ifndef GLX_USE_APPLEGL
    DestroyDrawable(dpy, (GLXDrawable) win, X_GLXDestroyWindow);
 #endif

@@ -338,7 +338,7 @@ static GLuint radeonEnsureEmitSize( struct gl_context * ctx , GLuint inputs )
     space_required += SCISSOR_BUFSZ;
   }
   /* flush the buffer in case we need more than is left. */
-  if (rcommonEnsureCmdBufSpace(&rmesa->radeon, space_required, __func__))
+  if (rcommonEnsureCmdBufSpace(&rmesa->radeon, space_required, __FUNCTION__))
     return space_required + radeonCountStateEmitSize( &rmesa->radeon );
   else
     return space_required + state_size;
@@ -507,7 +507,7 @@ static void transition_to_hwtnl( struct gl_context *ctx )
    
    //   if (rmesa->swtcl.indexed_verts.buf) 
    //      radeonReleaseDmaRegion( rmesa, &rmesa->swtcl.indexed_verts, 
-   //			      __func__ );
+   //			      __FUNCTION__ );
 
    if (RADEON_DEBUG & RADEON_FALLBACKS)
       fprintf(stderr, "Radeon end tcl fallback\n");

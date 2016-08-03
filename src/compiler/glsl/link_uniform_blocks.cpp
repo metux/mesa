@@ -406,7 +406,7 @@ link_uniform_blocks(void *mem_ctx,
                               _mesa_key_string_equal);
 
    if (block_hash == NULL) {
-      _mesa_error_no_memory(__func__);
+      _mesa_error_no_memory(__FUNCTION__);
       linker_error(prog, "out of memory\n");
       return;
    }

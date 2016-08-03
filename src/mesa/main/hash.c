@@ -124,7 +124,7 @@ _mesa_NewHashTable(void)
                                           uint_key_compare);
       if (table->ht == NULL) {
          free(table);
-         _mesa_error_no_memory(__func__);
+         _mesa_error_no_memory(__FUNCTION__);
          return NULL;
       }
 
@@ -133,7 +133,7 @@ _mesa_NewHashTable(void)
       mtx_init(&table->WalkMutex, mtx_plain);
    }
    else {
-      _mesa_error_no_memory(__func__);
+      _mesa_error_no_memory(__FUNCTION__);
    }
 
    return table;

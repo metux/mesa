@@ -66,7 +66,7 @@ static void r200SetTexWrap( radeonTexObjPtr t, GLenum swrap, GLenum twrap, GLenu
 
    radeon_print(RADEON_TEXTURE, RADEON_TRACE,
 		"%s(tex %p) sw %s, tw %s, rw %s\n",
-		__func__, t,
+		__FUNCTION__, t,
 		_mesa_enum_to_string(swrap),
 		_mesa_enum_to_string(twrap),
 		_mesa_enum_to_string(rwrap));
@@ -103,7 +103,7 @@ static void r200SetTexWrap( radeonTexObjPtr t, GLenum swrap, GLenum twrap, GLenu
       is_clamp_to_border = GL_TRUE;
       break;
    default:
-      _mesa_problem(NULL, "bad S wrap mode in %s", __func__);
+      _mesa_problem(NULL, "bad S wrap mode in %s", __FUNCTION__);
    }
 
    if (tObj->Target != GL_TEXTURE_1D) {
@@ -137,7 +137,7 @@ static void r200SetTexWrap( radeonTexObjPtr t, GLenum swrap, GLenum twrap, GLenu
          is_clamp_to_border = GL_TRUE;
          break;
       default:
-         _mesa_problem(NULL, "bad T wrap mode in %s", __func__);
+         _mesa_problem(NULL, "bad T wrap mode in %s", __FUNCTION__);
       }
    }
 
@@ -173,7 +173,7 @@ static void r200SetTexWrap( radeonTexObjPtr t, GLenum swrap, GLenum twrap, GLenu
       is_clamp_to_border = GL_TRUE;
       break;
    default:
-      _mesa_problem(NULL, "bad R wrap mode in %s", __func__);
+      _mesa_problem(NULL, "bad R wrap mode in %s", __FUNCTION__);
    }
 
    if ( is_clamp_to_border ) {
@@ -188,7 +188,7 @@ static void r200SetTexMaxAnisotropy( radeonTexObjPtr t, GLfloat max )
    t->pp_txfilter &= ~R200_MAX_ANISO_MASK;
    radeon_print(RADEON_TEXTURE, RADEON_TRACE,
 	"%s(tex %p) max %f.\n",
-	__func__, t, max);
+	__FUNCTION__, t, max);
 
    if ( max <= 1.0 ) {
       t->pp_txfilter |= R200_MAX_ANISO_1_TO_1;
@@ -223,7 +223,7 @@ static void r200SetTexFilter( radeonTexObjPtr t, GLenum minf, GLenum magf )
 
    radeon_print(RADEON_TEXTURE, RADEON_TRACE,
 	"%s(tex %p) minf %s, maxf %s, anisotropy %d.\n",
-	__func__, t,
+	__FUNCTION__, t,
 	_mesa_enum_to_string(minf),
 	_mesa_enum_to_string(magf),
 	anisotropy);
@@ -301,7 +301,7 @@ static void r200TexEnv( struct gl_context *ctx, GLenum target,
    struct gl_texture_unit *texUnit = &ctx->Texture.Unit[unit];
 
    radeon_print(RADEON_TEXTURE | RADEON_STATE, RADEON_VERBOSE, "%s( %s )\n",
-	       __func__, _mesa_enum_to_string( pname ) );
+	       __FUNCTION__, _mesa_enum_to_string( pname ) );
 
    /* This is incorrect: Need to maintain this data for each of
     * GL_TEXTURE_{123}D, GL_TEXTURE_RECTANGLE_NV, etc, and switch
@@ -382,7 +382,7 @@ static void r200TexParameter( struct gl_context *ctx,
 
    radeon_print(RADEON_TEXTURE | RADEON_STATE, RADEON_VERBOSE,
 		"%s(%p, tex %p)  pname %s\n",
-		__func__, ctx, texObj,
+		__FUNCTION__, ctx, texObj,
 	       _mesa_enum_to_string( pname ) );
 
    switch ( pname ) {
@@ -412,7 +412,7 @@ static void r200DeleteTexture(struct gl_context * ctx, struct gl_texture_object 
    radeonTexObj* t = radeon_tex_obj(texObj);
 
    radeon_print(RADEON_TEXTURE | RADEON_STATE, RADEON_NORMAL,
-           "%s( %p (target = %s) )\n", __func__,
+           "%s( %p (target = %s) )\n", __FUNCTION__,
 	   (void *)texObj,
 	   _mesa_enum_to_string(texObj->Target));
 
@@ -471,7 +471,7 @@ static struct gl_texture_object *r200NewTextureObject(struct gl_context * ctx,
 
    radeon_print(RADEON_STATE | RADEON_TEXTURE, RADEON_NORMAL,
            "%s(%p) target %s, new texture %p.\n",
-	   __func__, ctx,
+	   __FUNCTION__, ctx,
 	   _mesa_enum_to_string(target), t);
 
    _mesa_initialize_texture_object(ctx, &t->base, name, target);

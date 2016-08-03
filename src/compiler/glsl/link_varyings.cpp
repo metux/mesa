@@ -639,7 +639,7 @@ tfeedback_decl::init(struct gl_context *ctx, const void *mem_ctx,
    long subscript = parse_program_resource_name(input, &base_name_end);
    this->var_name = ralloc_strndup(mem_ctx, input, base_name_end - input);
    if (this->var_name == NULL) {
-      _mesa_error_no_memory(__func__);
+      _mesa_error_no_memory(__FUNCTION__);
       return;
    }
 

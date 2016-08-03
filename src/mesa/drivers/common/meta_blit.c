@@ -827,7 +827,7 @@ blitframebuffer_texture(struct gl_context *ctx,
       verts[3].tex[2] = readAtt->Zoffset;
 
       _mesa_buffer_sub_data(ctx, blit->buf_obj, 0, sizeof(verts), verts,
-                            __func__);
+                            __FUNCTION__);
    }
 
    /* setup viewport */

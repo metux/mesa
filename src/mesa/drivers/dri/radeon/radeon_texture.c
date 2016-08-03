@@ -64,7 +64,7 @@ void copy_rows(void* dst, GLuint dststride, const void* src, GLuint srcstride,
 	radeon_print(RADEON_TEXTURE, RADEON_TRACE,
 		"%s dst %p, stride %u, src %p, stride %u, "
 		"numrows %u, rowsize %u.\n",
-		__func__, dst, dststride,
+		__FUNCTION__, dst, dststride,
 		src, srcstride,
 		numrows, rowsize);
 
@@ -170,7 +170,7 @@ radeon_map_texture_image(struct gl_context *ctx,
 		radeon_print(RADEON_TEXTURE, RADEON_VERBOSE,
 			     "%s for texture that is "
 			     "queued for GPU processing.\n",
-			     __func__);
+			     __FUNCTION__);
 		radeon_firevertices(rmesa);
 	}
 
@@ -278,12 +278,12 @@ mesa_format radeonChooseTextureFormat(struct gl_context * ctx,
 
 	radeon_print(RADEON_TEXTURE, RADEON_TRACE,
 		"%s InternalFormat=%s(%d) type=%s format=%s\n",
-		__func__,
+		__FUNCTION__,
 		_mesa_enum_to_string(internalFormat), internalFormat,
 		_mesa_enum_to_string(type), _mesa_enum_to_string(format));
 	radeon_print(RADEON_TEXTURE, RADEON_TRACE,
 			"%s do32bpt=%d force16bpt=%d\n",
-			__func__, do32bpt, force16bpt);
+			__FUNCTION__, do32bpt, force16bpt);
 
 	switch (internalFormat) {
 	case 4:
@@ -478,7 +478,7 @@ mesa_format radeonChooseTextureFormat(struct gl_context * ctx,
 	default:
 		_mesa_problem(ctx,
 			      "unexpected internalFormat 0x%x in %s",
-			      (int)internalFormat, __func__);
+			      (int)internalFormat, __FUNCTION__);
 		return MESA_FORMAT_NONE;
 	}
 
@@ -504,7 +504,7 @@ static void teximage_assign_miptree(radeonContextPtr rmesa,
 		radeon_print(RADEON_TEXTURE, RADEON_NORMAL,
 			     "%s: texObj %p, texImage %p, "
 				"texObj miptree doesn't match, allocated new miptree %p\n",
-				__func__, texObj, texImage, t->mt);
+				__FUNCTION__, texObj, texImage, t->mt);
 	}
 
 	/* Miptree alocation may have failed,
@@ -513,7 +513,7 @@ static void teximage_assign_miptree(radeonContextPtr rmesa,
 		radeon_miptree_reference(t->mt, &image->mt);
 	} else
 		radeon_print(RADEON_TEXTURE, RADEON_VERBOSE,
-				"%s Failed to allocate miptree.\n", __func__);
+				"%s Failed to allocate miptree.\n", __FUNCTION__);
 }
 
 unsigned radeonIsFormatRenderable(mesa_format mesa_format)
@@ -577,7 +577,7 @@ void radeon_image_target_texture_2d(struct gl_context *ctx, GLenum target,
 	if (t->mt == NULL)
 	{
 		radeon_print(RADEON_TEXTURE, RADEON_VERBOSE,
-			     "%s Failed to allocate miptree.\n", __func__);
+			     "%s Failed to allocate miptree.\n", __FUNCTION__);
 		return;
 	}
 

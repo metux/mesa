@@ -388,7 +388,7 @@ svga_sampler_view_destroy(struct pipe_context *pipe,
           * view for now.  This should only sometimes happen when a shared
           * texture is deleted.
           */
-         _debug_printf("context mismatch in %s\n", __func__);
+         _debug_printf("context mismatch in %s\n", __FUNCTION__);
       }
       else {
          enum pipe_error ret;

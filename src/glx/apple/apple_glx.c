@@ -60,7 +60,7 @@ surface_notify_handler(Display * dpy, unsigned int uid, int kind)
 
    switch (kind) {
    case AppleDRISurfaceNotifyDestroyed:
-      apple_glx_diagnostic("%s: surface destroyed %u\n", __func__, uid);
+      apple_glx_diagnostic("%s: surface destroyed %u\n", __FUNCTION__, uid);
       apple_glx_surface_destroy(uid);
       break;
 
@@ -74,7 +74,7 @@ surface_notify_handler(Display * dpy, unsigned int uid, int kind)
       break;
 
    default:
-      fprintf(stderr, "unhandled kind of event: %d in %s\n", kind, __func__);
+      fprintf(stderr, "unhandled kind of event: %d in %s\n", kind, __FUNCTION__);
    }
 }
 

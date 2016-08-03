@@ -29,7 +29,7 @@
 #define P_COMPILER_H
 
 
-#include "c99_compat.h" /* inline, __func__, etc. */
+#include "c99_compat.h" /* inline, __FUNCTION__, etc. */
 
 #include "p_config.h"
 
@@ -105,12 +105,6 @@ typedef unsigned char boolean;
 #  else
 #    define ALWAYS_INLINE inline
 #  endif
-#endif
-
-
-/* XXX: Use standard `__func__` instead */
-#ifndef __FUNCTION__
-#  define __FUNCTION__ __func__
 #endif
 
 

@@ -584,7 +584,7 @@ _mesa_propagate_uniforms_to_driver_storage(struct gl_uniform_storage *uni,
 #if 0
       printf("%s: %p[%d] components=%u vectors=%u count=%u vector_stride=%u "
 	     "extra_stride=%u\n",
-	     __func__, dst, array_index, components,
+	     __FUNCTION__, dst, array_index, components,
 	     vectors, count, store->vector_stride, extra_stride);
 #endif
 

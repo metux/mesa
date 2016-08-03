@@ -254,14 +254,14 @@ gen7_filter_tiling(const struct isl_device *dev,
                       ISL_SURF_USAGE_DISPLAY_ROTATE_270_BIT)) {
       assert(*flags & ISL_SURF_USAGE_DISPLAY_BIT);
       isl_finishme("%s:%s: handle rotated display surfaces",
-                   __FILE__, __func__);
+                   __FILE__, __FUNCTION__);
    }
 
    if (info->usage & (ISL_SURF_USAGE_DISPLAY_FLIP_X_BIT |
                       ISL_SURF_USAGE_DISPLAY_FLIP_Y_BIT)) {
       assert(*flags & ISL_SURF_USAGE_DISPLAY_BIT);
       isl_finishme("%s:%s: handle flipped display surfaces",
-                   __FILE__, __func__);
+                   __FILE__, __FUNCTION__);
    }
 
    if (info->usage & ISL_SURF_USAGE_DISPLAY_BIT) {

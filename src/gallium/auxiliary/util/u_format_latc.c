@@ -102,19 +102,19 @@ util_format_latc1_unorm_fetch_rgba_float(float *dst, const uint8_t *src, unsigne
 void
 util_format_latc1_snorm_fetch_rgba_8unorm(uint8_t *dst, const uint8_t *src, unsigned i, unsigned j)
 {
-   fprintf(stderr,"%s\n", __func__);
+   fprintf(stderr,"%s\n", __FUNCTION__);
 }
 
 void
 util_format_latc1_snorm_unpack_rgba_8unorm(uint8_t *dst_row, unsigned dst_stride, const uint8_t *src_row, unsigned src_stride, unsigned width, unsigned height)
 {
-   fprintf(stderr,"%s\n", __func__);
+   fprintf(stderr,"%s\n", __FUNCTION__);
 }
 
 void
 util_format_latc1_snorm_pack_rgba_8unorm(uint8_t *dst_row, unsigned dst_stride, const uint8_t *src_row, unsigned src_stride, unsigned width, unsigned height)
 {
-   fprintf(stderr,"%s\n", __func__);
+   fprintf(stderr,"%s\n", __FUNCTION__);
 }
 
 void
@@ -233,19 +233,19 @@ util_format_latc2_unorm_fetch_rgba_float(float *dst, const uint8_t *src, unsigne
 void
 util_format_latc2_snorm_fetch_rgba_8unorm(uint8_t *dst, const uint8_t *src, unsigned i, unsigned j)
 {
-   fprintf(stderr,"%s\n", __func__);
+   fprintf(stderr,"%s\n", __FUNCTION__);
 }
 
 void
 util_format_latc2_snorm_unpack_rgba_8unorm(uint8_t *dst_row, unsigned dst_stride, const uint8_t *src_row, unsigned src_stride, unsigned width, unsigned height)
 {
-   fprintf(stderr,"%s\n", __func__);
+   fprintf(stderr,"%s\n", __FUNCTION__);
 }
 
 void
 util_format_latc2_snorm_pack_rgba_8unorm(uint8_t *dst_row, unsigned dst_stride, const uint8_t *src_row, unsigned src_stride, unsigned width, unsigned height)
 {
-   fprintf(stderr,"%s\n", __func__);
+   fprintf(stderr,"%s\n", __FUNCTION__);
 }
 
 void

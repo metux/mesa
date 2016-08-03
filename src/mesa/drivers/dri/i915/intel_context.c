@@ -205,7 +205,7 @@ intel_update_renderbuffers(__DRIcontext *context, __DRIdrawable *drawable)
    drawable->lastStamp = drawable->dri2.stamp;
 
    if (unlikely(INTEL_DEBUG & DEBUG_DRI))
-      fprintf(stderr, "enter %s, drawable %p\n", __func__, drawable);
+      fprintf(stderr, "enter %s, drawable %p\n", __FUNCTION__, drawable);
 
    if (screen->image.loader)
       intel_update_image_buffers(intel, drawable);
@@ -423,7 +423,7 @@ intelInitContext(struct intel_context *intel,
    if (!_mesa_initialize_context(&intel->ctx, api, mesaVis, shareCtx,
                                  functions)) {
       *dri_ctx_error = __DRI_CTX_ERROR_NO_MEMORY;
-      printf("%s: failed to init mesa context\n", __func__);
+      printf("%s: failed to init mesa context\n", __FUNCTION__);
       return false;
    }
 

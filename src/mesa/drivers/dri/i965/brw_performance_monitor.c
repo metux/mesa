@@ -610,7 +610,7 @@ gather_statistics_results(struct brw_context *brw,
 
    monitor->pipeline_stats_results = calloc(num_counters, sizeof(uint64_t));
    if (monitor->pipeline_stats_results == NULL) {
-      _mesa_error_no_memory(__func__);
+      _mesa_error_no_memory(__FUNCTION__);
       return;
    }
 
