@@ -149,18 +149,10 @@ exp2(double d)
 #if __cplusplus >= 201103L && (__GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 23))
 #include <cmath>
 
-using std::fpclassify;
 using std::isfinite;
 using std::isinf;
 using std::isnan;
 using std::isnormal;
-using std::signbit;
-using std::isgreater;
-using std::isgreaterequal;
-using std::isless;
-using std::islessequal;
-using std::islessgreater;
-using std::isunordered;
 #endif
 
 
