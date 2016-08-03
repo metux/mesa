@@ -88,19 +88,6 @@ llrint(double d)
    return rounded;
 }
 
-static inline long long int
-llrintf(float f)
-{
-   long long int rounded = (long long int)(f + 0.5f);
-
-   if (f - floorf(f) == 0.5f) {
-      if (rounded % 2 != 0)
-         rounded += (f > 0) ? -1 : 1;
-   }
-
-   return rounded;
-}
-
 static inline float
 exp2f(float f)
 {
