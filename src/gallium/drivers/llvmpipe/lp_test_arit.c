@@ -29,6 +29,7 @@
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "util/u_pointer.h"
 #include "util/u_memory.h"

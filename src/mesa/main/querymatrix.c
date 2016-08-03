@@ -13,6 +13,8 @@
 
 
 #include <stdlib.h>
+#include <math.h>
+
 #include "c99_math.h"
 #include "glheader.h"
 #include "querymatrix.h"
