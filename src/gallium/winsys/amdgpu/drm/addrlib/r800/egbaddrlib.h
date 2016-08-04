@@ -34,22 +34,24 @@
 #ifndef __EG_BASED_ADDR_LIB_H__
 #define __EG_BASED_ADDR_LIB_H__
 
+#include <stdint.h>
+
 #include "addrlib.h"
 
 
 /// Structures for functions
 struct CoordFromBankPipe
 {
-    UINT_32 xBits : 3;
-    UINT_32 yBits : 4;
+    uint32_t xBits : 3;
+    uint32_t yBits : 4;
 
-    UINT_32 xBit3 : 1;
-    UINT_32 xBit4 : 1;
-    UINT_32 xBit5 : 1;
-    UINT_32 yBit3 : 1;
-    UINT_32 yBit4 : 1;
-    UINT_32 yBit5 : 1;
-    UINT_32 yBit6 : 1;
+    uint32_t xBit3 : 1;
+    uint32_t xBit4 : 1;
+    uint32_t xBit5 : 1;
+    uint32_t yBit3 : 1;
+    uint32_t yBit4 : 1;
+    uint32_t yBit5 : 1;
+    uint32_t yBit6 : 1;
 };
 
 /**
@@ -105,8 +107,8 @@ protected:
         ADDR_EXTRACT_BANKPIPE_SWIZZLE_OUTPUT* pOut) const;
 
     virtual ADDR_E_RETURNCODE HwlCombineBankPipeSwizzle(
-        UINT_32 bankSwizzle, UINT_32 pipeSwizzle, ADDR_TILEINFO*  pTileInfo,
-        UINT_64 baseAddr, UINT_32* pTileSwizzle) const;
+        uint32_t bankSwizzle, uint32_t pipeSwizzle, ADDR_TILEINFO*  pTileInfo,
+        uint64_t baseAddr, uint32_t* pTileSwizzle) const;
 
     virtual ADDR_E_RETURNCODE HwlComputeBaseSwizzle(
         const ADDR_COMPUTE_BASE_SWIZZLE_INPUT* pIn,
@@ -116,10 +118,10 @@ protected:
         const ADDR_CONVERT_TILEINFOTOHW_INPUT* pIn,
         ADDR_CONVERT_TILEINFOTOHW_OUTPUT* pOut) const;
 
-    virtual UINT_32 HwlComputeHtileBpp(
+    virtual uint32_t HwlComputeHtileBpp(
         BOOL_32 isWidth8, BOOL_32 isHeight8) const;
 
-    virtual UINT_32 HwlComputeHtileBaseAlign(
+    virtual uint32_t HwlComputeHtileBaseAlign(
         BOOL_32 isTcCompatible, BOOL_32 isLinear, ADDR_TILEINFO* pTileInfo) const;
 
     virtual ADDR_E_RETURNCODE HwlComputeFmaskInfo(
@@ -137,13 +139,13 @@ protected:
     virtual BOOL_32 HwlDegradeBaseLevel(
         const ADDR_COMPUTE_SURFACE_INFO_INPUT* pIn) const;
 
-    virtual UINT_32 HwlComputeQbStereoRightSwizzle(
+    virtual uint32_t HwlComputeQbStereoRightSwizzle(
         ADDR_COMPUTE_SURFACE_INFO_OUTPUT* pInfo) const;
 
     virtual VOID HwlComputePixelCoordFromOffset(
-        UINT_32 offset, UINT_32 bpp, UINT_32 numSamples,
-        AddrTileMode tileMode, UINT_32 tileBase, UINT_32 compBits,
-        UINT_32* pX, UINT_32* pY, UINT_32* pSlice, UINT_32* pSample,
+        uint32_t offset, uint32_t bpp, uint32_t numSamples,
+        AddrTileMode tileMode, uint32_t tileBase, uint32_t compBits,
+        uint32_t* pX, uint32_t* pY, uint32_t* pSlice, uint32_t* pSample,
         AddrTileType microTileType, BOOL_32 isDepthSampleOrder) const;
 
     /// Return Cmask block max
@@ -156,26 +158,26 @@ protected:
     /// Pure virtual function to setup tile info (indices) if client requests to do so
     virtual VOID HwlSetupTileInfo(
         AddrTileMode tileMode, ADDR_SURFACE_FLAGS flags,
-        UINT_32 bpp, UINT_32 pitch, UINT_32 height, UINT_32 numSamples,
+        uint32_t bpp, uint32_t pitch, uint32_t height, uint32_t numSamples,
         ADDR_TILEINFO* inputTileInfo, ADDR_TILEINFO* outputTileInfo,
         AddrTileType inTileType, ADDR_COMPUTE_SURFACE_INFO_OUTPUT* pOut) const = 0;
 
     /// Pure virtual function to get pitch alignment for linear modes
-    virtual UINT_32 HwlGetPitchAlignmentLinear(UINT_32 bpp, ADDR_SURFACE_FLAGS flags) const = 0;
+    virtual uint32_t HwlGetPitchAlignmentLinear(uint32_t bpp, ADDR_SURFACE_FLAGS flags) const = 0;
 
     /// Pure virtual function to get size adjustment for linear modes
-    virtual UINT_64 HwlGetSizeAdjustmentLinear(
+    virtual uint64_t HwlGetSizeAdjustmentLinear(
         AddrTileMode tileMode,
-        UINT_32 bpp, UINT_32 numSamples, UINT_32 baseAlign, UINT_32 pitchAlign,
-        UINT_32 *pPitch, UINT_32 *pHeight, UINT_32 *pHeightAlign) const = 0;
+        uint32_t bpp, uint32_t numSamples, uint32_t baseAlign, uint32_t pitchAlign,
+        uint32_t *pPitch, uint32_t *pHeight, uint32_t *pHeightAlign) const = 0;
 
-    virtual UINT_32 HwlGetPitchAlignmentMicroTiled(
-        AddrTileMode tileMode, UINT_32 bpp, ADDR_SURFACE_FLAGS flags, UINT_32 numSamples) const;
+    virtual uint32_t HwlGetPitchAlignmentMicroTiled(
+        AddrTileMode tileMode, uint32_t bpp, ADDR_SURFACE_FLAGS flags, uint32_t numSamples) const;
 
-    virtual UINT_64 HwlGetSizeAdjustmentMicroTiled(
-        UINT_32 thickness, UINT_32 bpp, ADDR_SURFACE_FLAGS flags, UINT_32 numSamples,
-        UINT_32 baseAlign, UINT_32 pitchAlign,
-        UINT_32 *pPitch, UINT_32 *pHeight) const;
+    virtual uint64_t HwlGetSizeAdjustmentMicroTiled(
+        uint32_t thickness, uint32_t bpp, ADDR_SURFACE_FLAGS flags, uint32_t numSamples,
+        uint32_t baseAlign, uint32_t pitchAlign,
+        uint32_t *pPitch, uint32_t *pHeight) const;
 
         /// Pure virtual function to do extra sanity check
     virtual BOOL_32 HwlSanityCheckMacroTiled(
@@ -187,13 +189,13 @@ protected:
         ADDR_COMPUTE_SURFACE_INFO_OUTPUT* pOut) const = 0;
 
     /// Adjusts bank before bank is modified by rotation
-    virtual UINT_32 HwlPreAdjustBank(
-        UINT_32 tileX, UINT_32 bank, ADDR_TILEINFO*  pTileInfo) const = 0;
+    virtual uint32_t HwlPreAdjustBank(
+        uint32_t tileX, uint32_t bank, ADDR_TILEINFO*  pTileInfo) const = 0;
 
     virtual VOID HwlComputeSurfaceCoord2DFromBankPipe(
-        AddrTileMode tileMode, UINT_32* pX, UINT_32* pY, UINT_32 slice,
-        UINT_32 bank, UINT_32 pipe,
-        UINT_32 bankSwizzle, UINT_32 pipeSwizzle, UINT_32 tileSlices,
+        AddrTileMode tileMode, uint32_t* pX, uint32_t* pY, uint32_t slice,
+        uint32_t bank, uint32_t pipe,
+        uint32_t bankSwizzle, uint32_t pipeSwizzle, uint32_t tileSlices,
         BOOL_32 ignoreSE,
         ADDR_TILEINFO* pTileInfo) const = 0;
 
@@ -201,9 +203,9 @@ protected:
         const ADDR_TILEINFO* pLeft, const ADDR_TILEINFO* pRight) const;
 
     virtual AddrTileMode HwlDegradeThickTileMode(
-        AddrTileMode baseTileMode, UINT_32 numSlices, UINT_32* pBytesPerTile) const;
+        AddrTileMode baseTileMode, uint32_t numSlices, uint32_t* pBytesPerTile) const;
 
-    virtual INT_32 HwlPostCheckTileIndex(
+    virtual int32_t HwlPostCheckTileIndex(
         const ADDR_TILEINFO* pInfo, AddrTileMode mode, AddrTileType type,
         INT curIndex = TileIndexInvalid) const
     {
@@ -232,101 +234,101 @@ protected:
     }
 
     virtual BOOL_32 HwlReduceBankWidthHeight(
-        UINT_32 tileSize, UINT_32 bpp, ADDR_SURFACE_FLAGS flags, UINT_32 numSamples,
-        UINT_32 bankHeightAlign, UINT_32 pipes,
+        uint32_t tileSize, uint32_t bpp, ADDR_SURFACE_FLAGS flags, uint32_t numSamples,
+        uint32_t bankHeightAlign, uint32_t pipes,
         ADDR_TILEINFO* pTileInfo) const;
 
     // Protected non-virtual functions
 
     /// Mip level functions
     AddrTileMode ComputeSurfaceMipLevelTileMode(
-        AddrTileMode baseTileMode, UINT_32 bpp,
-        UINT_32 pitch, UINT_32 height, UINT_32 numSlices, UINT_32 numSamples,
-        UINT_32 pitchAlign, UINT_32 heightAlign,
+        AddrTileMode baseTileMode, uint32_t bpp,
+        uint32_t pitch, uint32_t height, uint32_t numSlices, uint32_t numSamples,
+        uint32_t pitchAlign, uint32_t heightAlign,
         ADDR_TILEINFO* pTileInfo) const;
 
     /// Swizzle functions
     VOID ExtractBankPipeSwizzle(
-        UINT_32 base256b, ADDR_TILEINFO* pTileInfo,
-        UINT_32* pBankSwizzle, UINT_32* pPipeSwizzle) const;
+        uint32_t base256b, ADDR_TILEINFO* pTileInfo,
+        uint32_t* pBankSwizzle, uint32_t* pPipeSwizzle) const;
 
-    UINT_32 GetBankPipeSwizzle(
-        UINT_32 bankSwizzle, UINT_32 pipeSwizzle,
-        UINT_64 baseAddr, ADDR_TILEINFO*  pTileInfo) const;
+    uint32_t GetBankPipeSwizzle(
+        uint32_t bankSwizzle, uint32_t pipeSwizzle,
+        uint64_t baseAddr, ADDR_TILEINFO*  pTileInfo) const;
 
-    UINT_32 ComputeSliceTileSwizzle(
-        AddrTileMode tileMode, UINT_32 baseSwizzle, UINT_32 slice, UINT_64 baseAddr,
+    uint32_t ComputeSliceTileSwizzle(
+        AddrTileMode tileMode, uint32_t baseSwizzle, uint32_t slice, uint64_t baseAddr,
         ADDR_TILEINFO* pTileInfo) const;
 
     /// Addressing functions
-    UINT_32 ComputeBankFromCoord(
-        UINT_32 x, UINT_32 y, UINT_32 slice,
-        AddrTileMode tileMode, UINT_32 bankSwizzle, UINT_32 tileSpitSlice,
+    uint32_t ComputeBankFromCoord(
+        uint32_t x, uint32_t y, uint32_t slice,
+        AddrTileMode tileMode, uint32_t bankSwizzle, uint32_t tileSpitSlice,
         ADDR_TILEINFO* pTileInfo) const;
 
-    UINT_32 ComputeBankFromAddr(
-        UINT_64 addr, UINT_32 numBanks, UINT_32 numPipes) const;
+    uint32_t ComputeBankFromAddr(
+        uint64_t addr, uint32_t numBanks, uint32_t numPipes) const;
 
-    UINT_32 ComputePipeRotation(
-        AddrTileMode tileMode, UINT_32 numPipes) const;
+    uint32_t ComputePipeRotation(
+        AddrTileMode tileMode, uint32_t numPipes) const;
 
-    UINT_32 ComputeBankRotation(
-        AddrTileMode tileMode, UINT_32 numBanks,
-        UINT_32 numPipes) const;
+    uint32_t ComputeBankRotation(
+        AddrTileMode tileMode, uint32_t numBanks,
+        uint32_t numPipes) const;
 
     VOID ComputeSurfaceCoord2DFromBankPipe(
-        AddrTileMode tileMode, UINT_32 x, UINT_32 y, UINT_32 slice,
-        UINT_32 bank, UINT_32 pipe,
-        UINT_32 bankSwizzle, UINT_32 pipeSwizzle, UINT_32 tileSlices,
+        AddrTileMode tileMode, uint32_t x, uint32_t y, uint32_t slice,
+        uint32_t bank, uint32_t pipe,
+        uint32_t bankSwizzle, uint32_t pipeSwizzle, uint32_t tileSlices,
         ADDR_TILEINFO* pTileInfo,
         CoordFromBankPipe *pOutput) const;
 
     /// Htile/Cmask functions
-    UINT_64 ComputeHtileBytes(
-        UINT_32 pitch, UINT_32 height, UINT_32 bpp,
-        BOOL_32 isLinear, UINT_32 numSlices, UINT_64* sliceBytes, UINT_32 baseAlign) const;
+    uint64_t ComputeHtileBytes(
+        uint32_t pitch, uint32_t height, uint32_t bpp,
+        BOOL_32 isLinear, uint32_t numSlices, uint64_t* sliceBytes, uint32_t baseAlign) const;
 
     // Static functions
     static BOOL_32 IsTileInfoAllZero(ADDR_TILEINFO* pTileInfo);
-    static UINT_32 ComputeFmaskNumPlanesFromNumSamples(UINT_32 numSamples);
-    static UINT_32 ComputeFmaskResolvedBppFromNumSamples(UINT_32 numSamples);
+    static uint32_t ComputeFmaskNumPlanesFromNumSamples(uint32_t numSamples);
+    static uint32_t ComputeFmaskResolvedBppFromNumSamples(uint32_t numSamples);
 
 private:
 
     BOOL_32 ComputeSurfaceInfoLinear(
         const ADDR_COMPUTE_SURFACE_INFO_INPUT* pIn,
         ADDR_COMPUTE_SURFACE_INFO_OUTPUT* pOut,
-        UINT_32 padDims) const;
+        uint32_t padDims) const;
 
     BOOL_32 ComputeSurfaceInfoMicroTiled(
         const ADDR_COMPUTE_SURFACE_INFO_INPUT* pIn,
         ADDR_COMPUTE_SURFACE_INFO_OUTPUT* pOut,
-        UINT_32 padDims,
+        uint32_t padDims,
         AddrTileMode expTileMode) const;
 
     BOOL_32 ComputeSurfaceInfoMacroTiled(
         const ADDR_COMPUTE_SURFACE_INFO_INPUT* pIn,
         ADDR_COMPUTE_SURFACE_INFO_OUTPUT* pOut,
-        UINT_32 padDims,
+        uint32_t padDims,
         AddrTileMode expTileMode) const;
 
     BOOL_32 ComputeSurfaceAlignmentsLinear(
-        AddrTileMode tileMode, UINT_32 bpp, ADDR_SURFACE_FLAGS flags,
-        UINT_32* pBaseAlign, UINT_32* pPitchAlign, UINT_32* pHeightAlign) const;
+        AddrTileMode tileMode, uint32_t bpp, ADDR_SURFACE_FLAGS flags,
+        uint32_t* pBaseAlign, uint32_t* pPitchAlign, uint32_t* pHeightAlign) const;
 
     BOOL_32 ComputeSurfaceAlignmentsMicroTiled(
-        AddrTileMode tileMode, UINT_32 bpp, ADDR_SURFACE_FLAGS flags,
-        UINT_32 mipLevel, UINT_32 numSamples,
-        UINT_32* pBaseAlign, UINT_32* pPitchAlign, UINT_32* pHeightAlign) const;
+        AddrTileMode tileMode, uint32_t bpp, ADDR_SURFACE_FLAGS flags,
+        uint32_t mipLevel, uint32_t numSamples,
+        uint32_t* pBaseAlign, uint32_t* pPitchAlign, uint32_t* pHeightAlign) const;
 
     BOOL_32 ComputeSurfaceAlignmentsMacroTiled(
-        AddrTileMode tileMode, UINT_32 bpp, ADDR_SURFACE_FLAGS flags,
-        UINT_32 mipLevel, UINT_32 numSamples,
+        AddrTileMode tileMode, uint32_t bpp, ADDR_SURFACE_FLAGS flags,
+        uint32_t mipLevel, uint32_t numSamples,
         ADDR_TILEINFO* pTileInfo,
-        UINT_32* pBaseAlign, UINT_32* pPitchAlign, UINT_32* pHeightAlign) const;
+        uint32_t* pBaseAlign, uint32_t* pPitchAlign, uint32_t* pHeightAlign) const;
 
     /// Surface addressing functions
-    UINT_64 DispatchComputeSurfaceAddrFromCoord(
+    uint64_t DispatchComputeSurfaceAddrFromCoord(
         const ADDR_COMPUTE_SURFACE_ADDRFROMCOORD_INPUT* pIn,
         ADDR_COMPUTE_SURFACE_ADDRFROMCOORD_OUTPUT* pOut) const;
 
@@ -334,33 +336,33 @@ private:
         const ADDR_COMPUTE_SURFACE_COORDFROMADDR_INPUT* pIn,
         ADDR_COMPUTE_SURFACE_COORDFROMADDR_OUTPUT* pOut) const;
 
-    UINT_64 ComputeSurfaceAddrFromCoordMicroTiled(
-        UINT_32 x, UINT_32 y, UINT_32 slice, UINT_32 sample,
-        UINT_32 bpp, UINT_32 pitch, UINT_32 height, UINT_32 numSamples,
+    uint64_t ComputeSurfaceAddrFromCoordMicroTiled(
+        uint32_t x, uint32_t y, uint32_t slice, uint32_t sample,
+        uint32_t bpp, uint32_t pitch, uint32_t height, uint32_t numSamples,
         AddrTileMode tileMode,
         AddrTileType microTileType, BOOL_32 isDepthSampleOrder,
-        UINT_32* pBitPosition) const;
+        uint32_t* pBitPosition) const;
 
-    UINT_64 ComputeSurfaceAddrFromCoordMacroTiled(
-        UINT_32 x, UINT_32 y, UINT_32 slice, UINT_32 sample,
-        UINT_32 bpp, UINT_32 pitch, UINT_32 height, UINT_32 numSamples,
+    uint64_t ComputeSurfaceAddrFromCoordMacroTiled(
+        uint32_t x, uint32_t y, uint32_t slice, uint32_t sample,
+        uint32_t bpp, uint32_t pitch, uint32_t height, uint32_t numSamples,
         AddrTileMode tileMode,
         AddrTileType microTileType, BOOL_32 ignoreSE, BOOL_32 isDepthSampleOrder,
-        UINT_32 pipeSwizzle, UINT_32 bankSwizzle,
+        uint32_t pipeSwizzle, uint32_t bankSwizzle,
         ADDR_TILEINFO* pTileInfo,
-        UINT_32* pBitPosition) const;
+        uint32_t* pBitPosition) const;
 
     VOID    ComputeSurfaceCoordFromAddrMacroTiled(
-        UINT_64 addr, UINT_32 bitPosition,
-        UINT_32 bpp, UINT_32 pitch, UINT_32 height, UINT_32 numSamples,
-        AddrTileMode tileMode, UINT_32 tileBase, UINT_32 compBits,
+        uint64_t addr, uint32_t bitPosition,
+        uint32_t bpp, uint32_t pitch, uint32_t height, uint32_t numSamples,
+        AddrTileMode tileMode, uint32_t tileBase, uint32_t compBits,
         AddrTileType microTileType, BOOL_32 ignoreSE, BOOL_32 isDepthSampleOrder,
-        UINT_32 pipeSwizzle, UINT_32 bankSwizzle,
+        uint32_t pipeSwizzle, uint32_t bankSwizzle,
         ADDR_TILEINFO* pTileInfo,
-        UINT_32* pX, UINT_32* pY, UINT_32* pSlice, UINT_32* pSample) const;
+        uint32_t* pX, uint32_t* pY, uint32_t* pSlice, uint32_t* pSample) const;
 
     /// Fmask functions
-    UINT_64 DispatchComputeFmaskAddrFromCoord(
+    uint64_t DispatchComputeFmaskAddrFromCoord(
         const ADDR_COMPUTE_FMASK_ADDRFROMCOORD_INPUT* pIn,
         ADDR_COMPUTE_FMASK_ADDRFROMCOORD_OUTPUT* pOut) const;
 
@@ -369,44 +371,43 @@ private:
         ADDR_COMPUTE_FMASK_COORDFROMADDR_OUTPUT* pOut) const;
 
     // FMASK related methods - private
-    UINT_64 ComputeFmaskAddrFromCoordMicroTiled(
-        UINT_32 x, UINT_32 y, UINT_32 slice, UINT_32 sample, UINT_32 plane,
-        UINT_32 pitch, UINT_32 height, UINT_32 numSamples, AddrTileMode tileMode,
-        BOOL_32 resolved, UINT_32* pBitPosition) const;
+    uint64_t ComputeFmaskAddrFromCoordMicroTiled(
+        uint32_t x, uint32_t y, uint32_t slice, uint32_t sample, uint32_t plane,
+        uint32_t pitch, uint32_t height, uint32_t numSamples, AddrTileMode tileMode,
+        BOOL_32 resolved, uint32_t* pBitPosition) const;
 
     VOID    ComputeFmaskCoordFromAddrMicroTiled(
-        UINT_64 addr, UINT_32 bitPosition,
-        UINT_32 pitch, UINT_32 height, UINT_32 numSamples,
+        uint64_t addr, uint32_t bitPosition,
+        uint32_t pitch, uint32_t height, uint32_t numSamples,
         AddrTileMode tileMode, BOOL_32 resolved,
-        UINT_32* pX, UINT_32* pY, UINT_32* pSlice, UINT_32* pSample, UINT_32* pPlane) const;
+        uint32_t* pX, uint32_t* pY, uint32_t* pSlice, uint32_t* pSample, uint32_t* pPlane) const;
 
     VOID    ComputeFmaskCoordFromAddrMacroTiled(
-        UINT_64 addr, UINT_32 bitPosition,
-        UINT_32 pitch, UINT_32 height, UINT_32 numSamples, AddrTileMode tileMode,
-        UINT_32 pipeSwizzle, UINT_32 bankSwizzle,
+        uint64_t addr, uint32_t bitPosition,
+        uint32_t pitch, uint32_t height, uint32_t numSamples, AddrTileMode tileMode,
+        uint32_t pipeSwizzle, uint32_t bankSwizzle,
         BOOL_32 ignoreSE,
         ADDR_TILEINFO* pTileInfo,
         BOOL_32 resolved,
-        UINT_32* pX, UINT_32* pY, UINT_32* pSlice, UINT_32* pSample, UINT_32* pPlane) const;
+        uint32_t* pX, uint32_t* pY, uint32_t* pSlice, uint32_t* pSample, uint32_t* pPlane) const;
 
-    UINT_64 ComputeFmaskAddrFromCoordMacroTiled(
-        UINT_32 x, UINT_32 y, UINT_32 slice, UINT_32 sample, UINT_32 plane,
-        UINT_32 pitch, UINT_32 height, UINT_32 numSamples,
-        AddrTileMode tileMode, UINT_32 pipeSwizzle, UINT_32 bankSwizzle,
+    uint64_t ComputeFmaskAddrFromCoordMacroTiled(
+        uint32_t x, uint32_t y, uint32_t slice, uint32_t sample, uint32_t plane,
+        uint32_t pitch, uint32_t height, uint32_t numSamples,
+        AddrTileMode tileMode, uint32_t pipeSwizzle, uint32_t bankSwizzle,
         BOOL_32 ignoreSE,
         ADDR_TILEINFO* pTileInfo,
         BOOL_32 resolved,
-        UINT_32* pBitPosition) const;
+        uint32_t* pBitPosition) const;
 
     /// Sanity check functions
     BOOL_32 SanityCheckMacroTiled(
         ADDR_TILEINFO* pTileInfo) const;
 
 protected:
-    UINT_32 m_ranks;                ///< Number of ranks - MC_ARB_RAMCFG.NOOFRANK
-    UINT_32 m_logicalBanks;         ///< Logical banks = m_banks * m_ranks if m_banks != 16
-    UINT_32 m_bankInterleave;       ///< Bank interleave, as a multiple of pipe interleave size
+    uint32_t m_ranks;                ///< Number of ranks - MC_ARB_RAMCFG.NOOFRANK
+    uint32_t m_logicalBanks;         ///< Logical banks = m_banks * m_ranks if m_banks != 16
+    uint32_t m_bankInterleave;       ///< Bank interleave, as a multiple of pipe interleave size
 };
 
 #endif
-

@@ -34,6 +34,8 @@
 #ifndef __SI_ADDR_LIB_H__
 #define __SI_ADDR_LIB_H__
 
+#include <stdint.h>
+
 #include "addrlib.h"
 #include "egbaddrlib.h"
 
@@ -58,13 +60,13 @@ struct SIChipSettings
 {
     struct
     {
-        UINT_32 isSouthernIsland    : 1;
-        UINT_32 isTahiti            : 1;
-        UINT_32 isPitCairn          : 1;
-        UINT_32 isCapeVerde         : 1;
+        uint32_t isSouthernIsland    : 1;
+        uint32_t isTahiti            : 1;
+        uint32_t isPitCairn          : 1;
+        uint32_t isCapeVerde         : 1;
         /// Oland/Hainan are of GFXIP 6.0, similar with SI
-        UINT_32 isOland             : 1;
-        UINT_32 isHainan            : 1;
+        uint32_t isOland             : 1;
+        uint32_t isHainan            : 1;
     };
 };
 
@@ -96,15 +98,15 @@ protected:
         const ADDR_CONVERT_TILEINFOTOHW_INPUT* pIn,
         ADDR_CONVERT_TILEINFOTOHW_OUTPUT* pOut) const;
 
-    virtual UINT_64 HwlComputeXmaskAddrFromCoord(
-        UINT_32 pitch, UINT_32 height, UINT_32 x, UINT_32 y, UINT_32 slice, UINT_32 numSlices,
-        UINT_32 factor, BOOL_32 isLinear, BOOL_32 isWidth8, BOOL_32 isHeight8,
-        ADDR_TILEINFO* pTileInfo, UINT_32* pBitPosition) const;
+    virtual uint64_t HwlComputeXmaskAddrFromCoord(
+        uint32_t pitch, uint32_t height, uint32_t x, uint32_t y, uint32_t slice, uint32_t numSlices,
+        uint32_t factor, BOOL_32 isLinear, BOOL_32 isWidth8, BOOL_32 isHeight8,
+        ADDR_TILEINFO* pTileInfo, uint32_t* pBitPosition) const;
 
     virtual VOID HwlComputeXmaskCoordFromAddr(
-        UINT_64 addr, UINT_32 bitPosition, UINT_32 pitch, UINT_32 height, UINT_32 numSlices,
-        UINT_32 factor, BOOL_32 isLinear, BOOL_32 isWidth8, BOOL_32 isHeight8,
-        ADDR_TILEINFO* pTileInfo, UINT_32* pX, UINT_32* pY, UINT_32* pSlice) const;
+        uint64_t addr, uint32_t bitPosition, uint32_t pitch, uint32_t height, uint32_t numSlices,
+        uint32_t factor, BOOL_32 isLinear, BOOL_32 isWidth8, BOOL_32 isHeight8,
+        ADDR_TILEINFO* pTileInfo, uint32_t* pX, uint32_t* pY, uint32_t* pSlice) const;
 
     virtual ADDR_E_RETURNCODE HwlGetTileIndex(
         const ADDR_GET_TILEINDEX_INPUT* pIn,
@@ -114,55 +116,55 @@ protected:
         ADDR_COMPUTE_SURFACE_INFO_INPUT* pIn) const;
 
     virtual AddrChipFamily HwlConvertChipFamily(
-        UINT_32 uChipFamily, UINT_32 uChipRevision);
+        uint32_t uChipFamily, uint32_t uChipRevision);
 
     virtual BOOL_32 HwlInitGlobalParams(
         const ADDR_CREATE_INPUT* pCreateIn);
 
     virtual ADDR_E_RETURNCODE HwlSetupTileCfg(
-        INT_32 index, INT_32 macroModeIndex,
+        int32_t index, int32_t macroModeIndex,
         ADDR_TILEINFO* pInfo, AddrTileMode* pMode = 0, AddrTileType* pType = 0) const;
 
     virtual VOID HwlComputeTileDataWidthAndHeightLinear(
-        UINT_32* pMacroWidth, UINT_32* pMacroHeight,
-        UINT_32 bpp, ADDR_TILEINFO* pTileInfo) const;
+        uint32_t* pMacroWidth, uint32_t* pMacroHeight,
+        uint32_t bpp, ADDR_TILEINFO* pTileInfo) const;
 
-    virtual UINT_64 HwlComputeHtileBytes(
-        UINT_32 pitch, UINT_32 height, UINT_32 bpp,
-        BOOL_32 isLinear, UINT_32 numSlices, UINT_64* pSliceBytes, UINT_32 baseAlign) const;
+    virtual uint64_t HwlComputeHtileBytes(
+        uint32_t pitch, uint32_t height, uint32_t bpp,
+        BOOL_32 isLinear, uint32_t numSlices, uint64_t* pSliceBytes, uint32_t baseAlign) const;
 
-    virtual UINT_32 ComputePipeFromCoord(
-        UINT_32 x, UINT_32 y, UINT_32 slice,
-        AddrTileMode tileMode, UINT_32 pipeSwizzle, BOOL_32 ignoreSE,
+    virtual uint32_t ComputePipeFromCoord(
+        uint32_t x, uint32_t y, uint32_t slice,
+        AddrTileMode tileMode, uint32_t pipeSwizzle, BOOL_32 ignoreSE,
         ADDR_TILEINFO* pTileInfo) const;
 
-    virtual UINT_32 HwlGetPipes(const ADDR_TILEINFO* pTileInfo) const;
+    virtual uint32_t HwlGetPipes(const ADDR_TILEINFO* pTileInfo) const;
 
     /// Pre-handler of 3x pitch (96 bit) adjustment
-    virtual UINT_32 HwlPreHandleBaseLvl3xPitch(
-        const ADDR_COMPUTE_SURFACE_INFO_INPUT* pIn, UINT_32 expPitch) const;
+    virtual uint32_t HwlPreHandleBaseLvl3xPitch(
+        const ADDR_COMPUTE_SURFACE_INFO_INPUT* pIn, uint32_t expPitch) const;
     /// Post-handler of 3x pitch adjustment
-    virtual UINT_32 HwlPostHandleBaseLvl3xPitch(
-        const ADDR_COMPUTE_SURFACE_INFO_INPUT* pIn, UINT_32 expPitch) const;
+    virtual uint32_t HwlPostHandleBaseLvl3xPitch(
+        const ADDR_COMPUTE_SURFACE_INFO_INPUT* pIn, uint32_t expPitch) const;
 
     /// Dummy function to finalize the inheritance
-    virtual UINT_32 HwlComputeXmaskCoordYFrom8Pipe(
-        UINT_32 pipe, UINT_32 x) const;
+    virtual uint32_t HwlComputeXmaskCoordYFrom8Pipe(
+        uint32_t pipe, uint32_t x) const;
 
     // Sub-hwl interface - defined in EgBasedAddrLib
     virtual VOID HwlSetupTileInfo(
         AddrTileMode tileMode, ADDR_SURFACE_FLAGS flags,
-        UINT_32 bpp, UINT_32 pitch, UINT_32 height, UINT_32 numSamples,
+        uint32_t bpp, uint32_t pitch, uint32_t height, uint32_t numSamples,
         ADDR_TILEINFO* inputTileInfo, ADDR_TILEINFO* outputTileInfo,
         AddrTileType inTileType, ADDR_COMPUTE_SURFACE_INFO_OUTPUT* pOut) const;
 
-    virtual UINT_32 HwlGetPitchAlignmentMicroTiled(
-        AddrTileMode tileMode, UINT_32 bpp, ADDR_SURFACE_FLAGS flags, UINT_32 numSamples) const;
+    virtual uint32_t HwlGetPitchAlignmentMicroTiled(
+        AddrTileMode tileMode, uint32_t bpp, ADDR_SURFACE_FLAGS flags, uint32_t numSamples) const;
 
-    virtual UINT_64 HwlGetSizeAdjustmentMicroTiled(
-        UINT_32 thickness, UINT_32 bpp, ADDR_SURFACE_FLAGS flags, UINT_32 numSamples,
-        UINT_32 baseAlign, UINT_32 pitchAlign,
-        UINT_32 *pPitch, UINT_32 *pHeight) const;
+    virtual uint64_t HwlGetSizeAdjustmentMicroTiled(
+        uint32_t thickness, uint32_t bpp, ADDR_SURFACE_FLAGS flags, uint32_t numSamples,
+        uint32_t baseAlign, uint32_t pitchAlign,
+        uint32_t *pPitch, uint32_t *pHeight) const;
 
     virtual VOID HwlCheckLastMacroTiledLvl(
         const ADDR_COMPUTE_SURFACE_INFO_INPUT* pIn, ADDR_COMPUTE_SURFACE_INFO_OUTPUT* pOut) const;
@@ -171,7 +173,7 @@ protected:
         const ADDR_TILEINFO* pLeft, const ADDR_TILEINFO* pRight) const;
 
     virtual AddrTileMode HwlDegradeThickTileMode(
-        AddrTileMode baseTileMode, UINT_32 numSlices, UINT_32* pBytesPerTile) const;
+        AddrTileMode baseTileMode, uint32_t numSlices, uint32_t* pBytesPerTile) const;
 
     virtual BOOL_32 HwlOverrideTileMode(
         const ADDR_COMPUTE_SURFACE_INFO_INPUT* pIn,
@@ -184,24 +186,24 @@ protected:
         return TRUE;
     }
 
-    virtual UINT_32 HwlGetPitchAlignmentLinear(UINT_32 bpp, ADDR_SURFACE_FLAGS flags) const;
+    virtual uint32_t HwlGetPitchAlignmentLinear(uint32_t bpp, ADDR_SURFACE_FLAGS flags) const;
 
-    virtual UINT_64 HwlGetSizeAdjustmentLinear(
+    virtual uint64_t HwlGetSizeAdjustmentLinear(
         AddrTileMode tileMode,
-        UINT_32 bpp, UINT_32 numSamples, UINT_32 baseAlign, UINT_32 pitchAlign,
-        UINT_32 *pPitch, UINT_32 *pHeight, UINT_32 *pHeightAlign) const;
+        uint32_t bpp, uint32_t numSamples, uint32_t baseAlign, uint32_t pitchAlign,
+        uint32_t *pPitch, uint32_t *pHeight, uint32_t *pHeightAlign) const;
 
     virtual VOID HwlComputeSurfaceCoord2DFromBankPipe(
-        AddrTileMode tileMode, UINT_32* pX, UINT_32* pY, UINT_32 slice,
-        UINT_32 bank, UINT_32 pipe,
-        UINT_32 bankSwizzle, UINT_32 pipeSwizzle, UINT_32 tileSlices,
+        AddrTileMode tileMode, uint32_t* pX, uint32_t* pY, uint32_t slice,
+        uint32_t bank, uint32_t pipe,
+        uint32_t bankSwizzle, uint32_t pipeSwizzle, uint32_t tileSlices,
         BOOL_32 ignoreSE,
         ADDR_TILEINFO* pTileInfo) const;
 
-    virtual UINT_32 HwlPreAdjustBank(
-        UINT_32 tileX, UINT_32 bank, ADDR_TILEINFO* pTileInfo) const;
+    virtual uint32_t HwlPreAdjustBank(
+        uint32_t tileX, uint32_t bank, ADDR_TILEINFO* pTileInfo) const;
 
-    virtual INT_32 HwlPostCheckTileIndex(
+    virtual int32_t HwlPostCheckTileIndex(
         const ADDR_TILEINFO* pInfo, AddrTileMode mode, AddrTileType type,
         INT curIndex = TileIndexInvalid) const;
 
@@ -215,13 +217,13 @@ protected:
         const ADDR_COMPUTE_SURFACE_INFO_OUTPUT* pSurfOut,
         ADDR_COMPUTE_FMASK_INFO_OUTPUT* pFmaskOut) const;
 
-    virtual UINT_32 HwlComputeFmaskBits(
+    virtual uint32_t HwlComputeFmaskBits(
         const ADDR_COMPUTE_FMASK_INFO_INPUT* pIn,
-        UINT_32* pNumSamples) const;
+        uint32_t* pNumSamples) const;
 
     virtual BOOL_32 HwlReduceBankWidthHeight(
-        UINT_32 tileSize, UINT_32 bpp, ADDR_SURFACE_FLAGS flags, UINT_32 numSamples,
-        UINT_32 bankHeightAlign, UINT_32 pipes,
+        uint32_t tileSize, uint32_t bpp, ADDR_SURFACE_FLAGS flags, uint32_t numSamples,
+        uint32_t bankHeightAlign, uint32_t pipes,
         ADDR_TILEINFO* pTileInfo) const
     {
         return TRUE;
@@ -229,34 +231,33 @@ protected:
 
     // Protected non-virtual functions
     VOID ComputeTileCoordFromPipeAndElemIdx(
-        UINT_32 elemIdx, UINT_32 pipe, AddrPipeCfg pipeCfg, UINT_32 pitchInMacroTile,
-        UINT_32 x, UINT_32 y, UINT_32* pX, UINT_32* pY) const;
+        uint32_t elemIdx, uint32_t pipe, AddrPipeCfg pipeCfg, uint32_t pitchInMacroTile,
+        uint32_t x, uint32_t y, uint32_t* pX, uint32_t* pY) const;
 
-    UINT_32 TileCoordToMaskElementIndex(
-        UINT_32 tx, UINT_32 ty, AddrPipeCfg  pipeConfig,
-        UINT_32 *macroShift, UINT_32 *elemIdxBits) const;
+    uint32_t TileCoordToMaskElementIndex(
+        uint32_t tx, uint32_t ty, AddrPipeCfg  pipeConfig,
+        uint32_t *macroShift, uint32_t *elemIdxBits) const;
 
     BOOL_32 DecodeGbRegs(
         const ADDR_REGISTER_VALUE* pRegValue);
 
     const ADDR_TILECONFIG* GetTileSetting(
-        UINT_32 index) const;
+        uint32_t index) const;
 
-    static const UINT_32    TileTableSize = 32;
+    static const uint32_t    TileTableSize = 32;
     ADDR_TILECONFIG         m_tileTable[TileTableSize];
-    UINT_32                 m_noOfEntries;
+    uint32_t                 m_noOfEntries;
 
 private:
 
-    UINT_32 GetPipePerSurf(AddrPipeCfg pipeConfig) const;
+    uint32_t GetPipePerSurf(AddrPipeCfg pipeConfig) const;
 
     VOID ReadGbTileMode(
-        UINT_32 regValue, ADDR_TILECONFIG* pCfg) const;
+        uint32_t regValue, ADDR_TILECONFIG* pCfg) const;
     BOOL_32 InitTileSettingTable(
-        const UINT_32 *pSetting, UINT_32 noOfEntries);
+        const uint32_t *pSetting, uint32_t noOfEntries);
 
     SIChipSettings          m_settings;
 };
 
 #endif
-

@@ -34,23 +34,25 @@
 #ifndef __ELEM_LIB_H__
 #define __ELEM_LIB_H__
 
+#include <stdint.h>
+
 #include "addrinterface.h"
 #include "addrobject.h"
 #include "addrcommon.h"
 
 class AddrLib;
 
-// The masks for property bits within the Properties INT_32
+// The masks for property bits within the Properties int32_t
 union ADDR_COMPONENT_FLAGS
 {
     struct
     {
-        UINT_32 byteAligned    : 1;    ///< all components are byte aligned
-        UINT_32 exportNorm     : 1;    ///< components support R6xx NORM compression
-        UINT_32 floatComp      : 1;    ///< there is at least one floating point component
+        uint32_t byteAligned    : 1;    ///< all components are byte aligned
+        uint32_t exportNorm     : 1;    ///< components support R6xx NORM compression
+        uint32_t floatComp      : 1;    ///< there is at least one floating point component
     };
 
-    UINT_32 value;
+    uint32_t value;
 };
 
 // Copy from legacy lib's AddrNumberType
@@ -155,11 +157,11 @@ enum AddrDepthPlanarType
 */
 struct ADDR_PIXEL_FORMATINFO
 {
-    UINT_32             compBit[4];
+    uint32_t            compBit[4];
     AddrNumberType      numType[4];
-    UINT_32             compStart[4];
+    uint32_t            compStart[4];
     AddrElemMode        elemMode;
-    UINT_32             comps;          ///< Number of components
+    uint32_t            comps;          ///< Number of components
 };
 
 /**
@@ -189,18 +191,18 @@ public:
     /// Remove static if we need different operation in hwl.
 
     VOID    Flt32ToDepthPixel(
-        AddrDepthFormat format, const ADDR_FLT_32 comps[2], UINT_8 *pPixel) const;
+        AddrDepthFormat format, const ADDR_FLT_32 comps[2], uint8_t *pPixel) const;
 
     VOID    Flt32ToColorPixel(
         AddrColorFormat format, AddrSurfaceNumber surfNum, AddrSurfaceSwap surfSwap,
-        const ADDR_FLT_32 comps[4], UINT_8 *pPixel) const;
+        const ADDR_FLT_32 comps[4], uint8_t *pPixel) const;
 
     static VOID    Flt32sToInt32s(
-        ADDR_FLT_32 value, UINT_32 bits, AddrNumberType numberType, UINT_32* pResult);
+        ADDR_FLT_32 value, uint32_t bits, AddrNumberType numberType, uint32_t* pResult);
 
     static VOID    Int32sToPixel(
-        UINT_32 numComps, UINT_32* pComps, UINT_32* pCompBits, UINT_32* pCompStart,
-        ADDR_COMPONENT_FLAGS properties, UINT_32 resultBits, UINT_8* pPixel);
+        uint32_t numComps, uint32_t* pComps, uint32_t* pCompBits, uint32_t* pCompStart,
+        ADDR_COMPONENT_FLAGS properties, uint32_t resultBits, uint8_t* pPixel);
 
     VOID    PixGetColorCompInfo(
         AddrColorFormat format, AddrSurfaceNumber number, AddrSurfaceSwap swap,
@@ -209,20 +211,20 @@ public:
     VOID    PixGetDepthCompInfo(
         AddrDepthFormat format, ADDR_PIXEL_FORMATINFO* pInfo) const;
 
-    UINT_32 GetBitsPerPixel(
+    uint32_t GetBitsPerPixel(
         AddrFormat format, AddrElemMode* pElemMode,
-        UINT_32* pExpandX = NULL, UINT_32* pExpandY = NULL, UINT_32* pBitsUnused = NULL);
+        uint32_t* pExpandX = NULL, uint32_t* pExpandY = NULL, uint32_t* pBitsUnused = NULL);
 
     static VOID    SetClearComps(
         ADDR_FLT_32 comps[4], BOOL_32 clearColor, BOOL_32 float32);
 
     VOID    AdjustSurfaceInfo(
-        AddrElemMode elemMode, UINT_32 expandX, UINT_32 expandY,
-        UINT_32* pBpp, UINT_32* pBasePitch, UINT_32* pWidth, UINT_32* pHeight);
+        AddrElemMode elemMode, uint32_t expandX, uint32_t expandY,
+        uint32_t* pBpp, uint32_t* pBasePitch, uint32_t* pWidth, uint32_t* pHeight);
 
     VOID    RestoreSurfaceInfo(
-        AddrElemMode elemMode, UINT_32 expandX, UINT_32 expandY,
-        UINT_32* pBpp, UINT_32* pWidth, UINT_32* pHeight);
+        AddrElemMode elemMode, uint32_t expandX, uint32_t expandY,
+        uint32_t* pBpp, uint32_t* pWidth, uint32_t* pHeight);
 
     /// Checks if depth and stencil are planar inside a tile
     BOOL_32 IsDepthStencilTilePlanar()
@@ -243,7 +245,7 @@ public:
 protected:
 
     static VOID    GetCompBits(
-        UINT_32 c0, UINT_32 c1, UINT_32 c2, UINT_32 c3,
+        uint32_t c0, uint32_t c1, uint32_t c2, uint32_t c3,
         ADDR_PIXEL_FORMATINFO* pInfo,
         AddrElemMode elemMode = ADDR_ROUND_BY_HALF);
 
@@ -255,11 +257,11 @@ protected:
         AddrSurfaceSwap swap, ADDR_PIXEL_FORMATINFO* pInfo);
 
     static VOID    SwapComps(
-        UINT_32 c0, UINT_32 c1, ADDR_PIXEL_FORMATINFO* pInfo);
+        uint32_t c0, uint32_t c1, ADDR_PIXEL_FORMATINFO* pInfo);
 
 private:
 
-    UINT_32             m_fp16ExportNorm;   ///< If allow FP16 to be reported as EXPORT_NORM
+    uint32_t             m_fp16ExportNorm;   ///< If allow FP16 to be reported as EXPORT_NORM
     AddrDepthPlanarType m_depthPlanarType;
 
     ADDR_CONFIG_FLAGS   m_configFlags;      ///< Copy of AddrLib's configFlags
@@ -267,4 +269,3 @@ private:
 };
 
 #endif
-

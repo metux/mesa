@@ -30,6 +30,9 @@
 * @brief Contains the addrlib interface functions
 ***************************************************************************************************
 */
+
+#include <stdint.h>
+
 #include "addrinterface.h"
 #include "addrlib.h"
 
@@ -556,9 +559,9 @@ ADDR_E_RETURNCODE ADDR_API AddrComputeDccInfo(
 *       defined in addrinterface.h to see if there is a mismatch.
 ***************************************************************************************************
 */
-UINT_32 ADDR_API AddrGetVersion(ADDR_HANDLE hLib)
+uint32_t ADDR_API AddrGetVersion(ADDR_HANDLE hLib)
 {
-    UINT_32 version = 0;
+    uint32_t version = 0;
 
     AddrLib* pLib = AddrLib::GetAddrLib(hLib);
 

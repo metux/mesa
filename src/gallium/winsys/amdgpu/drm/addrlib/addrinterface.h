@@ -33,6 +33,8 @@
 #ifndef __ADDR_INTERFACE_H__
 #define __ADDR_INTERFACE_H__
 
+#include <stdint.h>
+
 #include "addrtypes.h"
 
 #if defined(__cplusplus)
@@ -136,9 +138,9 @@ typedef union _ADDR_ALLOCSYSMEM_FLAGS
 {
     struct
     {
-        UINT_32 reserved    : 32;  ///< Reserved for future use.
+        uint32_t reserved    : 32;  ///< Reserved for future use.
     } fields;
-    UINT_32 value;
+    uint32_t value;
 
 } ADDR_ALLOCSYSMEM_FLAGS;
 
@@ -149,10 +151,10 @@ typedef union _ADDR_ALLOCSYSMEM_FLAGS
 */
 typedef struct _ADDR_ALLOCSYSMEM_INPUT
 {
-    UINT_32                 size;           ///< Size of this structure in bytes
+    uint32_t                size;           ///< Size of this structure in bytes
 
     ADDR_ALLOCSYSMEM_FLAGS  flags;          ///< System memory flags.
-    UINT_32                 sizeInBytes;    ///< System memory allocation size in bytes.
+    uint32_t                sizeInBytes;    ///< System memory allocation size in bytes.
     ADDR_CLIENT_HANDLE      hClient;        ///< Client handle
 } ADDR_ALLOCSYSMEM_INPUT;
 
@@ -173,7 +175,7 @@ typedef VOID* (ADDR_API* ADDR_ALLOCSYSMEM)(
 */
 typedef struct _ADDR_FREESYSMEM_INPUT
 {
-    UINT_32                 size;           ///< Size of this structure in bytes
+    uint32_t                size;           ///< Size of this structure in bytes
 
     VOID*                   pVirtAddr;      ///< Virtual address
     ADDR_CLIENT_HANDLE      hClient;        ///< Client handle
@@ -197,7 +199,7 @@ typedef ADDR_E_RETURNCODE (ADDR_API* ADDR_FREESYSMEM)(
 */
 typedef struct _ADDR_DEBUGPRINT_INPUT
 {
-    UINT_32             size;           ///< Size of this structure in bytes
+    uint32_t            size;           ///< Size of this structure in bytes
 
     CHAR*               pDebugString;   ///< Debug print string
     va_list             ap;             ///< Variable argument list
@@ -247,19 +249,19 @@ typedef union _ADDR_CREATE_FLAGS
 {
     struct
     {
-        UINT_32 noCubeMipSlicesPad     : 1;    ///< Turn cubemap faces padding off
-        UINT_32 fillSizeFields         : 1;    ///< If clients fill size fields in all input and
+        uint32_t noCubeMipSlicesPad     : 1;    ///< Turn cubemap faces padding off
+        uint32_t fillSizeFields         : 1;    ///< If clients fill size fields in all input and
                                                ///  output structure
-        UINT_32 useTileIndex           : 1;    ///< Make tileIndex field in input valid
-        UINT_32 useCombinedSwizzle     : 1;    ///< Use combined tile swizzle
-        UINT_32 checkLast2DLevel       : 1;    ///< Check the last 2D mip sub level
-        UINT_32 useHtileSliceAlign     : 1;    ///< Do htile single slice alignment
-        UINT_32 degradeBaseLevel       : 1;    ///< Degrade to 1D modes automatically for base level
-        UINT_32 allowLargeThickTile    : 1;    ///< Allow 64*thickness*bytesPerPixel > rowSize
-        UINT_32 reserved               : 24;   ///< Reserved bits for future use
+        uint32_t useTileIndex           : 1;    ///< Make tileIndex field in input valid
+        uint32_t useCombinedSwizzle     : 1;    ///< Use combined tile swizzle
+        uint32_t checkLast2DLevel       : 1;    ///< Check the last 2D mip sub level
+        uint32_t useHtileSliceAlign     : 1;    ///< Do htile single slice alignment
+        uint32_t degradeBaseLevel       : 1;    ///< Degrade to 1D modes automatically for base level
+        uint32_t allowLargeThickTile    : 1;    ///< Allow 64*thickness*bytesPerPixel > rowSize
+        uint32_t reserved               : 24;   ///< Reserved bits for future use
     };
 
-    UINT_32 value;
+    uint32_t value;
 } ADDR_CREATE_FLAGS;
 
 /**
@@ -272,29 +274,29 @@ typedef union _ADDR_CREATE_FLAGS
 */
 typedef struct _ADDR_REGISTER_VALUE
 {
-    UINT_32  gbAddrConfig;       ///< For R8xx, use GB_ADDR_CONFIG register value.
+    uint32_t gbAddrConfig;       ///< For R8xx, use GB_ADDR_CONFIG register value.
                                  ///  For R6xx/R7xx, use GB_TILING_CONFIG.
                                  ///  But they can be treated as the same.
                                  ///  if this value is 0, use chip to set default value
-    UINT_32  backendDisables;    ///< 1 bit per backend, starting with LSB. 1=disabled,0=enabled.
+    uint32_t backendDisables;    ///< 1 bit per backend, starting with LSB. 1=disabled,0=enabled.
                                  ///  Register value of CC_RB_BACKEND_DISABLE.BACKEND_DISABLE
 
                                  ///  R800 registers-----------------------------------------------
-    UINT_32  noOfBanks;          ///< Number of h/w ram banks - For r800: MC_ARB_RAMCFG.NOOFBANK
+    uint32_t noOfBanks;          ///< Number of h/w ram banks - For r800: MC_ARB_RAMCFG.NOOFBANK
                                  ///  No enums for this value in h/w header files
                                  ///  0: 4
                                  ///  1: 8
                                  ///  2: 16
-    UINT_32  noOfRanks;          ///  MC_ARB_RAMCFG.NOOFRANK
+    uint32_t noOfRanks;          ///  MC_ARB_RAMCFG.NOOFRANK
                                  ///  0: 1
                                  ///  1: 2
                                  ///  SI (R1000) registers-----------------------------------------
-    const UINT_32* pTileConfig;  ///< Global tile setting tables
-    UINT_32  noOfEntries;        ///< Number of entries in pTileConfig
+    const uint32_t* pTileConfig;      ///< Global tile setting tables
+    uint32_t  noOfEntries;            ///< Number of entries in pTileConfig
 
-                                 ///< CI registers-------------------------------------------------
-    const UINT_32* pMacroTileConfig;    ///< Global macro tile mode table
-    UINT_32  noOfMacroEntries;   ///< Number of entries in pMacroTileConfig
+                                      ///< CI registers-------------------------------------------------
+    const uint32_t* pMacroTileConfig; ///< Global macro tile mode table
+    uint32_t  noOfMacroEntries;       ///< Number of entries in pMacroTileConfig
 
 } ADDR_REGISTER_VALUE;
 
@@ -309,16 +311,16 @@ typedef struct _ADDR_REGISTER_VALUE
 */
 typedef struct _ADDR_CREATE_INPUT
 {
-    UINT_32             size;                ///< Size of this structure in bytes
+    uint32_t            size;                ///< Size of this structure in bytes
 
-    UINT_32             chipEngine;          ///< Chip Engine
-    UINT_32             chipFamily;          ///< Chip Family
-    UINT_32             chipRevision;        ///< Chip Revision
+    uint32_t            chipEngine;          ///< Chip Engine
+    uint32_t            chipFamily;          ///< Chip Family
+    uint32_t            chipRevision;        ///< Chip Revision
     ADDR_CALLBACKS      callbacks;           ///< Callbacks for sysmem alloc/free/print
     ADDR_CREATE_FLAGS   createFlags;         ///< Flags to setup AddrLib
     ADDR_REGISTER_VALUE regValue;            ///< Data from registers to setup AddrLib global data
     ADDR_CLIENT_HANDLE  hClient;             ///< Client handle
-    UINT_32             minPitchAlignPixels; ///< Minimum pitch alignment in pixels
+    uint32_t            minPitchAlignPixels; ///< Minimum pitch alignment in pixels
 } ADDR_CREATE_INPUT;
 
 /**
@@ -332,7 +334,7 @@ typedef struct _ADDR_CREATE_INPUT
 */
 typedef struct _ADDR_CREATE_OUTPUT
 {
-    UINT_32     size;    ///< Size of this structure in bytes
+    uint32_t    size;    ///< Size of this structure in bytes
 
     ADDR_HANDLE hLib;    ///< Address lib handle
 } ADDR_CREATE_OUTPUT;
@@ -393,11 +395,11 @@ ADDR_E_RETURNCODE ADDR_API AddrDestroy(
 typedef struct _ADDR_TILEINFO
 {
     ///  Any of these parameters can be set to 0 to use the HW default.
-    UINT_32     banks;              ///< Number of banks, numerical value
-    UINT_32     bankWidth;          ///< Number of tiles in the X direction in the same bank
-    UINT_32     bankHeight;         ///< Number of tiles in the Y direction in the same bank
-    UINT_32     macroAspectRatio;   ///< Macro tile aspect ratio. 1-1:1, 2-4:1, 4-16:1, 8-64:1
-    UINT_32     tileSplitBytes;     ///< Tile split size, in bytes
+    uint32_t    banks;              ///< Number of banks, numerical value
+    uint32_t    bankWidth;          ///< Number of tiles in the X direction in the same bank
+    uint32_t    bankHeight;         ///< Number of tiles in the Y direction in the same bank
+    uint32_t    macroAspectRatio;   ///< Macro tile aspect ratio. 1-1:1, 2-4:1, 4-16:1, 8-64:1
+    uint32_t    tileSplitBytes;     ///< Tile split size, in bytes
     AddrPipeCfg pipeConfig;         ///< Pipe Config = HW enum + 1
 } ADDR_TILEINFO;
 
@@ -413,9 +415,9 @@ typedef ADDR_TILEINFO ADDR_R800_TILEINFO;
 */
 typedef struct _ADDR_QBSTEREOINFO
 {
-    UINT_32         eyeHeight;          ///< Height (in pixel rows) to right eye
-    UINT_32         rightOffset;        ///< Offset (in bytes) to right eye
-    UINT_32         rightSwizzle;       ///< TileSwizzle for right eyes
+    uint32_t        eyeHeight;          ///< Height (in pixel rows) to right eye
+    uint32_t        rightOffset;        ///< Offset (in bytes) to right eye
+    uint32_t        rightSwizzle;       ///< TileSwizzle for right eyes
 } ADDR_QBSTEREOINFO;
 
 /**
@@ -430,36 +432,36 @@ typedef union _ADDR_SURFACE_FLAGS
 {
     struct
     {
-        UINT_32 color         : 1; ///< Flag indicates this is a color buffer
-        UINT_32 depth         : 1; ///< Flag indicates this is a depth/stencil buffer
-        UINT_32 stencil       : 1; ///< Flag indicates this is a stencil buffer
-        UINT_32 texture       : 1; ///< Flag indicates this is a texture
-        UINT_32 cube          : 1; ///< Flag indicates this is a cubemap
+        uint32_t color            : 1; ///< Flag indicates this is a color buffer
+        uint32_t depth            : 1; ///< Flag indicates this is a depth/stencil buffer
+        uint32_t stencil          : 1; ///< Flag indicates this is a stencil buffer
+        uint32_t texture          : 1; ///< Flag indicates this is a texture
+        uint32_t cube             : 1; ///< Flag indicates this is a cubemap
 
-        UINT_32 volume        : 1; ///< Flag indicates this is a volume texture
-        UINT_32 fmask         : 1; ///< Flag indicates this is an fmask
-        UINT_32 cubeAsArray   : 1; ///< Flag indicates if treat cubemap as arrays
-        UINT_32 compressZ     : 1; ///< Flag indicates z buffer is compressed
-        UINT_32 overlay       : 1; ///< Flag indicates this is an overlay surface
-        UINT_32 noStencil     : 1; ///< Flag indicates this depth has no separate stencil
-        UINT_32 display       : 1; ///< Flag indicates this should match display controller req.
-        UINT_32 opt4Space     : 1; ///< Flag indicates this surface should be optimized for space
-                                   ///  i.e. save some memory but may lose performance
-        UINT_32 prt           : 1; ///< Flag for partially resident texture
-        UINT_32 qbStereo      : 1; ///< Quad buffer stereo surface
-        UINT_32 pow2Pad       : 1; ///< SI: Pad to pow2, must set for mipmap (include level0)
-        UINT_32 interleaved   : 1; ///< Special flag for interleaved YUV surface padding
-        UINT_32 degrade4Space : 1; ///< Degrade base level's tile mode to save memory
-        UINT_32 tcCompatible  : 1; ///< Flag indicates surface needs to be shader readable
-        UINT_32 dispTileType  : 1; ///< NI: force display Tiling for 128 bit shared resoruce
-        UINT_32 dccCompatible : 1; ///< VI: whether to support dcc fast clear
-        UINT_32 czDispCompatible: 1; ///< SI+: CZ family (Carrizo) has a HW bug needs special alignment.
-                                     ///<      This flag indicates we need to follow the alignment with
-                                     ///<      CZ families or other ASICs under PX configuration + CZ.
-        UINT_32 reserved      :10; ///< Reserved bits
+        uint32_t volume           : 1; ///< Flag indicates this is a volume texture
+        uint32_t fmask            : 1; ///< Flag indicates this is an fmask
+        uint32_t cubeAsArray      : 1; ///< Flag indicates if treat cubemap as arrays
+        uint32_t compressZ        : 1; ///< Flag indicates z buffer is compressed
+        uint32_t overlay          : 1; ///< Flag indicates this is an overlay surface
+        uint32_t noStencil        : 1; ///< Flag indicates this depth has no separate stencil
+        uint32_t display          : 1; ///< Flag indicates this should match display controller req.
+        uint32_t opt4Space        : 1; ///< Flag indicates this surface should be optimized for space
+                                       ///  i.e. save some memory but may lose performance
+        uint32_t prt              : 1; ///< Flag for partially resident texture
+        uint32_t qbStereo         : 1; ///< Quad buffer stereo surface
+        uint32_t pow2Pad          : 1; ///< SI: Pad to pow2, must set for mipmap (include level0)
+        uint32_t interleaved      : 1; ///< Special flag for interleaved YUV surface padding
+        uint32_t degrade4Space    : 1; ///< Degrade base level's tile mode to save memory
+        uint32_t tcCompatible     : 1; ///< Flag indicates surface needs to be shader readable
+        uint32_t dispTileType     : 1; ///< NI: force display Tiling for 128 bit shared resoruce
+        uint32_t dccCompatible    : 1; ///< VI: whether to support dcc fast clear
+        uint32_t czDispCompatible : 1; ///< SI+: CZ family (Carrizo) has a HW bug needs special alignment.
+                                       ///<      This flag indicates we need to follow the alignment with
+                                       ///<      CZ families or other ASICs under PX configuration + CZ.
+        uint32_ reserved          :10; ///< Reserved bits
     };
 
-    UINT_32 value;
+    uint32_t value;
 } ADDR_SURFACE_FLAGS;
 
 /**
@@ -472,16 +474,16 @@ typedef union _ADDR_SURFACE_FLAGS
 */
 typedef struct _ADDR_COMPUTE_SURFACE_INFO_INPUT
 {
-    UINT_32             size;               ///< Size of this structure in bytes
+    uint32_t            size;               ///< Size of this structure in bytes
 
     AddrTileMode        tileMode;           ///< Tile mode
     AddrFormat          format;             ///< If format is set to valid one, bpp/width/height
                                             ///  might be overwritten
-    UINT_32             bpp;                ///< Bits per pixel
-    UINT_32             numSamples;         ///< Number of samples
-    UINT_32             width;              ///< Width, in pixels
-    UINT_32             height;             ///< Height, in pixels
-    UINT_32             numSlices;          ///< Number surface slice/depth,
+    uint32_t            bpp;                ///< Bits per pixel
+    uint32_t            numSamples;         ///< Number of samples
+    uint32_t            width;              ///< Width, in pixels
+    uint32_t            height;             ///< Height, in pixels
+    uint32_t            numSlices;          ///< Number surface slice/depth,
                                             ///  Note:
                                             ///  For cubemap, driver clients usually set numSlices
                                             ///  to 1 in per-face calc.
@@ -489,21 +491,21 @@ typedef struct _ADDR_COMPUTE_SURFACE_INFO_INPUT
                                             ///  In this case, clients should set numSlices to 6 and
                                             ///  this is also can be turned off by createFlags when
                                             ///  calling AddrCreate
-    UINT_32             slice;              ///< Slice index
-    UINT_32             mipLevel;           ///< Current mipmap level.
+    uint32_t            slice;              ///< Slice index
+    uint32_t            mipLevel;           ///< Current mipmap level.
                                             ///  Padding/tiling have different rules for level0 and
                                             ///  sublevels
     ADDR_SURFACE_FLAGS  flags;              ///< Surface type flags
-    UINT_32             numFrags;           ///< Number of fragments, leave it zero or the same as
+    uint32_t            numFrags;           ///< Number of fragments, leave it zero or the same as
                                             ///  number of samples for normal AA; Set it to the
                                             ///  number of fragments for EQAA
     /// r800 and later HWL parameters
     // Needed by 2D tiling, for linear and 1D tiling, just keep them 0's
     ADDR_TILEINFO*      pTileInfo;          ///< 2D tile parameters. Set to 0 to default/calculate
     AddrTileType        tileType;           ///< Micro tiling type, not needed when tileIndex != -1
-    INT_32              tileIndex;          ///< Tile index, MUST be -1 if you don't want to use it
+    int32_t             tileIndex;          ///< Tile index, MUST be -1 if you don't want to use it
                                             ///  while the global useTileIndex is set to 1
-    UINT_32             basePitch;          ///< Base level pitch in pixels, 0 means ignored, is a
+    uint32_t            basePitch;          ///< Base level pitch in pixels, 0 means ignored, is a
                                             ///  must for mip levels from SI+.
                                             ///  Don't use pitch in blocks for compressed formats!
 } ADDR_COMPUTE_SURFACE_INFO_INPUT;
@@ -521,36 +523,36 @@ typedef struct _ADDR_COMPUTE_SURFACE_INFO_INPUT
 */
 typedef struct _ADDR_COMPUTE_SURFACE_INFO_OUTPUT
 {
-    UINT_32         size;           ///< Size of this structure in bytes
+    uint32_t        size;           ///< Size of this structure in bytes
 
-    UINT_32         pitch;          ///< Pitch in elements (in blocks for compressed formats)
-    UINT_32         height;         ///< Height in elements (in blocks for compressed formats)
-    UINT_32         depth;          ///< Number of slice/depth
-    UINT_64         surfSize;       ///< Surface size in bytes
+    uint32_t        pitch;          ///< Pitch in elements (in blocks for compressed formats)
+    uint32_t        height;         ///< Height in elements (in blocks for compressed formats)
+    uint32_t        depth;          ///< Number of slice/depth
+    uint64_t        surfSize;       ///< Surface size in bytes
     AddrTileMode    tileMode;       ///< Actual tile mode. May differ from that in input
-    UINT_32         baseAlign;      ///< Base address alignment
-    UINT_32         pitchAlign;     ///< Pitch alignment, in elements
-    UINT_32         heightAlign;    ///< Height alignment, in elements
-    UINT_32         depthAlign;     ///< Depth alignment, aligned to thickness, for 3d texture
-    UINT_32         bpp;            ///< Bits per elements (e.g. blocks for BCn, 1/3 for 96bit)
-    UINT_32         pixelPitch;     ///< Pitch in original pixels
-    UINT_32         pixelHeight;    ///< Height in original pixels
-    UINT_32         pixelBits;      ///< Original bits per pixel, passed from input
-    UINT_64         sliceSize;      ///< Size of slice specified by input's slice
+    uint32_t        baseAlign;      ///< Base address alignment
+    uint32_t        pitchAlign;     ///< Pitch alignment, in elements
+    uint32_t        heightAlign;    ///< Height alignment, in elements
+    uint32_t        depthAlign;     ///< Depth alignment, aligned to thickness, for 3d texture
+    uint32_t        bpp;            ///< Bits per elements (e.g. blocks for BCn, 1/3 for 96bit)
+    uint32_t        pixelPitch;     ///< Pitch in original pixels
+    uint32_t        pixelHeight;    ///< Height in original pixels
+    uint32_t        pixelBits;      ///< Original bits per pixel, passed from input
+    uint64_t        sliceSize;      ///< Size of slice specified by input's slice
                                     ///  The result is controlled by surface flags & createFlags
                                     ///  By default this value equals to surfSize for volume
-    UINT_32         pitchTileMax;   ///< PITCH_TILE_MAX value for h/w register
-    UINT_32         heightTileMax;  ///< HEIGHT_TILE_MAX value for h/w register
-    UINT_32         sliceTileMax;   ///< SLICE_TILE_MAX value for h/w register
+    uint32_t        pitchTileMax;   ///< PITCH_TILE_MAX value for h/w register
+    uint32_t        heightTileMax;  ///< HEIGHT_TILE_MAX value for h/w register
+    uint32_t        sliceTileMax;   ///< SLICE_TILE_MAX value for h/w register
 
-    UINT_32         numSamples;     ///< Pass the effective numSamples processed in this call
+    uint32_t        numSamples;     ///< Pass the effective numSamples processed in this call
 
     /// r800 and later HWL parameters
     ADDR_TILEINFO*  pTileInfo;      ///< Tile parameters used. Filled in if 0 on input
     AddrTileType    tileType;       ///< Micro tiling type, only valid when tileIndex != -1
-    INT_32          tileIndex;      ///< Tile index, MAY be "downgraded"
+    int32_t         tileIndex;      ///< Tile index, MAY be "downgraded"
 
-    INT_32          macroModeIndex; ///< Index in macro tile mode table if there is one (CI)
+    int32_t         macroModeIndex; ///< Index in macro tile mode table if there is one (CI)
     /// Special information to work around SI mipmap swizzle bug UBTS #317508
     BOOL_32         last2DLevel;    ///< TRUE if this is the last 2D(3D) tiled
                                     ///< Only meaningful when create flag checkLast2DLevel is set
@@ -583,27 +585,27 @@ ADDR_E_RETURNCODE ADDR_API AddrComputeSurfaceInfo(
 */
 typedef struct _ADDR_COMPUTE_SURFACE_ADDRFROMCOORD_INPUT
 {
-    UINT_32         size;               ///< Size of this structure in bytes
+    uint32_t        size;               ///< Size of this structure in bytes
 
-    UINT_32         x;                  ///< X coordinate
-    UINT_32         y;                  ///< Y coordinate
-    UINT_32         slice;              ///< Slice index
-    UINT_32         sample;             ///< Sample index, use fragment index for EQAA
+    uint32_t        x;                  ///< X coordinate
+    uint32_t        y;                  ///< Y coordinate
+    uint32_t        slice;              ///< Slice index
+    uint32_t        sample;             ///< Sample index, use fragment index for EQAA
 
-    UINT_32         bpp;                ///< Bits per pixel
-    UINT_32         pitch;              ///< Surface pitch, in pixels
-    UINT_32         height;             ///< Surface height, in pixels
-    UINT_32         numSlices;          ///< Surface depth
-    UINT_32         numSamples;         ///< Number of samples
+    uint32_t        bpp;                ///< Bits per pixel
+    uint32_t        pitch;              ///< Surface pitch, in pixels
+    uint32_t        height;             ///< Surface height, in pixels
+    uint32_t        numSlices;          ///< Surface depth
+    uint32_t        numSamples;         ///< Number of samples
 
     AddrTileMode    tileMode;           ///< Tile mode
     BOOL_32         isDepth;            ///< TRUE if the surface uses depth sample ordering within
                                         ///  micro tile. Textures can also choose depth sample order
-    UINT_32         tileBase;           ///< Base offset (in bits) inside micro tile which handles
+    uint32_t        tileBase;           ///< Base offset (in bits) inside micro tile which handles
                                         ///  the case that components are stored separately
-    UINT_32         compBits;           ///< The component bits actually needed(for planar surface)
+    uint32_t        compBits;           ///< The component bits actually needed(for planar surface)
 
-    UINT_32         numFrags;           ///< Number of fragments, leave it zero or the same as
+    uint32_t        numFrags;           ///< Number of fragments, leave it zero or the same as
                                         ///  number of samples for normal AA; Set it to the
                                         ///  number of fragments for EQAA
     /// r800 and later HWL parameters
@@ -611,26 +613,26 @@ typedef struct _ADDR_COMPUTE_SURFACE_ADDRFROMCOORD_INPUT
     AddrTileType    tileType;           ///< See defintion of AddrTileType
     struct
     {
-        UINT_32     ignoreSE : 1;       ///< TRUE if shader engines are ignored. This is texture
+        uint32_t    ignoreSE : 1;       ///< TRUE if shader engines are ignored. This is texture
                                         ///  only flag. Only non-RT texture can set this to TRUE
-        UINT_32     reserved :31;       ///< Reserved for future use.
+        uint32_t    reserved :31;       ///< Reserved for future use.
     };
     // 2D tiling needs following structure
     ADDR_TILEINFO*  pTileInfo;          ///< 2D tile parameters. Client must provide all data
-    INT_32          tileIndex;          ///< Tile index, MUST be -1 if you don't want to use it
+    int32_t         tileIndex;          ///< Tile index, MUST be -1 if you don't want to use it
                                         ///  while the global useTileIndex is set to 1
     union
     {
         struct
         {
-            UINT_32  bankSwizzle;       ///< Bank swizzle
-            UINT_32  pipeSwizzle;       ///< Pipe swizzle
+            uint32_t bankSwizzle;       ///< Bank swizzle
+            uint32_t pipeSwizzle;       ///< Pipe swizzle
         };
-        UINT_32     tileSwizzle;        ///< Combined swizzle, if useCombinedSwizzle is TRUE
+        uint32_t    tileSwizzle;        ///< Combined swizzle, if useCombinedSwizzle is TRUE
     };
 
 #if ADDR_AM_BUILD // These two fields are not valid in SW blt since no HTILE access
-    UINT_32         addr5Swizzle;       ///< ADDR5_SWIZZLE_MASK of DB_DEPTH_INFO
+    uint32_t        addr5Swizzle;       ///< ADDR5_SWIZZLE_MASK of DB_DEPTH_INFO
     BOOL_32         is32ByteTile;       ///< Caller must have access to HTILE buffer and know if
                                         ///  this tile is compressed to 32B
 #endif
@@ -646,12 +648,12 @@ typedef struct _ADDR_COMPUTE_SURFACE_ADDRFROMCOORD_INPUT
 */
 typedef struct _ADDR_COMPUTE_SURFACE_ADDRFROMCOORD_OUTPUT
 {
-    UINT_32 size;           ///< Size of this structure in bytes
+    uint32_t size;           ///< Size of this structure in bytes
 
-    UINT_64 addr;           ///< Byte address
-    UINT_32 bitPosition;    ///< Bit position within surfaceAddr, 0-7.
-                            ///  For surface bpp < 8, e.g. FMT_1.
-    UINT_32 prtBlockIndex;  ///< Index of a PRT tile (64K block)
+    uint64_t addr;           ///< Byte address
+    uint32_t bitPosition;    ///< Bit position within surfaceAddr, 0-7.
+                             ///  For surface bpp < 8, e.g. FMT_1.
+    uint32_t prtBlockIndex;  ///< Index of a PRT tile (64K block)
 } ADDR_COMPUTE_SURFACE_ADDRFROMCOORD_OUTPUT;
 
 /**
@@ -679,25 +681,25 @@ ADDR_E_RETURNCODE ADDR_API AddrComputeSurfaceAddrFromCoord(
 */
 typedef struct _ADDR_COMPUTE_SURFACE_COORDFROMADDR_INPUT
 {
-    UINT_32         size;               ///< Size of this structure in bytes
+    uint32_t        size;               ///< Size of this structure in bytes
 
-    UINT_64         addr;               ///< Address in bytes
-    UINT_32         bitPosition;        ///< Bit position in addr. 0-7. for surface bpp < 8,
+    uint64_t        addr;               ///< Address in bytes
+    uint32_t        bitPosition;        ///< Bit position in addr. 0-7. for surface bpp < 8,
                                         ///  e.g. FMT_1;
-    UINT_32         bpp;                ///< Bits per pixel
-    UINT_32         pitch;              ///< Pitch, in pixels
-    UINT_32         height;             ///< Height in pixels
-    UINT_32         numSlices;          ///< Surface depth
-    UINT_32         numSamples;         ///< Number of samples
+    uint32_t        bpp;                ///< Bits per pixel
+    uint32_t        pitch;              ///< Pitch, in pixels
+    uint32_t        height;             ///< Height in pixels
+    uint32_t        numSlices;          ///< Surface depth
+    uint32_t        numSamples;         ///< Number of samples
 
     AddrTileMode    tileMode;           ///< Tile mode
     BOOL_32         isDepth;            ///< Surface uses depth sample ordering within micro tile.
                                         ///  Note: Textures can choose depth sample order as well.
-    UINT_32         tileBase;           ///< Base offset (in bits) inside micro tile which handles
+    uint32_t        tileBase;           ///< Base offset (in bits) inside micro tile which handles
                                         ///  the case that components are stored separately
-    UINT_32         compBits;           ///< The component bits actually needed(for planar surface)
+    uint32_t        compBits;           ///< The component bits actually needed(for planar surface)
 
-    UINT_32         numFrags;           ///< Number of fragments, leave it zero or the same as
+    uint32_t        numFrags;           ///< Number of fragments, leave it zero or the same as
                                         ///  number of samples for normal AA; Set it to the
                                         ///  number of fragments for EQAA
     /// r800 and later HWL parameters
@@ -705,22 +707,22 @@ typedef struct _ADDR_COMPUTE_SURFACE_COORDFROMADDR_INPUT
     AddrTileType    tileType;           ///< See defintion of AddrTileType
     struct
     {
-        UINT_32     ignoreSE : 1;       ///< TRUE if shader engines are ignored. This is texture
+        uint32_t    ignoreSE : 1;       ///< TRUE if shader engines are ignored. This is texture
                                         ///  only flag. Only non-RT texture can set this to TRUE
-        UINT_32     reserved :31;       ///< Reserved for future use.
+        uint32_t    reserved :31;       ///< Reserved for future use.
     };
     // 2D tiling needs following structure
     ADDR_TILEINFO*  pTileInfo;          ///< 2D tile parameters. Client must provide all data
-    INT_32          tileIndex;          ///< Tile index, MUST be -1 if you don't want to use it
+    int32_t         tileIndex;          ///< Tile index, MUST be -1 if you don't want to use it
                                         ///  while the global useTileIndex is set to 1
     union
     {
         struct
         {
-            UINT_32  bankSwizzle;       ///< Bank swizzle
-            UINT_32  pipeSwizzle;       ///< Pipe swizzle
+            uint32_t bankSwizzle;       ///< Bank swizzle
+            uint32_t pipeSwizzle;       ///< Pipe swizzle
         };
-        UINT_32     tileSwizzle;        ///< Combined swizzle, if useCombinedSwizzle is TRUE
+        uint32_t    tileSwizzle;        ///< Combined swizzle, if useCombinedSwizzle is TRUE
     };
 } ADDR_COMPUTE_SURFACE_COORDFROMADDR_INPUT;
 
@@ -734,12 +736,12 @@ typedef struct _ADDR_COMPUTE_SURFACE_COORDFROMADDR_INPUT
 */
 typedef struct _ADDR_COMPUTE_SURFACE_COORDFROMADDR_OUTPUT
 {
-    UINT_32 size;   ///< Size of this structure in bytes
+    uint32_t size;   ///< Size of this structure in bytes
 
-    UINT_32 x;      ///< X coordinate
-    UINT_32 y;      ///< Y coordinate
-    UINT_32 slice;  ///< Index of slices
-    UINT_32 sample; ///< Index of samples, means fragment index for EQAA
+    uint32_t x;      ///< X coordinate
+    uint32_t y;      ///< Y coordinate
+    uint32_t slice;  ///< Index of slices
+    uint32_t sample; ///< Index of samples, means fragment index for EQAA
 } ADDR_COMPUTE_SURFACE_COORDFROMADDR_OUTPUT;
 
 /**
@@ -771,11 +773,11 @@ typedef union _ADDR_HTILE_FLAGS
 {
     struct
     {
-        UINT_32 tcCompatible  : 1; ///< Flag indicates surface needs to be shader readable
-        UINT_32 reserved      :31; ///< Reserved bits
+        uint32_t tcCompatible  : 1; ///< Flag indicates surface needs to be shader readable
+        uint32_t reserved      :31; ///< Reserved bits
     };
 
-    UINT_32 value;
+    uint32_t value;
 } ADDR_HTILE_FLAGS;
 
 /**
@@ -788,20 +790,20 @@ typedef union _ADDR_HTILE_FLAGS
 */
 typedef struct _ADDR_COMPUTE_HTILE_INFO_INPUT
 {
-    UINT_32            size;            ///< Size of this structure in bytes
+    uint32_t           size;            ///< Size of this structure in bytes
 
     ADDR_HTILE_FLAGS   flags;           ///< HTILE flags
-    UINT_32            pitch;           ///< Surface pitch, in pixels
-    UINT_32            height;          ///< Surface height, in pixels
-    UINT_32            numSlices;       ///< Number of slices
+    uint32_t           pitch;           ///< Surface pitch, in pixels
+    uint32_t           height;          ///< Surface height, in pixels
+    uint32_t           numSlices;       ///< Number of slices
     BOOL_32            isLinear;        ///< Linear or tiled HTILE layout
     AddrHtileBlockSize blockWidth;      ///< 4 or 8. EG above only support 8
     AddrHtileBlockSize blockHeight;     ///< 4 or 8. EG above only support 8
     ADDR_TILEINFO*     pTileInfo;       ///< Tile info
 
-    INT_32             tileIndex;       ///< Tile index, MUST be -1 if you don't want to use it
+    int32_t            tileIndex;       ///< Tile index, MUST be -1 if you don't want to use it
                                         ///  while the global useTileIndex is set to 1
-    INT_32             macroModeIndex;  ///< Index in macro tile mode table if there is one (CI)
+    int32_t            macroModeIndex;  ///< Index in macro tile mode table if there is one (CI)
                                         ///< README: When tileIndex is not -1, this must be valid
 } ADDR_COMPUTE_HTILE_INFO_INPUT;
 
@@ -815,18 +817,18 @@ typedef struct _ADDR_COMPUTE_HTILE_INFO_INPUT
 */
 typedef struct _ADDR_COMPUTE_HTILE_INFO_OUTPUT
 {
-    UINT_32 size;           ///< Size of this structure in bytes
+    uint32_t size;          ///< Size of this structure in bytes
 
-    UINT_32 pitch;          ///< Pitch in pixels of depth buffer represented in this
+    uint32_t pitch;         ///< Pitch in pixels of depth buffer represented in this
                             ///  HTile buffer. This might be larger than original depth
                             ///  buffer pitch when called with an unaligned pitch.
-    UINT_32 height;         ///< Height in pixels, as above
-    UINT_64 htileBytes;     ///< Size of HTILE buffer, in bytes
-    UINT_32 baseAlign;      ///< Base alignment
-    UINT_32 bpp;            ///< Bits per pixel for HTILE is how many bits for an 8x8 block!
-    UINT_32 macroWidth;     ///< Macro width in pixels, actually squared cache shape
-    UINT_32 macroHeight;    ///< Macro height in pixels
-    UINT_64 sliceSize;      ///< Slice size, in bytes.
+    uint32_t height;        ///< Height in pixels, as above
+    uint64_t htileBytes;    ///< Size of HTILE buffer, in bytes
+    uint32_t baseAlign;     ///< Base alignment
+    uint32_t bpp;           ///< Bits per pixel for HTILE is how many bits for an 8x8 block!
+    uint32_t macroWidth;    ///< Macro width in pixels, actually squared cache shape
+    uint32_t macroHeight;   ///< Macro height in pixels
+    uint64_t sliceSize;     ///< Slice size, in bytes.
 } ADDR_COMPUTE_HTILE_INFO_OUTPUT;
 
 /**
@@ -854,22 +856,22 @@ ADDR_E_RETURNCODE ADDR_API AddrComputeHtileInfo(
 */
 typedef struct _ADDR_COMPUTE_HTILE_ADDRFROMCOORD_INPUT
 {
-    UINT_32            size;            ///< Size of this structure in bytes
+    uint32_t           size;            ///< Size of this structure in bytes
 
-    UINT_32            pitch;           ///< Pitch, in pixels
-    UINT_32            height;          ///< Height in pixels
-    UINT_32            x;               ///< X coordinate
-    UINT_32            y;               ///< Y coordinate
-    UINT_32            slice;           ///< Index of slice
-    UINT_32            numSlices;       ///< Number of slices
+    uint32_t           pitch;           ///< Pitch, in pixels
+    uint32_t           height;          ///< Height in pixels
+    uint32_t           x;               ///< X coordinate
+    uint32_t           y;               ///< Y coordinate
+    uint32_t           slice;           ///< Index of slice
+    uint32_t           numSlices;       ///< Number of slices
     BOOL_32            isLinear;        ///< Linear or tiled HTILE layout
     AddrHtileBlockSize blockWidth;      ///< 4 or 8. 1 means 8, 0 means 4. EG above only support 8
     AddrHtileBlockSize blockHeight;     ///< 4 or 8. 1 means 8, 0 means 4. EG above only support 8
     ADDR_TILEINFO*     pTileInfo;       ///< Tile info
 
-    INT_32             tileIndex;       ///< Tile index, MUST be -1 if you don't want to use it
+    int32_t            tileIndex;       ///< Tile index, MUST be -1 if you don't want to use it
                                         ///  while the global useTileIndex is set to 1
-    INT_32             macroModeIndex;  ///< Index in macro tile mode table if there is one (CI)
+    int32_t            macroModeIndex;  ///< Index in macro tile mode table if there is one (CI)
                                         ///< README: When tileIndex is not -1, this must be valid
 } ADDR_COMPUTE_HTILE_ADDRFROMCOORD_INPUT;
 
@@ -883,10 +885,10 @@ typedef struct _ADDR_COMPUTE_HTILE_ADDRFROMCOORD_INPUT
 */
 typedef struct _ADDR_COMPUTE_HTILE_ADDRFROMCOORD_OUTPUT
 {
-    UINT_32 size;           ///< Size of this structure in bytes
+    uint32_t size;          ///< Size of this structure in bytes
 
-    UINT_64 addr;           ///< Address in bytes
-    UINT_32 bitPosition;    ///< Bit position, 0 or 4. CMASK and HTILE shares some lib method.
+    uint64_t addr;          ///< Address in bytes
+    uint32_t bitPosition;   ///< Bit position, 0 or 4. CMASK and HTILE shares some lib method.
                             ///  So we keep bitPosition for HTILE as well
 } ADDR_COMPUTE_HTILE_ADDRFROMCOORD_OUTPUT;
 
@@ -915,22 +917,22 @@ ADDR_E_RETURNCODE ADDR_API AddrComputeHtileAddrFromCoord(
 */
 typedef struct _ADDR_COMPUTE_HTILE_COORDFROMADDR_INPUT
 {
-    UINT_32            size;            ///< Size of this structure in bytes
+    uint32_t           size;            ///< Size of this structure in bytes
 
-    UINT_64            addr;            ///< Address
-    UINT_32            bitPosition;     ///< Bit position 0 or 4. CMASK and HTILE share some methods
+    uint64_t           addr;            ///< Address
+    uint32_t           bitPosition;     ///< Bit position 0 or 4. CMASK and HTILE share some methods
                                         ///  so we keep bitPosition for HTILE as well
-    UINT_32            pitch;           ///< Pitch, in pixels
-    UINT_32            height;          ///< Height, in pixels
-    UINT_32            numSlices;       ///< Number of slices
+    uint32_t           pitch;           ///< Pitch, in pixels
+    uint32_t           height;          ///< Height, in pixels
+    uint32_t           numSlices;       ///< Number of slices
     BOOL_32            isLinear;        ///< Linear or tiled HTILE layout
     AddrHtileBlockSize blockWidth;      ///< 4 or 8. 1 means 8, 0 means 4. R8xx/R9xx only support 8
     AddrHtileBlockSize blockHeight;     ///< 4 or 8. 1 means 8, 0 means 4. R8xx/R9xx only support 8
     ADDR_TILEINFO*     pTileInfo;       ///< Tile info
 
-    INT_32             tileIndex;       ///< Tile index, MUST be -1 if you don't want to use it
+    int32_t            tileIndex;       ///< Tile index, MUST be -1 if you don't want to use it
                                         ///  while the global useTileIndex is set to 1
-    INT_32             macroModeIndex;  ///< Index in macro tile mode table if there is one (CI)
+    int32_t            macroModeIndex;  ///< Index in macro tile mode table if there is one (CI)
                                         ///< README: When tileIndex is not -1, this must be valid
 } ADDR_COMPUTE_HTILE_COORDFROMADDR_INPUT;
 
@@ -944,11 +946,11 @@ typedef struct _ADDR_COMPUTE_HTILE_COORDFROMADDR_INPUT
 */
 typedef struct _ADDR_COMPUTE_HTILE_COORDFROMADDR_OUTPUT
 {
-    UINT_32 size;   ///< Size of this structure in bytes
+    uint32_t size;   ///< Size of this structure in bytes
 
-    UINT_32 x;      ///< X coordinate
-    UINT_32 y;      ///< Y coordinate
-    UINT_32 slice;  ///< Slice index
+    uint32_t x;      ///< X coordinate
+    uint32_t y;      ///< Y coordinate
+    uint32_t slice;  ///< Slice index
 } ADDR_COMPUTE_HTILE_COORDFROMADDR_OUTPUT;
 
 /**
@@ -983,11 +985,11 @@ typedef union _ADDR_CMASK_FLAGS
 {
     struct
     {
-        UINT_32 tcCompatible  : 1; ///< Flag indicates surface needs to be shader readable
-        UINT_32 reserved      :31; ///< Reserved bits
+        uint32_t tcCompatible  : 1; ///< Flag indicates surface needs to be shader readable
+        uint32_t reserved      :31; ///< Reserved bits
     };
 
-    UINT_32 value;
+    uint32_t value;
 } ADDR_CMASK_FLAGS;
 
 /**
@@ -1000,18 +1002,18 @@ typedef union _ADDR_CMASK_FLAGS
 */
 typedef struct _ADDR_COMPUTE_CMASKINFO_INPUT
 {
-    UINT_32             size;            ///< Size of this structure in bytes
+    uint32_t            size;            ///< Size of this structure in bytes
 
     ADDR_CMASK_FLAGS    flags;           ///< CMASK flags
-    UINT_32             pitch;           ///< Pitch, in pixels, of color buffer
-    UINT_32             height;          ///< Height, in pixels, of color buffer
-    UINT_32             numSlices;       ///< Number of slices, of color buffer
+    uint32_t            pitch;           ///< Pitch, in pixels, of color buffer
+    uint32_t            height;          ///< Height, in pixels, of color buffer
+    uint32_t            numSlices;       ///< Number of slices, of color buffer
     BOOL_32             isLinear;        ///< Linear or tiled layout, Only SI can be linear
     ADDR_TILEINFO*      pTileInfo;       ///< Tile info
 
-    INT_32              tileIndex;       ///< Tile index, MUST be -1 if you don't want to use it
+    int32_t             tileIndex;       ///< Tile index, MUST be -1 if you don't want to use it
                                          ///  while the global useTileIndex is set to 1
-    INT_32              macroModeIndex;  ///< Index in macro tile mode table if there is one (CI)
+    int32_t             macroModeIndex;  ///< Index in macro tile mode table if there is one (CI)
                                          ///< README: When tileIndex is not -1, this must be valid
 } ADDR_COMPUTE_CMASK_INFO_INPUT;
 
@@ -1025,19 +1027,19 @@ typedef struct _ADDR_COMPUTE_CMASKINFO_INPUT
 */
 typedef struct _ADDR_COMPUTE_CMASK_INFO_OUTPUT
 {
-    UINT_32 size;           ///< Size of this structure in bytes
+    uint32_t size;          ///< Size of this structure in bytes
 
-    UINT_32 pitch;          ///< Pitch in pixels of color buffer which
+    uint32_t pitch;         ///< Pitch in pixels of color buffer which
                             ///  this Cmask matches. The size might be larger than
                             ///  original color buffer pitch when called with
                             ///  an unaligned pitch.
-    UINT_32 height;         ///< Height in pixels, as above
-    UINT_64 cmaskBytes;     ///< Size in bytes of CMask buffer
-    UINT_32 baseAlign;      ///< Base alignment
-    UINT_32 blockMax;       ///< Cmask block size. Need this to set CB_COLORn_MASK register
-    UINT_32 macroWidth;     ///< Macro width in pixels, actually squared cache shape
-    UINT_32 macroHeight;    ///< Macro height in pixels
-    UINT_64 sliceSize;      ///< Slice size, in bytes.
+    uint32_t height;        ///< Height in pixels, as above
+    uint64_t cmaskBytes;    ///< Size in bytes of CMask buffer
+    uint32_t baseAlign;     ///< Base alignment
+    uint32_t blockMax;      ///< Cmask block size. Need this to set CB_COLORn_MASK register
+    uint32_t macroWidth;    ///< Macro width in pixels, actually squared cache shape
+    uint32_t macroHeight;   ///< Macro height in pixels
+    uint64_t sliceSize;     ///< Slice size, in bytes.
 } ADDR_COMPUTE_CMASK_INFO_OUTPUT;
 
 /**
@@ -1067,22 +1069,22 @@ ADDR_E_RETURNCODE ADDR_API AddrComputeCmaskInfo(
 */
 typedef struct _ADDR_COMPUTE_CMASK_ADDRFROMCOORD_INPUT
 {
-    UINT_32          size;           ///< Size of this structure in bytes
-    UINT_32          x;              ///< X coordinate
-    UINT_32          y;              ///< Y coordinate
-    UINT_64          fmaskAddr;      ///< Fmask addr for tc compatible Cmask
-    UINT_32          slice;          ///< Slice index
-    UINT_32          pitch;          ///< Pitch in pixels, of color buffer
-    UINT_32          height;         ///< Height in pixels, of color buffer
-    UINT_32          numSlices;      ///< Number of slices
-    UINT_32          bpp;
+    uint32_t         size;           ///< Size of this structure in bytes
+    uint32_t         x;              ///< X coordinate
+    uint32_t         y;              ///< Y coordinate
+    uint64_t         fmaskAddr;      ///< Fmask addr for tc compatible Cmask
+    uint32_t         slice;          ///< Slice index
+    uint32_t         pitch;          ///< Pitch in pixels, of color buffer
+    uint32_t         height;         ///< Height in pixels, of color buffer
+    uint32_t         numSlices;      ///< Number of slices
+    uint32_t         bpp;
     BOOL_32          isLinear;       ///< Linear or tiled layout, Only SI can be linear
     ADDR_CMASK_FLAGS flags;          ///< CMASK flags
     ADDR_TILEINFO*   pTileInfo;      ///< Tile info
 
-    INT_32           tileIndex;      ///< Tile index, MUST be -1 if you don't want to use it
+    int32_t          tileIndex;      ///< Tile index, MUST be -1 if you don't want to use it
                                      ///< while the global useTileIndex is set to 1
-    INT_32           macroModeIndex; ///< Index in macro tile mode table if there is one (CI)
+    int32_t          macroModeIndex; ///< Index in macro tile mode table if there is one (CI)
                                      ///< README: When tileIndex is not -1, this must be valid
 } ADDR_COMPUTE_CMASK_ADDRFROMCOORD_INPUT;
 
@@ -1096,10 +1098,10 @@ typedef struct _ADDR_COMPUTE_CMASK_ADDRFROMCOORD_INPUT
 */
 typedef struct _ADDR_COMPUTE_CMASK_ADDRFROMCOORD_OUTPUT
 {
-    UINT_32 size;           ///< Size of this structure in bytes
+    uint32_t size;          ///< Size of this structure in bytes
 
-    UINT_64 addr;           ///< CMASK address in bytes
-    UINT_32 bitPosition;    ///< Bit position within addr, 0-7. CMASK is 4 bpp,
+    uint64_t addr;          ///< CMASK address in bytes
+    uint32_t bitPosition;   ///< Bit position within addr, 0-7. CMASK is 4 bpp,
                             ///  so the address may be located in bit 0 (0) or 4 (4)
 } ADDR_COMPUTE_CMASK_ADDRFROMCOORD_OUTPUT;
 
@@ -1128,20 +1130,20 @@ ADDR_E_RETURNCODE ADDR_API AddrComputeCmaskAddrFromCoord(
 */
 typedef struct _ADDR_COMPUTE_CMASK_COORDFROMADDR_INPUT
 {
-    UINT_32        size;            ///< Size of this structure in bytes
+    uint32_t       size;            ///< Size of this structure in bytes
 
-    UINT_64        addr;            ///< CMASK address in bytes
-    UINT_32        bitPosition;     ///< Bit position within addr, 0-7. CMASK is 4 bpp,
+    uint64_t       addr;            ///< CMASK address in bytes
+    uint32_t       bitPosition;     ///< Bit position within addr, 0-7. CMASK is 4 bpp,
                                     ///  so the address may be located in bit 0 (0) or 4 (4)
-    UINT_32        pitch;           ///< Pitch, in pixels
-    UINT_32        height;          ///< Height in pixels
-    UINT_32        numSlices;       ///< Number of slices
+    uint32_t       pitch;           ///< Pitch, in pixels
+    uint32_t       height;          ///< Height in pixels
+    uint32_t       numSlices;       ///< Number of slices
     BOOL_32        isLinear;        ///< Linear or tiled layout, Only SI can be linear
     ADDR_TILEINFO* pTileInfo;       ///< Tile info
 
-    INT_32         tileIndex;       ///< Tile index, MUST be -1 if you don't want to use it
+    int32_t        tileIndex;       ///< Tile index, MUST be -1 if you don't want to use it
                                     ///  while the global useTileIndex is set to 1
-    INT_32         macroModeIndex;  ///< Index in macro tile mode table if there is one (CI)
+    int32_t        macroModeIndex;  ///< Index in macro tile mode table if there is one (CI)
                                     ///< README: When tileIndex is not -1, this must be valid
 } ADDR_COMPUTE_CMASK_COORDFROMADDR_INPUT;
 
@@ -1155,11 +1157,11 @@ typedef struct _ADDR_COMPUTE_CMASK_COORDFROMADDR_INPUT
 */
 typedef struct _ADDR_COMPUTE_CMASK_COORDFROMADDR_OUTPUT
 {
-    UINT_32 size;   ///< Size of this structure in bytes
+    uint32_t size;   ///< Size of this structure in bytes
 
-    UINT_32 x;      ///< X coordinate
-    UINT_32 y;      ///< Y coordinate
-    UINT_32 slice;  ///< Slice index
+    uint32_t x;      ///< X coordinate
+    uint32_t y;      ///< Y coordinate
+    uint32_t slice;  ///< Slice index
 } ADDR_COMPUTE_CMASK_COORDFROMADDR_OUTPUT;
 
 /**
@@ -1192,25 +1194,25 @@ ADDR_E_RETURNCODE ADDR_API AddrComputeCmaskCoordFromAddr(
 */
 typedef struct _ADDR_COMPUTE_FMASK_INFO_INPUT
 {
-    UINT_32         size;               ///< Size of this structure in bytes
+    uint32_t        size;               ///< Size of this structure in bytes
 
     AddrTileMode    tileMode;           ///< Tile mode
-    UINT_32         pitch;              ///< Surface pitch, in pixels
-    UINT_32         height;             ///< Surface height, in pixels
-    UINT_32         numSlices;          ///< Number of slice/depth
-    UINT_32         numSamples;         ///< Number of samples
-    UINT_32         numFrags;           ///< Number of fragments, leave it zero or the same as
+    uint32_t        pitch;              ///< Surface pitch, in pixels
+    uint32_t        height;             ///< Surface height, in pixels
+    uint32_t        numSlices;          ///< Number of slice/depth
+    uint32_t        numSamples;         ///< Number of samples
+    uint32_t        numFrags;           ///< Number of fragments, leave it zero or the same as
                                         ///  number of samples for normal AA; Set it to the
                                         ///  number of fragments for EQAA
     /// r800 and later HWL parameters
     struct
     {
-        UINT_32 resolved:   1;          ///< TRUE if the surface is for resolved fmask, only used
+        uint32_t resolved:   1;         ///< TRUE if the surface is for resolved fmask, only used
                                         ///  by H/W clients. S/W should always set it to FALSE.
-        UINT_32 reserved:  31;          ///< Reserved for future use.
+        uint32_t reserved:  31;         ///< Reserved for future use.
     };
     ADDR_TILEINFO*  pTileInfo;          ///< 2D tiling parameters. Clients must give valid data
-    INT_32          tileIndex;          ///< Tile index, MUST be -1 if you don't want to use it
+    int32_t         tileIndex;          ///< Tile index, MUST be -1 if you don't want to use it
                                         ///  while the global useTileIndex is set to 1
 } ADDR_COMPUTE_FMASK_INFO_INPUT;
 
@@ -1224,25 +1226,25 @@ typedef struct _ADDR_COMPUTE_FMASK_INFO_INPUT
 */
 typedef struct _ADDR_COMPUTE_FMASK_INFO_OUTPUT
 {
-    UINT_32         size;           ///< Size of this structure in bytes
+    uint32_t        size;           ///< Size of this structure in bytes
 
-    UINT_32         pitch;          ///< Pitch of fmask in pixels
-    UINT_32         height;         ///< Height of fmask in pixels
-    UINT_32         numSlices;      ///< Slices of fmask
-    UINT_64         fmaskBytes;     ///< Size of fmask in bytes
-    UINT_32         baseAlign;      ///< Base address alignment
-    UINT_32         pitchAlign;     ///< Pitch alignment
-    UINT_32         heightAlign;    ///< Height alignment
-    UINT_32         bpp;            ///< Bits per pixel of FMASK is: number of bit planes
-    UINT_32         numSamples;     ///< Number of samples, used for dump, export this since input
+    uint32_t        pitch;          ///< Pitch of fmask in pixels
+    uint32_t        height;         ///< Height of fmask in pixels
+    uint32_t        numSlices;      ///< Slices of fmask
+    uint64_t        fmaskBytes;     ///< Size of fmask in bytes
+    uint32_t        baseAlign;      ///< Base address alignment
+    uint32_t        pitchAlign;     ///< Pitch alignment
+    uint32_t        heightAlign;    ///< Height alignment
+    uint32_t        bpp;            ///< Bits per pixel of FMASK is: number of bit planes
+    uint32_t        numSamples;     ///< Number of samples, used for dump, export this since input
                                     ///  may be changed in 9xx and above
     /// r800 and later HWL parameters
     ADDR_TILEINFO*  pTileInfo;      ///< Tile parameters used. Fmask can have different
                                     ///  bank_height from color buffer
-    INT_32          tileIndex;      ///< Tile index, MUST be -1 if you don't want to use it
+    int32_t         tileIndex;      ///< Tile index, MUST be -1 if you don't want to use it
                                     ///  while the global useTileIndex is set to 1
-    INT_32          macroModeIndex; ///< Index in macro tile mode table if there is one (CI)
-    UINT_64         sliceSize;      ///< Size of slice in bytes
+    int32_t         macroModeIndex; ///< Index in macro tile mode table if there is one (CI)
+    uint64_t        sliceSize;      ///< Size of slice in bytes
 } ADDR_COMPUTE_FMASK_INFO_OUTPUT;
 
 /**
@@ -1270,18 +1272,18 @@ ADDR_E_RETURNCODE ADDR_API AddrComputeFmaskInfo(
 */
 typedef struct _ADDR_COMPUTE_FMASK_ADDRFROMCOORD_INPUT
 {
-    UINT_32         size;               ///< Size of this structure in bytes
+    uint32_t        size;               ///< Size of this structure in bytes
 
-    UINT_32         x;                  ///< X coordinate
-    UINT_32         y;                  ///< Y coordinate
-    UINT_32         slice;              ///< Slice index
-    UINT_32         plane;              ///< Plane number
-    UINT_32         sample;             ///< Sample index (fragment index for EQAA)
+    uint32_t        x;                  ///< X coordinate
+    uint32_t        y;                  ///< Y coordinate
+    uint32_t        slice;              ///< Slice index
+    uint32_t        plane;              ///< Plane number
+    uint32_t        sample;             ///< Sample index (fragment index for EQAA)
 
-    UINT_32         pitch;              ///< Surface pitch, in pixels
-    UINT_32         height;             ///< Surface height, in pixels
-    UINT_32         numSamples;         ///< Number of samples
-    UINT_32         numFrags;           ///< Number of fragments, leave it zero or the same as
+    uint32_t        pitch;              ///< Surface pitch, in pixels
+    uint32_t        height;             ///< Surface height, in pixels
+    uint32_t        numSamples;         ///< Number of samples
+    uint32_t        numFrags;           ///< Number of fragments, leave it zero or the same as
                                         ///  number of samples for normal AA; Set it to the
                                         ///  number of fragments for EQAA
 
@@ -1290,18 +1292,18 @@ typedef struct _ADDR_COMPUTE_FMASK_ADDRFROMCOORD_INPUT
     {
         struct
         {
-            UINT_32  bankSwizzle;       ///< Bank swizzle
-            UINT_32  pipeSwizzle;       ///< Pipe swizzle
+            uint32_t bankSwizzle;       ///< Bank swizzle
+            uint32_t pipeSwizzle;       ///< Pipe swizzle
         };
-        UINT_32     tileSwizzle;        ///< Combined swizzle, if useCombinedSwizzle is TRUE
+        uint32_t    tileSwizzle;        ///< Combined swizzle, if useCombinedSwizzle is TRUE
     };
 
     /// r800 and later HWL parameters
     struct
     {
-        UINT_32 resolved:   1;          ///< TRUE if this is a resolved fmask, used by H/W clients
-        UINT_32 ignoreSE:   1;          ///< TRUE if shader engines are ignored.
-        UINT_32 reserved:  30;          ///< Reserved for future use.
+        uint32_t resolved:   1;         ///< TRUE if this is a resolved fmask, used by H/W clients
+        uint32_t ignoreSE:   1;         ///< TRUE if shader engines are ignored.
+        uint32_t reserved:  30;         ///< Reserved for future use.
     };
     ADDR_TILEINFO*  pTileInfo;          ///< 2D tiling parameters. Client must provide all data
 
@@ -1317,10 +1319,10 @@ typedef struct _ADDR_COMPUTE_FMASK_ADDRFROMCOORD_INPUT
 */
 typedef struct _ADDR_COMPUTE_FMASK_ADDRFROMCOORD_OUTPUT
 {
-    UINT_32 size;           ///< Size of this structure in bytes
+    uint32_t size;           ///< Size of this structure in bytes
 
-    UINT_64 addr;           ///< Fmask address
-    UINT_32 bitPosition;    ///< Bit position within fmaskAddr, 0-7.
+    uint64_t addr;           ///< Fmask address
+    uint32_t bitPosition;    ///< Bit position within fmaskAddr, 0-7.
 } ADDR_COMPUTE_FMASK_ADDRFROMCOORD_OUTPUT;
 
 /**
@@ -1348,32 +1350,32 @@ ADDR_E_RETURNCODE ADDR_API AddrComputeFmaskAddrFromCoord(
 */
 typedef struct _ADDR_COMPUTE_FMASK_COORDFROMADDR_INPUT
 {
-    UINT_32         size;               ///< Size of this structure in bytes
+    uint32_t        size;               ///< Size of this structure in bytes
 
-    UINT_64         addr;               ///< Address
-    UINT_32         bitPosition;        ///< Bit position within addr, 0-7.
+    uint64_t        addr;               ///< Address
+    uint32_t        bitPosition;        ///< Bit position within addr, 0-7.
 
-    UINT_32         pitch;              ///< Pitch, in pixels
-    UINT_32         height;             ///< Height in pixels
-    UINT_32         numSamples;         ///< Number of samples
-    UINT_32         numFrags;           ///< Number of fragments
+    uint32_t        pitch;              ///< Pitch, in pixels
+    uint32_t        height;             ///< Height in pixels
+    uint32_t        numSamples;         ///< Number of samples
+    uint32_t        numFrags;           ///< Number of fragments
     AddrTileMode    tileMode;           ///< Tile mode
     union
     {
         struct
         {
-            UINT_32  bankSwizzle;       ///< Bank swizzle
-            UINT_32  pipeSwizzle;       ///< Pipe swizzle
+            uint32_t bankSwizzle;       ///< Bank swizzle
+            uint32_t pipeSwizzle;       ///< Pipe swizzle
         };
-        UINT_32     tileSwizzle;        ///< Combined swizzle, if useCombinedSwizzle is TRUE
+        uint32_t    tileSwizzle;        ///< Combined swizzle, if useCombinedSwizzle is TRUE
     };
 
     /// r800 and later HWL parameters
     struct
     {
-        UINT_32 resolved:   1;          ///< TRUE if this is a resolved fmask, used by HW components
-        UINT_32 ignoreSE:   1;          ///< TRUE if shader engines are ignored.
-        UINT_32 reserved:  30;          ///< Reserved for future use.
+        uint32_t resolved:   1;         ///< TRUE if this is a resolved fmask, used by HW components
+        uint32_t ignoreSE:   1;         ///< TRUE if shader engines are ignored.
+        uint32_t reserved:  30;         ///< Reserved for future use.
     };
     ADDR_TILEINFO*  pTileInfo;          ///< 2D tile parameters. Client must provide all data
 
@@ -1389,13 +1391,13 @@ typedef struct _ADDR_COMPUTE_FMASK_COORDFROMADDR_INPUT
 */
 typedef struct _ADDR_COMPUTE_FMASK_COORDFROMADDR_OUTPUT
 {
-    UINT_32 size;       ///< Size of this structure in bytes
+    uint32_t size;       ///< Size of this structure in bytes
 
-    UINT_32 x;          ///< X coordinate
-    UINT_32 y;          ///< Y coordinate
-    UINT_32 slice;      ///< Slice index
-    UINT_32 plane;      ///< Plane number
-    UINT_32 sample;     ///< Sample index (fragment index for EQAA)
+    uint32_t x;          ///< X coordinate
+    uint32_t y;          ///< Y coordinate
+    uint32_t slice;      ///< Slice index
+    uint32_t plane;      ///< Plane number
+    uint32_t sample;     ///< Sample index (fragment index for EQAA)
 } ADDR_COMPUTE_FMASK_COORDFROMADDR_OUTPUT;
 
 /**
@@ -1425,7 +1427,7 @@ ADDR_E_RETURNCODE ADDR_API AddrComputeFmaskCoordFromAddr(
 *       Get AddrLib version number
 ***************************************************************************************************
 */
-UINT_32 ADDR_API AddrGetVersion(ADDR_HANDLE hLib);
+uint32_t ADDR_API AddrGetVersion(ADDR_HANDLE hLib);
 
 /**
 ***************************************************************************************************
@@ -1457,16 +1459,16 @@ BOOL_32 ADDR_API AddrUseCombinedSwizzle(ADDR_HANDLE hLib);
 */
 typedef struct _ADDR_EXTRACT_BANKPIPE_SWIZZLE_INPUT
 {
-    UINT_32         size;           ///< Size of this structure in bytes
+    uint32_t        size;           ///< Size of this structure in bytes
 
-    UINT_32         base256b;       ///< Base256b value
+    uint32_t        base256b;       ///< Base256b value
 
     /// r800 and later HWL parameters
     ADDR_TILEINFO*  pTileInfo;      ///< 2D tile parameters. Client must provide all data
 
-    INT_32          tileIndex;      ///< Tile index, MUST be -1 if you don't want to use it
+    int32_t         tileIndex;      ///< Tile index, MUST be -1 if you don't want to use it
                                     ///  while the global useTileIndex is set to 1
-    INT_32          macroModeIndex; ///< Index in macro tile mode table if there is one (CI)
+    int32_t         macroModeIndex; ///< Index in macro tile mode table if there is one (CI)
                                     ///< README: When tileIndex is not -1, this must be valid
 } ADDR_EXTRACT_BANKPIPE_SWIZZLE_INPUT;
 
@@ -1480,10 +1482,10 @@ typedef struct _ADDR_EXTRACT_BANKPIPE_SWIZZLE_INPUT
 */
 typedef struct _ADDR_EXTRACT_BANKPIPE_SWIZZLE_OUTPUT
 {
-    UINT_32 size;           ///< Size of this structure in bytes
+    uint32_t size;           ///< Size of this structure in bytes
 
-    UINT_32 bankSwizzle;    ///< Bank swizzle
-    UINT_32 pipeSwizzle;    ///< Pipe swizzle
+    uint32_t bankSwizzle;    ///< Bank swizzle
+    uint32_t pipeSwizzle;    ///< Pipe swizzle
 } ADDR_EXTRACT_BANKPIPE_SWIZZLE_OUTPUT;
 
 /**
@@ -1512,18 +1514,18 @@ ADDR_E_RETURNCODE ADDR_API AddrExtractBankPipeSwizzle(
 */
 typedef struct _ADDR_COMBINE_BANKPIPE_SWIZZLE_INPUT
 {
-    UINT_32         size;           ///< Size of this structure in bytes
+    uint32_t        size;           ///< Size of this structure in bytes
 
-    UINT_32         bankSwizzle;    ///< Bank swizzle
-    UINT_32         pipeSwizzle;    ///< Pipe swizzle
-    UINT_64         baseAddr;       ///< Base address (leave it zero for driver clients)
+    uint32_t        bankSwizzle;    ///< Bank swizzle
+    uint32_t        pipeSwizzle;    ///< Pipe swizzle
+    uint64_t        baseAddr;       ///< Base address (leave it zero for driver clients)
 
     /// r800 and later HWL parameters
     ADDR_TILEINFO*  pTileInfo;      ///< 2D tile parameters. Client must provide all data
 
-    INT_32          tileIndex;      ///< Tile index, MUST be -1 if you don't want to use it
+    int32_t         tileIndex;      ///< Tile index, MUST be -1 if you don't want to use it
                                     ///  while the global useTileIndex is set to 1
-    INT_32          macroModeIndex; ///< Index in macro tile mode table if there is one (CI)
+    int32_t         macroModeIndex; ///< Index in macro tile mode table if there is one (CI)
                                     ///< README: When tileIndex is not -1, this must be valid
 } ADDR_COMBINE_BANKPIPE_SWIZZLE_INPUT;
 
@@ -1537,9 +1539,9 @@ typedef struct _ADDR_COMBINE_BANKPIPE_SWIZZLE_INPUT
 */
 typedef struct _ADDR_COMBINE_BANKPIPE_SWIZZLE_OUTPUT
 {
-    UINT_32 size;           ///< Size of this structure in bytes
+    uint32_t size;           ///< Size of this structure in bytes
 
-    UINT_32 tileSwizzle;    ///< Combined swizzle
+    uint32_t tileSwizzle;    ///< Combined swizzle
 } ADDR_COMBINE_BANKPIPE_SWIZZLE_OUTPUT;
 
 /**
@@ -1571,19 +1573,19 @@ ADDR_E_RETURNCODE ADDR_API AddrCombineBankPipeSwizzle(
 */
 typedef struct _ADDR_COMPUTE_SLICESWIZZLE_INPUT
 {
-    UINT_32         size;               ///< Size of this structure in bytes
+    uint32_t        size;               ///< Size of this structure in bytes
 
     AddrTileMode    tileMode;           ///< Tile Mode
-    UINT_32         baseSwizzle;        ///< Base tile swizzle
-    UINT_32         slice;              ///< Slice index
-    UINT_64         baseAddr;           ///< Base address, driver should leave it 0 in most cases
+    uint32_t        baseSwizzle;        ///< Base tile swizzle
+    uint32_t        slice;              ///< Slice index
+    uint64_t        baseAddr;           ///< Base address, driver should leave it 0 in most cases
 
     /// r800 and later HWL parameters
     ADDR_TILEINFO*  pTileInfo;          ///< 2D tile parameters. Actually banks needed here!
 
-    INT_32          tileIndex;          ///< Tile index, MUST be -1 if you don't want to use it
+    int32_t         tileIndex;          ///< Tile index, MUST be -1 if you don't want to use it
                                         ///  while the global useTileIndex is set to 1
-    INT_32          macroModeIndex;     ///< Index in macro tile mode table if there is one (CI)
+    int32_t         macroModeIndex;     ///< Index in macro tile mode table if there is one (CI)
                                         ///< README: When tileIndex is not -1, this must be valid
 } ADDR_COMPUTE_SLICESWIZZLE_INPUT;
 
@@ -1599,9 +1601,9 @@ typedef struct _ADDR_COMPUTE_SLICESWIZZLE_INPUT
 */
 typedef struct _ADDR_COMPUTE_SLICESWIZZLE_OUTPUT
 {
-    UINT_32  size;           ///< Size of this structure in bytes
+    uint32_t  size;           ///< Size of this structure in bytes
 
-    UINT_32  tileSwizzle;    ///< Recalculated tileSwizzle value
+    uint32_t  tileSwizzle;    ///< Recalculated tileSwizzle value
 } ADDR_COMPUTE_SLICESWIZZLE_OUTPUT;
 
 /**
@@ -1646,12 +1648,12 @@ typedef union _ADDR_SWIZZLE_OPTION
 {
     struct
     {
-        UINT_32 genOption       : 1;    ///< The way swizzle is generated, see AddrSwizzleGenOption
-        UINT_32 reduceBankBit   : 1;    ///< TRUE if we need reduce swizzle bits
-        UINT_32 reserved        :30;    ///< Reserved bits
+        uint32_t genOption       : 1;    ///< The way swizzle is generated, see AddrSwizzleGenOption
+        uint32_t reduceBankBit   : 1;    ///< TRUE if we need reduce swizzle bits
+        uint32_t reserved        :30;    ///< Reserved bits
     };
 
-    UINT_32 value;
+    uint32_t value;
 
 } ADDR_SWIZZLE_OPTION;
 
@@ -1665,18 +1667,18 @@ typedef union _ADDR_SWIZZLE_OPTION
 */
 typedef struct _ADDR_COMPUTE_BASE_SWIZZLE_INPUT
 {
-    UINT_32             size;           ///< Size of this structure in bytes
+    uint32_t            size;           ///< Size of this structure in bytes
 
     ADDR_SWIZZLE_OPTION option;         ///< Swizzle option
-    UINT_32             surfIndex;      ///< Index of this surface type
+    uint32_t            surfIndex;      ///< Index of this surface type
     AddrTileMode        tileMode;       ///< Tile Mode
 
     /// r800 and later HWL parameters
     ADDR_TILEINFO*      pTileInfo;      ///< 2D tile parameters. Actually banks needed here!
 
-    INT_32              tileIndex;      ///< Tile index, MUST be -1 if you don't want to use it
+    int32_t             tileIndex;      ///< Tile index, MUST be -1 if you don't want to use it
                                         ///  while the global useTileIndex is set to 1
-    INT_32              macroModeIndex; ///< Index in macro tile mode table if there is one (CI)
+    int32_t             macroModeIndex; ///< Index in macro tile mode table if there is one (CI)
                                         ///< README: When tileIndex is not -1, this must be valid
 } ADDR_COMPUTE_BASE_SWIZZLE_INPUT;
 
@@ -1690,9 +1692,9 @@ typedef struct _ADDR_COMPUTE_BASE_SWIZZLE_INPUT
 */
 typedef struct _ADDR_COMPUTE_BASE_SWIZZLE_OUTPUT
 {
-    UINT_32 size;           ///< Size of this structure in bytes
+    uint32_t size;           ///< Size of this structure in bytes
 
-    UINT_32 tileSwizzle;    ///< Combined swizzle
+    uint32_t tileSwizzle;    ///< Combined swizzle
 } ADDR_COMPUTE_BASE_SWIZZLE_OUTPUT;
 
 /**
@@ -1723,12 +1725,12 @@ ADDR_E_RETURNCODE ADDR_API AddrComputeBaseSwizzle(
 */
 typedef struct _ELEM_GETEXPORTNORM_INPUT
 {
-    UINT_32             size;       ///< Size of this structure in bytes
+    uint32_t            size;       ///< Size of this structure in bytes
 
     AddrColorFormat     format;     ///< Color buffer format; Client should use ColorFormat
     AddrSurfaceNumber   num;        ///< Surface number type; Client should use NumberType
     AddrSurfaceSwap     swap;       ///< Surface swap byte swap; Client should use SurfaceSwap
-    UINT_32             numSamples; ///< Number of samples
+    uint32_t            numSamples; ///< Number of samples
 } ELEM_GETEXPORTNORM_INPUT;
 
 /**
@@ -1765,7 +1767,7 @@ BOOL_32 ADDR_API ElemGetExportNorm(
 */
 typedef struct _ELEM_FLT32TODEPTHPIXEL_INPUT
 {
-    UINT_32         size;           ///< Size of this structure in bytes
+    uint32_t        size;           ///< Size of this structure in bytes
 
     AddrDepthFormat format;         ///< Depth buffer format
     ADDR_FLT_32     comps[2];       ///< Component values (Z/stencil)
@@ -1782,14 +1784,14 @@ typedef struct _ELEM_FLT32TODEPTHPIXEL_INPUT
 */
 typedef struct _ELEM_FLT32TODEPTHPIXEL_OUTPUT
 {
-    UINT_32 size;           ///< Size of this structure in bytes
+    uint32_t size;          ///< Size of this structure in bytes
 
-    UINT_8* pPixel;         ///< Real depth value. Same data type as depth buffer.
+    uint8_t* pPixel;        ///< Real depth value. Same data type as depth buffer.
                             ///  Client must provide enough storage for this type.
-    UINT_32 depthBase;      ///< Tile base in bits for depth bits
-    UINT_32 stencilBase;    ///< Tile base in bits for stencil bits
-    UINT_32 depthBits;      ///< Bits for depth
-    UINT_32 stencilBits;    ///< Bits for stencil
+    uint32_t depthBase;     ///< Tile base in bits for depth bits
+    uint32_t stencilBase;   ///< Tile base in bits for stencil bits
+    uint32_t depthBits;     ///< Bits for depth
+    uint32_t stencilBits;   ///< Bits for stencil
 } ELEM_FLT32TODEPTHPIXEL_OUTPUT;
 
 /**
@@ -1822,7 +1824,7 @@ ADDR_E_RETURNCODE ADDR_API ElemFlt32ToDepthPixel(
 */
 typedef struct _ELEM_FLT32TOCOLORPIXEL_INPUT
 {
-    UINT_32            size;           ///< Size of this structure in bytes
+    uint32_t           size;           ///< Size of this structure in bytes
 
     AddrColorFormat    format;         ///< Color buffer format
     AddrSurfaceNumber  surfNum;        ///< Surface number
@@ -1841,9 +1843,9 @@ typedef struct _ELEM_FLT32TOCOLORPIXEL_INPUT
 */
 typedef struct _ELEM_FLT32TOCOLORPIXEL_OUTPUT
 {
-    UINT_32 size;       ///< Size of this structure in bytes
+    uint32_t size;       ///< Size of this structure in bytes
 
-    UINT_8* pPixel;     ///< Real color value. Same data type as color buffer.
+    uint8_t* pPixel;     ///< Real color value. Same data type as color buffer.
                         ///  Client must provide enough storage for this type.
 } ELEM_FLT32TOCOLORPIXEL_OUTPUT;
 
@@ -1877,7 +1879,7 @@ ADDR_E_RETURNCODE ADDR_API ElemFlt32ToColorPixel(
 */
 typedef struct _ADDR_CONVERT_TILEINFOTOHW_INPUT
 {
-    UINT_32         size;               ///< Size of this structure in bytes
+    uint32_t        size;               ///< Size of this structure in bytes
     BOOL_32         reverse;            ///< Convert control flag.
                                         ///  FALSE: convert from real value to HW value;
                                         ///  TRUE: convert from HW value to real value.
@@ -1885,9 +1887,9 @@ typedef struct _ADDR_CONVERT_TILEINFOTOHW_INPUT
     /// r800 and later HWL parameters
     ADDR_TILEINFO*  pTileInfo;          ///< Tile parameters with real value
 
-    INT_32          tileIndex;          ///< Tile index, MUST be -1 if you don't want to use it
+    int32_t         tileIndex;          ///< Tile index, MUST be -1 if you don't want to use it
                                         ///  while the global useTileIndex is set to 1
-    INT_32          macroModeIndex;     ///< Index in macro tile mode table if there is one (CI)
+    int32_t         macroModeIndex;     ///< Index in macro tile mode table if there is one (CI)
                                         ///< README: When tileIndex is not -1, this must be valid
 } ADDR_CONVERT_TILEINFOTOHW_INPUT;
 
@@ -1901,7 +1903,7 @@ typedef struct _ADDR_CONVERT_TILEINFOTOHW_INPUT
 */
 typedef struct _ADDR_CONVERT_TILEINFOTOHW_OUTPUT
 {
-    UINT_32             size;               ///< Size of this structure in bytes
+    uint32_t            size;               ///< Size of this structure in bytes
 
     /// r800 and later HWL parameters
     ADDR_TILEINFO*      pTileInfo;          ///< Tile parameters with hardware register value
@@ -1933,10 +1935,10 @@ ADDR_E_RETURNCODE ADDR_API AddrConvertTileInfoToHW(
 */
 typedef struct _ADDR_CONVERT_TILEINDEX_INPUT
 {
-    UINT_32         size;               ///< Size of this structure in bytes
+    uint32_t        size;               ///< Size of this structure in bytes
 
-    INT_32          tileIndex;          ///< Tile index
-    INT_32          macroModeIndex;     ///< Index in macro tile mode table if there is one (CI)
+    int32_t         tileIndex;          ///< Tile index
+    int32_t         macroModeIndex;     ///< Index in macro tile mode table if there is one (CI)
     BOOL_32         tileInfoHw;         ///< Set to TRUE if client wants HW enum, otherwise actual
 } ADDR_CONVERT_TILEINDEX_INPUT;
 
@@ -1950,7 +1952,7 @@ typedef struct _ADDR_CONVERT_TILEINDEX_INPUT
 */
 typedef struct _ADDR_CONVERT_TILEINDEX_OUTPUT
 {
-    UINT_32             size;           ///< Size of this structure in bytes
+    uint32_t            size;           ///< Size of this structure in bytes
 
     AddrTileMode        tileMode;       ///< Tile mode
     AddrTileType        tileType;       ///< Tile type
@@ -1983,11 +1985,11 @@ ADDR_E_RETURNCODE ADDR_API AddrConvertTileIndex(
 */
 typedef struct _ADDR_CONVERT_TILEINDEX1_INPUT
 {
-    UINT_32         size;               ///< Size of this structure in bytes
+    uint32_t        size;               ///< Size of this structure in bytes
 
-    INT_32          tileIndex;          ///< Tile index
-    UINT_32         bpp;                ///< Bits per pixel
-    UINT_32         numSamples;         ///< Number of samples
+    int32_t         tileIndex;          ///< Tile index
+    uint32_t        bpp;                ///< Bits per pixel
+    uint32_t        numSamples;         ///< Number of samples
     BOOL_32         tileInfoHw;         ///< Set to TRUE if client wants HW enum, otherwise actual
 } ADDR_CONVERT_TILEINDEX1_INPUT;
 
@@ -2016,7 +2018,7 @@ ADDR_E_RETURNCODE ADDR_API AddrConvertTileIndex1(
 */
 typedef struct _ADDR_GET_TILEINDEX_INPUT
 {
-    UINT_32         size;           ///< Size of this structure in bytes
+    uint32_t        size;           ///< Size of this structure in bytes
 
     AddrTileMode    tileMode;       ///< Tile mode
     AddrTileType    tileType;       ///< Tile-type: disp/non-disp/...
@@ -2033,9 +2035,9 @@ typedef struct _ADDR_GET_TILEINDEX_INPUT
 */
 typedef struct _ADDR_GET_TILEINDEX_OUTPUT
 {
-    UINT_32         size;           ///< Size of this structure in bytes
+    uint32_t        size;           ///< Size of this structure in bytes
 
-    INT_32          index;          ///< index in table
+    int32_t         index;          ///< index in table
 } ADDR_GET_TILEINDEX_OUTPUT;
 
 /**
@@ -2065,10 +2067,10 @@ ADDR_E_RETURNCODE ADDR_API AddrGetTileIndex(
 typedef struct _ADDR_PRT_INFO_INPUT
 {
     AddrFormat          format;        ///< Surface format
-    UINT_32             baseMipWidth;  ///< Base mipmap width
-    UINT_32             baseMipHeight; ///< Base mipmap height
-    UINT_32             baseMipDepth;  ///< Base mipmap depth
-    UINT_32             numFrags;      ///< Number of fragments,
+    uint32_t            baseMipWidth;  ///< Base mipmap width
+    uint32_t            baseMipHeight; ///< Base mipmap height
+    uint32_t            baseMipDepth;  ///< Base mipmap depth
+    uint32_t            numFrags;      ///< Number of fragments,
 } ADDR_PRT_INFO_INPUT;
 
 /**
@@ -2081,8 +2083,8 @@ typedef struct _ADDR_PRT_INFO_INPUT
 */
 typedef struct _ADDR_PRT_INFO_OUTPUT
 {
-    UINT_32             prtTileWidth;
-    UINT_32             prtTileHeight;
+    uint32_t             prtTileWidth;
+    uint32_t             prtTileHeight;
 } ADDR_PRT_INFO_OUTPUT;
 
 /**
@@ -2112,17 +2114,17 @@ ADDR_E_RETURNCODE ADDR_API AddrComputePrtInfo(
 */
 typedef struct _ADDR_COMPUTE_DCCINFO_INPUT
 {
-    UINT_32             size;            ///< Size of this structure in bytes
-    UINT_32             bpp;             ///< BitPP of color surface
-    UINT_32             numSamples;      ///< Sample number of color surface
-    UINT_64             colorSurfSize;   ///< Size of color surface to which dcc key is bound
+    uint32_t            size;            ///< Size of this structure in bytes
+    uint32_t            bpp;             ///< BitPP of color surface
+    uint32_t            numSamples;      ///< Sample number of color surface
+    uint64_t            colorSurfSize;   ///< Size of color surface to which dcc key is bound
     AddrTileMode        tileMode;        ///< Tile mode of color surface
     ADDR_TILEINFO       tileInfo;        ///< Tile info of color surface
-    UINT_32             tileSwizzle;     ///< Tile swizzle
-    INT_32              tileIndex;       ///< Tile index of color surface,
+    uint32_t            tileSwizzle;     ///< Tile swizzle
+    int32_t             tileIndex;       ///< Tile index of color surface,
                                          ///< MUST be -1 if you don't want to use it
                                          ///< while the global useTileIndex is set to 1
-    INT_32              macroModeIndex;  ///< Index in macro tile mode table if there is one (CI)
+    int32_t             macroModeIndex;  ///< Index in macro tile mode table if there is one (CI)
                                          ///< README: When tileIndex is not -1, this must be valid
 } ADDR_COMPUTE_DCCINFO_INPUT;
 
@@ -2136,10 +2138,10 @@ typedef struct _ADDR_COMPUTE_DCCINFO_INPUT
 */
 typedef struct _ADDR_COMPUTE_DCCINFO_OUTPUT
 {
-    UINT_32 size;                 ///< Size of this structure in bytes
-    UINT_64 dccRamBaseAlign;      ///< Base alignment of dcc key
-    UINT_64 dccRamSize;           ///< Size of dcc key
-    UINT_64 dccFastClearSize;     ///< Size of dcc key portion that can be fast cleared
+    uint32_t size;                ///< Size of this structure in bytes
+    uint64_t dccRamBaseAlign;     ///< Base alignment of dcc key
+    uint64_t dccRamSize;          ///< Size of dcc key
+    uint64_t dccFastClearSize;    ///< Size of dcc key portion that can be fast cleared
     BOOL_32 subLvlCompressible;   ///< whether sub resource is compressiable
 } ADDR_COMPUTE_DCCINFO_OUTPUT;
 
@@ -2162,5 +2164,3 @@ ADDR_E_RETURNCODE ADDR_API AddrComputeDccInfo(
 #endif
 
 #endif // __ADDR_INTERFACE_H__
-
-
