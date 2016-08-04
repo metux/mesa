@@ -44,7 +44,6 @@
 DECLARE_XFORM_GROUP( sse, 2 )
 DECLARE_XFORM_GROUP( sse, 3 )
 
-#if 1
 /* Some functions are not written in SSE-assembly, because the fpu ones are faster */
 extern void _mesa_sse_transform_normals_no_rot( NORM_ARGS );
 extern void _mesa_sse_transform_rescale_normals( NORM_ARGS );
@@ -56,9 +55,6 @@ extern void _mesa_sse_transform_points4_3d( XFORM_ARGS );
 extern void _mesa_sse_transform_points4_identity( XFORM_ARGS );
 /* XXX this one works, see below */
 extern void _mesa_x86_transform_points4_identity( XFORM_ARGS );
-#else
-DECLARE_NORM_GROUP( sse )
-#endif
 
 
 extern void
@@ -89,7 +85,6 @@ void _mesa_init_sse_transform_asm( void )
    ASSIGN_XFORM_GROUP( sse, 2 );
    ASSIGN_XFORM_GROUP( sse, 3 );
 
-#if 1
    /* TODO: Finish these off.
     */
    _mesa_transform_tab[4][MATRIX_GENERAL] =
@@ -108,11 +103,6 @@ void _mesa_init_sse_transform_asm( void )
       _mesa_sse_transform_rescale_normals;
    _mesa_normal_tab[NORM_TRANSFORM_NO_ROT | NORM_RESCALE] =
       _mesa_sse_transform_rescale_normals_no_rot;
-#else
-   ASSIGN_XFORM_GROUP( sse, 4 );
-
-   ASSIGN_NORM_GROUP( sse );
-#endif
 
 #ifdef DEBUG_MATH
    _math_test_all_transform_functions( "SSE" );
@@ -120,4 +110,3 @@ void _mesa_init_sse_transform_asm( void )
 #endif
 #endif
 }
-
