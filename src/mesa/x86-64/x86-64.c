@@ -51,16 +51,6 @@ DECLARE_XFORM_GROUP( 3dnow, 4 )
 #include "x86-64.h"
 #endif
 
-/*
-extern void _mesa_x86_64_transform_points4_general( XFORM_ARGS );
-extern void _mesa_x86_64_transform_points4_identity( XFORM_ARGS );
-extern void _mesa_x86_64_transform_points4_perspective( XFORM_ARGS );
-extern void _mesa_x86_64_transform_points4_3d( XFORM_ARGS );
-extern void _mesa_x86_64_transform_points4_3d_no_rot( XFORM_ARGS );
-extern void _mesa_x86_64_transform_points4_2d_no_rot( XFORM_ARGS );
-extern void _mesa_x86_64_transform_points4_2d( XFORM_ARGS );
-*/
-
 #ifdef USE_X86_64_ASM
 static void message( const char *msg )
 {
@@ -108,7 +98,6 @@ void _mesa_init_all_x86_64_transform_asm(void)
 
    }
 
-   
 #ifdef DEBUG_MATH
    _math_test_all_transform_functions("x86_64");
    _math_test_all_cliptest_functions("x86_64");
