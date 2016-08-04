@@ -25,6 +25,8 @@
  *
  **************************************************************************/
 
+#include <unistd.h>
+
 #include "pipe_loader_priv.h"
 
 #include "util/u_memory.h"
