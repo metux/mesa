@@ -22,9 +22,10 @@
  *
  */
 
+#include <math.h>
+
 #include "nir.h"
 #include "nir_builder.h"
-#include "c99_math.h"
 
 /*
  * Lowers some unsupported double operations, using only:

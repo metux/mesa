@@ -23,8 +23,8 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
+#include <math.h>
 
-#include "c99_math.h"
 #include "glheader.h"
 #include "imports.h"
 #include "context.h"

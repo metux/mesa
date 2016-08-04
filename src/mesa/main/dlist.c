@@ -29,7 +29,8 @@
  * Display lists management functions.
  */
 
-#include "c99_math.h"
+#include <math.h>
+
 #include "glheader.h"
 #include "imports.h"
 #include "api_arrayelt.h"

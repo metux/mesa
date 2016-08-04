@@ -31,7 +31,8 @@
  * \author Brian Paul
  */
 
-#include "c99_math.h"
+#include <math.h>
+
 #include "main/glheader.h"
 #include "main/format_pack.h"
 #include "main/format_unpack.h"

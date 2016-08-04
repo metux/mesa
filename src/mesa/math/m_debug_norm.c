@@ -26,7 +26,8 @@
  *    Gareth Hughes
  */
 
-#include "c99_math.h"
+#include <math.h>
+
 #include "main/glheader.h"
 #include "main/context.h"
 #include "main/macros.h"
