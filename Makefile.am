@@ -59,7 +59,6 @@ EXTRA_DIST = \
 noinst_HEADERS = \
 	include/c99_alloca.h \
 	include/c99_compat.h \
-	include/c99_math.h \
 	include/c11 \
 	include/D3D9 \
 	include/HaikuGL \

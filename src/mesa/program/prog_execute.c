@@ -35,7 +35,8 @@
  */
 
 
-#include "c99_math.h"
+#include <math.h>
+
 #include "main/glheader.h"
 #include "main/macros.h"
 #include "prog_execute.h"

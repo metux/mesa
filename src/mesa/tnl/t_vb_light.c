@@ -22,8 +22,8 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
+#include <math.h>
 
-#include "c99_math.h"
 #include "main/glheader.h"
 #include "main/light.h"
 #include "main/macros.h"
