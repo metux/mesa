@@ -1,0 +1,2 @@
+
+missing system headers (and prototypes) that are missing on win32 / msvc2k3
