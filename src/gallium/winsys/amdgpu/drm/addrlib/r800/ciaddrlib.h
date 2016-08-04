@@ -34,6 +34,8 @@
 #ifndef __CI_ADDR_LIB_H__
 #define __CI_ADDR_LIB_H__
 
+#include <stdint.h>
+
 #include "addrlib.h"
 #include "siaddrlib.h"
 
@@ -46,24 +48,24 @@ struct CIChipSettings
 {
     struct
     {
-        UINT_32 isSeaIsland : 1;
-        UINT_32 isBonaire   : 1;
-        UINT_32 isKaveri    : 1;
-        UINT_32 isSpectre   : 1;
-        UINT_32 isSpooky    : 1;
-        UINT_32 isKalindi   : 1;
+        uint32_t isSeaIsland : 1;
+        uint32_t isBonaire   : 1;
+        uint32_t isKaveri    : 1;
+        uint32_t isSpectre   : 1;
+        uint32_t isSpooky    : 1;
+        uint32_t isKalindi   : 1;
         // Hawaii is GFXIP 7.2, similar with CI (Bonaire)
-        UINT_32 isHawaii    : 1;
+        uint32_t isHawaii    : 1;
 
         // VI
-        UINT_32 isVolcanicIslands : 1;
-        UINT_32 isIceland         : 1;
-        UINT_32 isTonga           : 1;
-        UINT_32 isFiji            : 1;
-        UINT_32 isPolaris10       : 1;
-        UINT_32 isPolaris11       : 1;
+        uint32_t isVolcanicIslands : 1;
+        uint32_t isIceland         : 1;
+        uint32_t isTonga           : 1;
+        uint32_t isFiji            : 1;
+        uint32_t isPolaris10       : 1;
+        uint32_t isPolaris11       : 1;
         // VI fusion (Carrizo)
-        UINT_32 isCarrizo         : 1;
+        uint32_t isCarrizo         : 1;
     };
 };
 
@@ -98,32 +100,32 @@ protected:
         ADDR_COMPUTE_FMASK_INFO_OUTPUT* pOut);
 
     virtual AddrChipFamily HwlConvertChipFamily(
-        UINT_32 uChipFamily, UINT_32 uChipRevision);
+        uint32_t uChipFamily, uint32_t uChipRevision);
 
     virtual BOOL_32 HwlInitGlobalParams(
         const ADDR_CREATE_INPUT* pCreateIn);
 
     virtual ADDR_E_RETURNCODE HwlSetupTileCfg(
-        INT_32 index, INT_32 macroModeIndex, ADDR_TILEINFO* pInfo,
+        int32_t index, int32_t macroModeIndex, ADDR_TILEINFO* pInfo,
         AddrTileMode* pMode = 0, AddrTileType* pType = 0) const;
 
     virtual VOID HwlComputeTileDataWidthAndHeightLinear(
-        UINT_32* pMacroWidth, UINT_32* pMacroHeight,
-        UINT_32 bpp, ADDR_TILEINFO* pTileInfo) const;
+        uint32_t* pMacroWidth, uint32_t* pMacroHeight,
+        uint32_t bpp, ADDR_TILEINFO* pTileInfo) const;
 
-    virtual INT_32 HwlComputeMacroModeIndex(
-        INT_32 tileIndex, ADDR_SURFACE_FLAGS flags, UINT_32 bpp, UINT_32 numSamples,
+    virtual int32_t HwlComputeMacroModeIndex(
+        int32_t tileIndex, ADDR_SURFACE_FLAGS flags, uint32_t bpp, uint32_t numSamples,
         ADDR_TILEINFO* pTileInfo, AddrTileMode* pTileMode = NULL, AddrTileType* pTileType = NULL
         ) const;
 
     // Sub-hwl interface - defined in EgBasedAddrLib
     virtual VOID HwlSetupTileInfo(
         AddrTileMode tileMode, ADDR_SURFACE_FLAGS flags,
-        UINT_32 bpp, UINT_32 pitch, UINT_32 height, UINT_32 numSamples,
+        uint32_t bpp, uint32_t pitch, uint32_t height, uint32_t numSamples,
         ADDR_TILEINFO* inputTileInfo, ADDR_TILEINFO* outputTileInfo,
         AddrTileType inTileType, ADDR_COMPUTE_SURFACE_INFO_OUTPUT* pOut) const;
 
-    virtual INT_32 HwlPostCheckTileIndex(
+    virtual int32_t HwlPostCheckTileIndex(
         const ADDR_TILEINFO* pInfo, AddrTileMode mode, AddrTileType type,
         INT curIndex = TileIndexInvalid) const;
 
@@ -138,7 +140,7 @@ protected:
         ADDR_COMPUTE_FMASK_INFO_OUTPUT* pFmaskOut) const;
 
     virtual AddrTileMode HwlDegradeThickTileMode(
-        AddrTileMode baseTileMode, UINT_32 numSlices, UINT_32* pBytesPerTile) const;
+        AddrTileMode baseTileMode, uint32_t numSlices, uint32_t* pBytesPerTile) const;
 
     virtual BOOL_32 HwlOverrideTileMode(
         const ADDR_COMPUTE_SURFACE_INFO_INPUT* pIn,
@@ -157,46 +159,44 @@ protected:
 
 protected:
     virtual VOID HwlPadDimensions(
-        AddrTileMode tileMode, UINT_32 bpp, ADDR_SURFACE_FLAGS flags,
-        UINT_32 numSamples, ADDR_TILEINFO* pTileInfo, UINT_32 padDims, UINT_32 mipLevel,
-        UINT_32* pPitch, UINT_32 pitchAlign, UINT_32* pHeight, UINT_32 heightAlign,
-        UINT_32* pSlices, UINT_32 sliceAlign) const;
+        AddrTileMode tileMode, uint32_t bpp, ADDR_SURFACE_FLAGS flags,
+        uint32_t numSamples, ADDR_TILEINFO* pTileInfo, uint32_t padDims, uint32_t mipLevel,
+        uint32_t* pPitch, uint32_t pitchAlign, uint32_t* pHeight, uint32_t heightAlign,
+        uint32_t* pSlices, uint32_t sliceAlign) const;
 
 private:
     VOID ReadGbTileMode(
-        UINT_32 regValue, ADDR_TILECONFIG* pCfg) const;
+        uint32_t regValue, ADDR_TILECONFIG* pCfg) const;
 
     VOID ReadGbMacroTileCfg(
-        UINT_32 regValue, ADDR_TILEINFO* pCfg) const;
+        uint32_t regValue, ADDR_TILEINFO* pCfg) const;
 
-    UINT_32 GetPrtSwitchP4Threshold() const;
+    uint32_t GetPrtSwitchP4Threshold() const;
 
     BOOL_32 InitTileSettingTable(
-        const UINT_32 *pSetting, UINT_32 noOfEntries);
+        const uint32_t *pSetting, uint32_t noOfEntries);
 
     BOOL_32 InitMacroTileCfgTable(
-        const UINT_32 *pSetting, UINT_32 noOfEntries);
+        const uint32_t *pSetting, uint32_t noOfEntries);
 
-    UINT_64 HwlComputeMetadataNibbleAddress(
-        UINT_64 uncompressedDataByteAddress,
-        UINT_64 dataBaseByteAddress,
-        UINT_64 metadataBaseByteAddress,
-        UINT_32 metadataBitSize,
-        UINT_32 elementBitSize,
-        UINT_32 blockByteSize,
-        UINT_32 pipeInterleaveBytes,
-        UINT_32 numOfPipes,
-        UINT_32 numOfBanks,
-        UINT_32 numOfSamplesPerSplit) const;
+    uint64_t HwlComputeMetadataNibbleAddress(
+        uint64_t uncompressedDataByteAddress,
+        uint64_t dataBaseByteAddress,
+        uint64_t metadataBaseByteAddress,
+        uint32_t metadataBitSize,
+        uint32_t elementBitSize,
+        uint32_t blockByteSize,
+        uint32_t pipeInterleaveBytes,
+        uint32_t numOfPipes,
+        uint32_t numOfBanks,
+        uint32_t numOfSamplesPerSplit) const;
 
-    static const UINT_32    MacroTileTableSize = 16;
+    static const uint32_t    MacroTileTableSize = 16;
     ADDR_TILEINFO           m_macroTileTable[MacroTileTableSize];
-    UINT_32                 m_noOfMacroEntries;
+    uint32_t                 m_noOfMacroEntries;
     BOOL_32                 m_allowNonDispThickModes;
 
     CIChipSettings          m_settings;
 };
 
 #endif
-
-

@@ -31,6 +31,8 @@
 ***************************************************************************************************
 */
 
+#include <stdint.h>
+
 #include "addrelemlib.h"
 #include "addrlib.h"
 
@@ -125,15 +127,15 @@ AddrElemLib* AddrElemLib::Create(
 */
 VOID AddrElemLib::Flt32sToInt32s(
     ADDR_FLT_32     value,      ///< [in] ADDR_FLT_32 value
-    UINT_32         bits,       ///< [in] nubmer of bits in value
+    uint32_t        bits,       ///< [in] nubmer of bits in value
     AddrNumberType  numberType, ///< [in] the type of number
-    UINT_32*        pResult)    ///< [out] Int32 value
+    uint32_t*       pResult)    ///< [out] Int32 value
 {
-    UINT_8 round = 128;    //ADDR_ROUND_BY_HALF
-    UINT_32 uscale;
-    UINT_32 sign;
+    uint8_t round = 128;    //ADDR_ROUND_BY_HALF
+    uint32_t uscale;
+    uint32_t sign;
 
-    //convert each component to an INT_32
+    //convert each component to an int32_t
     switch ( numberType )
     {
         case ADDR_NO_NUMBER:    //fall through
@@ -191,23 +193,23 @@ VOID AddrElemLib::Flt32sToInt32s(
                     else
                     {
                         FLOAT f = value.f * ((1<<bits) - 1);
-                        *pResult = static_cast<INT_32>(f + (round/256.0f));
+                        *pResult = static_cast<int32_t>(f + (round/256.0f));
                     }
                     #endif
                     else
                     {
                         ADDR_FLT_32 scaled;
                         ADDR_FLT_32 shifted;
-                        UINT_64 truncated, rounded;
-                        UINT_32 altShift;
-                        UINT_32 mask = (1 << bits) - 1;
-                        UINT_32 half = 1 << (bits - 1);
-                        UINT_32 mant24 = (value.i & 0x7FFFFF) + 0x800000;
-                        UINT_64 temp = mant24 - (mant24>>bits) -
-                            static_cast<INT_32>((mant24 & mask) > half);
-                        UINT_32 exp8 = value.i >> 23;
-                        UINT_32 shift = 126 - exp8 + 24 - bits;
-                        UINT_64 final;
+                        uint64_t truncated, rounded;
+                        uint32_t altShift;
+                        uint32_t mask = (1 << bits) - 1;
+                        uint32_t half = 1 << (bits - 1);
+                        uint32_t mant24 = (value.i & 0x7FFFFF) + 0x800000;
+                        uint64_t temp = mant24 - (mant24>>bits) -
+                            static_cast<int32_t>((mant24 & mask) > half);
+                        uint32_t exp8 = value.i >> 23;
+                        uint32_t shift = 126 - exp8 + 24 - bits;
+                        uint64_t final;
 
                         if (shift >= 32) // This is zero, even with maximum dither add
                         {
@@ -215,11 +217,11 @@ VOID AddrElemLib::Flt32sToInt32s(
                         }
                         else
                         {
-                            final = ((temp<<8) + (static_cast<UINT_64>(round)<<shift)) >> (shift+8);
+                            final = ((temp<<8) + (static_cast<uint64_t>(round)<<shift)) >> (shift+8);
                         }
                         //ADDR_EXIT( *pResult == final,
                         //    ("Float %x converted to %d-bit Unorm %x != bitwise %x",
-                        //     value.u, bits, (UINT_32)*pResult, (UINT_32)final) );
+                        //     value.u, bits, (uint32_t)*pResult, (uint32_t)final) );
                         if (final > mask)
                         {
                             final = mask;
@@ -227,13 +229,13 @@ VOID AddrElemLib::Flt32sToInt32s(
 
                         scaled.f  = value.f * ((1<<bits) - 1);
                         shifted.f = (scaled.f * 256);
-                        truncated = ((shifted.i&0x7FFFFF) + (INT_64)0x800000) << 8;
+                        truncated = ((shifted.i&0x7FFFFF) + (int64_t)0x800000) << 8;
                         altShift  = 126 + 24 + 8 - ((shifted.i>>23)&0xFF);
                         truncated = (altShift > 60) ? 0 : truncated >> altShift;
-                        rounded   = static_cast<INT_32>((round + truncated) >> 8);
+                        rounded   = static_cast<int32_t>((round + truncated) >> 8);
                         //if (rounded > ((1<<bits) - 1))
                         //    rounded = ((1<<bits) - 1);
-                        *pResult = static_cast<INT_32>(rounded); //(INT_32)final;
+                        *pResult = static_cast<int32_t>(rounded); //(int32_t)final;
                     }
                 }
             }
@@ -321,23 +323,23 @@ VOID AddrElemLib::Flt32sToInt32s(
 ***************************************************************************************************
 */
 VOID AddrElemLib::Int32sToPixel(
-    UINT_32              numComps,      ///< [in] number of components
-    UINT_32*             pComps,        ///< [in] compnents
-    UINT_32*             pCompBits,     ///< [in] total bits in each component
-    UINT_32*             pCompStart,    ///< [in] the first bit position of each component
+    uint32_t             numComps,      ///< [in] number of components
+    uint32_t*            pComps,        ///< [in] compnents
+    uint32_t*            pCompBits,     ///< [in] total bits in each component
+    uint32_t*            pCompStart,    ///< [in] the first bit position of each component
     ADDR_COMPONENT_FLAGS properties,    ///< [in] properties about byteAligned, exportNorm
-    UINT_32              resultBits,    ///< [in] result bits: total bpp after decompression
-    UINT_8*              pPixel)        ///< [out] a depth/stencil pixel value
+    uint32_t             resultBits,    ///< [in] result bits: total bpp after decompression
+    uint8_t*             pPixel)        ///< [out] a depth/stencil pixel value
 {
-    UINT_32 i;
-    UINT_32 j;
-    UINT_32 start;
-    UINT_32 size;
-    UINT_32 byte;
-    UINT_32 value = 0;
-    UINT_32 compMask;
-    UINT_32 elemMask=0;
-    UINT_32 elementXor = 0;  // address xor when reading bytes from elements
+    uint32_t i;
+    uint32_t j;
+    uint32_t start;
+    uint32_t size;
+    uint32_t byte;
+    uint32_t value = 0;
+    uint32_t compMask;
+    uint32_t elemMask=0;
+    uint32_t elementXor = 0;  // address xor when reading bytes from elements
 
 
     // @@ NOTE: assert if called on a compressed format!
@@ -351,7 +353,7 @@ VOID AddrElemLib::Int32sToPixel(
             size  = pCompBits[i]  / 8;
             for (j = 0; j < size; j++)
             {
-                pPixel[(j+start)^elementXor] = static_cast<UINT_8>(pComps[i] >> (8*j));
+                pPixel[(j+start)^elementXor] = static_cast<uint8_t>(pComps[i] >> (8*j));
             }
         }
     }
@@ -370,7 +372,7 @@ VOID AddrElemLib::Int32sToPixel(
         for (i = 0; i < size; i++)
         {
             byte = pPixel[i^elementXor] & ~(elemMask >> (8*i));
-            pPixel[i^elementXor] = static_cast<UINT_8>(byte | ((elemMask & value) >> (8*i)));
+            pPixel[i^elementXor] = static_cast<uint8_t>(byte | ((elemMask & value) >> (8*i)));
         }
     }
 }
@@ -389,13 +391,13 @@ VOID AddrElemLib::Int32sToPixel(
 VOID AddrElemLib::Flt32ToDepthPixel(
     AddrDepthFormat     format,     ///< [in] Depth format
     const ADDR_FLT_32   comps[2],   ///< [in] two components of depth
-    UINT_8*             pPixel      ///< [out] depth pixel value
+    uint8_t*            pPixel      ///< [out] depth pixel value
     ) const
 {
-    UINT_32 i;
-    UINT_32 values[2];
+    uint32_t i;
+    uint32_t values[2];
     ADDR_COMPONENT_FLAGS properties;    // byteAligned, exportNorm
-    UINT_32 resultBits = 0;             // result bits: total bits per pixel after decompression
+    uint32_t resultBits = 0;             // result bits: total bits per pixel after decompression
 
     ADDR_PIXEL_FORMATINFO fmt;
 
@@ -460,15 +462,15 @@ VOID AddrElemLib::Flt32ToColorPixel(
     AddrSurfaceNumber   surfNum,    ///< [in] Surface number
     AddrSurfaceSwap     surfSwap,   ///< [in] Surface swap
     const ADDR_FLT_32   comps[4],   ///< [in] four components of color
-    UINT_8*             pPixel      ///< [out] a red/green/blue/alpha pixel value
+    uint8_t*            pPixel      ///< [out] a red/green/blue/alpha pixel value
     ) const
 {
     ADDR_PIXEL_FORMATINFO pixelInfo;
 
-    UINT_32 i;
-    UINT_32 values[4];
+    uint32_t i;
+    uint32_t values[4];
     ADDR_COMPONENT_FLAGS properties;    // byteAligned, exportNorm
-    UINT_32 resultBits = 0;             // result bits: total bits per pixel after decompression
+    uint32_t resultBits = 0;             // result bits: total bits per pixel after decompression
 
     memset(&pixelInfo, 0, sizeof(ADDR_PIXEL_FORMATINFO));
 
@@ -565,7 +567,7 @@ VOID AddrElemLib::GetCompType(
             // Special handling for the depth formats
         case ADDR_COLOR_8_24:                // fall through for these 2 similar format
         case ADDR_COLOR_24_8:
-            for (UINT_32 c = 0; c < 4; c++)
+            for (uint32_t c = 0; c < 4; c++)
             {
                 if (pInfo->compBit[c] == 8)
                 {
@@ -585,7 +587,7 @@ VOID AddrElemLib::GetCompType(
         case ADDR_COLOR_8_24_FLOAT:          // fall through for these 3 similar format
         case ADDR_COLOR_24_8_FLOAT:
         case ADDR_COLOR_X24_8_32_FLOAT:
-            for (UINT_32 c = 0; c < 4; c++)
+            for (uint32_t c = 0; c < 4; c++)
             {
                 if (pInfo->compBit[c] == 8)
                 {
@@ -612,7 +614,7 @@ VOID AddrElemLib::GetCompType(
 
     if (!handled)
     {
-        for (UINT_32 c = 0; c < 4; c++)
+        for (uint32_t c = 0; c < 4; c++)
         {
             // Assign a number type for each component
             AddrSurfaceNumber cnum;
@@ -626,7 +628,7 @@ VOID AddrElemLib::GetCompType(
                 }
                 else if (numType == ADDR_NUMBER_UINT || numType == ADDR_NUMBER_SINT)
                 {
-                    pInfo->numType[c] = ADDR_EPSILON;   // Alpha INT_32 bits default is 0x01
+                    pInfo->numType[c] = ADDR_EPSILON;   // Alpha int32_t bits default is 0x01
                 }
                 else
                 {
@@ -806,12 +808,12 @@ VOID AddrElemLib::GetCompSwap(
 ***************************************************************************************************
 */
 VOID AddrElemLib::SwapComps(
-    UINT_32                 c0,     ///< [in] component index 0
-    UINT_32                 c1,     ///< [in] component index 1
+    uint32_t                c0,     ///< [in] component index 0
+    uint32_t                c1,     ///< [in] component index 1
     ADDR_PIXEL_FORMATINFO*  pInfo)  ///< [in/out] output per component info
 {
-    UINT_32 start;
-    UINT_32 bits;
+    uint32_t start;
+    uint32_t bits;
 
     start = pInfo->compStart[c0];
     pInfo->compStart[c0] = pInfo->compStart[c1];
@@ -1081,7 +1083,7 @@ BOOL_32 AddrElemLib::PixGetExportNorm(
 
     PixGetColorCompInfo(colorFmt, numberFmt, swap, &formatInfo);
 
-    for (UINT_32 c = 0; c < 4; c++)
+    for (uint32_t c = 0; c < 4; c++)
     {
         if (m_fp16ExportNorm)
         {
@@ -1122,18 +1124,18 @@ BOOL_32 AddrElemLib::PixGetExportNorm(
 */
 VOID AddrElemLib::AdjustSurfaceInfo(
     AddrElemMode    elemMode,       ///< [in] element mode
-    UINT_32         expandX,        ///< [in] decompression expansion factor in X
-    UINT_32         expandY,        ///< [in] decompression expansion factor in Y
-    UINT_32*        pBpp,           ///< [in/out] bpp
-    UINT_32*        pBasePitch,     ///< [in/out] base pitch
-    UINT_32*        pWidth,         ///< [in/out] width
-    UINT_32*        pHeight)        ///< [in/out] height
+    uint32_t        expandX,        ///< [in] decompression expansion factor in X
+    uint32_t        expandY,        ///< [in] decompression expansion factor in Y
+    uint32_t*       pBpp,           ///< [in/out] bpp
+    uint32_t*       pBasePitch,     ///< [in/out] base pitch
+    uint32_t*       pWidth,         ///< [in/out] width
+    uint32_t*       pHeight)        ///< [in/out] height
 {
-    UINT_32 packedBits;
-    UINT_32 basePitch;
-    UINT_32 width;
-    UINT_32 height;
-    UINT_32 bpp;
+    uint32_t packedBits;
+    uint32_t basePitch;
+    uint32_t width;
+    uint32_t height;
+    uint32_t bpp;
     BOOL_32 bBCnFormat = FALSE;
 
     ADDR_ASSERT(pBpp != NULL);
@@ -1247,16 +1249,16 @@ VOID AddrElemLib::AdjustSurfaceInfo(
 */
 VOID AddrElemLib::RestoreSurfaceInfo(
     AddrElemMode    elemMode,       ///< [in] element mode
-    UINT_32         expandX,        ///< [in] decompression expansion factor in X
-    UINT_32         expandY,        ///< [out] decompression expansion factor in Y
-    UINT_32*        pBpp,           ///< [in/out] bpp
-    UINT_32*        pWidth,         ///< [in/out] width
-    UINT_32*        pHeight)        ///< [in/out] height
+    uint32_t        expandX,        ///< [in] decompression expansion factor in X
+    uint32_t        expandY,        ///< [out] decompression expansion factor in Y
+    uint32_t*       pBpp,           ///< [in/out] bpp
+    uint32_t*       pWidth,         ///< [in/out] width
+    uint32_t*       pHeight)        ///< [in/out] height
 {
-    UINT_32 originalBits;
-    UINT_32 width;
-    UINT_32 height;
-    UINT_32 bpp;
+    uint32_t originalBits;
+    uint32_t width;
+    uint32_t height;
+    uint32_t bpp;
 
     ADDR_ASSERT(pBpp != NULL);
     ADDR_ASSERT(pWidth != NULL && pHeight != NULL);
@@ -1339,17 +1341,17 @@ VOID AddrElemLib::RestoreSurfaceInfo(
 *       Bits per pixel
 ***************************************************************************************************
 */
-UINT_32 AddrElemLib::GetBitsPerPixel(
+uint32_t AddrElemLib::GetBitsPerPixel(
     AddrFormat          format,         ///< [in] surface format code
     AddrElemMode*       pElemMode,      ///< [out] element mode
-    UINT_32*            pExpandX,       ///< [out] decompression expansion factor in X
-    UINT_32*            pExpandY,       ///< [out] decompression expansion factor in Y
-    UINT_32*            pUnusedBits)    ///< [out] bits unused
+    uint32_t*           pExpandX,       ///< [out] decompression expansion factor in X
+    uint32_t*           pExpandY,       ///< [out] decompression expansion factor in Y
+    uint32_t*           pUnusedBits)    ///< [out] bits unused
 {
-    UINT_32 bpp;
-    UINT_32 expandX = 1;
-    UINT_32 expandY = 1;
-    UINT_32 bitUnused = 0;
+    uint32_t bpp;
+    uint32_t expandX = 1;
+    uint32_t expandY = 1;
+    uint32_t bitUnused = 0;
     AddrElemMode elemMode = ADDR_UNCOMPRESSED; // default value
 
     switch (format)
@@ -1490,7 +1492,7 @@ UINT_32 AddrElemLib::GetBitsPerPixel(
     SafeAssign(pExpandX, expandX);
     SafeAssign(pExpandY, expandY);
     SafeAssign(pUnusedBits, bitUnused);
-    SafeAssign(reinterpret_cast<UINT_32*>(pElemMode), elemMode);
+    SafeAssign(reinterpret_cast<uint32_t*>(pElemMode), elemMode);
 
     return bpp;
 }
@@ -1507,10 +1509,10 @@ UINT_32 AddrElemLib::GetBitsPerPixel(
 ***************************************************************************************************
 */
 VOID AddrElemLib::GetCompBits(
-    UINT_32 c0,                     ///< [in] bits of component 0
-    UINT_32 c1,                     ///< [in] bits of component 1
-    UINT_32 c2,                     ///< [in] bits of component 2
-    UINT_32 c3,                     ///< [in] bits of component 3
+    uint32_t c0,                    ///< [in] bits of component 0
+    uint32_t c1,                    ///< [in] bits of component 1
+    uint32_t c2,                    ///< [in] bits of component 2
+    uint32_t c3,                    ///< [in] bits of component 3
     ADDR_PIXEL_FORMATINFO* pInfo,   ///< [out] per component info out
     AddrElemMode elemMode)          ///< [in] element mode
 {
@@ -1562,7 +1564,7 @@ VOID AddrElemLib::SetClearComps(
     BOOL_32 clearColor,     ///< [in] TRUE if clear color is set (CLEAR_COLOR)
     BOOL_32 float32)        ///< [in] TRUE if float32 component (BLEND_FLOAT32)
 {
-    INT_32 i;
+    int32_t i;
 
     // Use default clearvalues if clearColor is disabled
     if (clearColor == FALSE)
@@ -1670,5 +1672,3 @@ BOOL_32 AddrElemLib::IsExpand3x(
 
     return is3x;
 }
-
-

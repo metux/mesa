@@ -31,28 +31,30 @@
 ***************************************************************************************************
 */
 
+#include <stdint.h>
+
 #include "addrinterface.h"
 #include "addrlib.h"
 #include "addrcommon.h"
 
 #if defined(__APPLE__)
 
-UINT_32 div64_32(UINT_64 n, UINT_32 base)
+uint32_t div64_32(uint64_t n, uint32_t base)
 {
-    UINT_64 rem = n;
-    UINT_64 b = base;
-    UINT_64 res, d = 1;
-    UINT_32 high = rem >> 32;
+    uint64_t rem = n;
+    uint64_t b = base;
+    uint64_t res, d = 1;
+    uint32_t high = rem >> 32;
 
     res = 0;
     if (high >= base)
     {
         high /= base;
-        res = (UINT_64) high << 32;
-        rem -= (UINT_64) (high*base) << 32;
+        res = (uint64_t) high << 32;
+        rem -= (uint64_t) (high*base) << 32;
     }
 
-    while ((INT_64)b > 0 && b < rem)
+    while ((int64_t)b > 0 && b < rem)
     {
         b = b+b;
         d = d+d;
@@ -74,7 +76,7 @@ UINT_32 div64_32(UINT_64 n, UINT_32 base)
 }
 
 extern "C"
-UINT_32 __umoddi3(UINT_64 n, UINT_32 base)
+uint32_t __umoddi3(uint64_t n, uint32_t base)
 {
     return div64_32(n, base);
 }
@@ -319,8 +321,8 @@ ADDR_E_RETURNCODE AddrLib::Create(
 ***************************************************************************************************
 */
 VOID AddrLib::SetAddrChipFamily(
-    UINT_32 uChipFamily,        ///< [in] chip family defined in atiih.h
-    UINT_32 uChipRevision)      ///< [in] chip revision defined in "asic_family"_id.h
+    uint32_t uChipFamily,       ///< [in] chip family defined in atiih.h
+    uint32_t uChipRevision)     ///< [in] chip revision defined in "asic_family"_id.h
 {
     AddrChipFamily family = ADDR_CHIP_FAMILY_IVLD;
 
@@ -344,7 +346,7 @@ VOID AddrLib::SetAddrChipFamily(
 ***************************************************************************************************
 */
 VOID AddrLib::SetMinPitchAlignPixels(
-    UINT_32 minPitchAlignPixels)    ///< [in] minmum pitch alignment in pixels
+    uint32_t minPitchAlignPixels)   ///< [in] minmum pitch alignment in pixels
 {
     m_minPitchAlignPixels = (minPitchAlignPixels == 0)? 1 : minPitchAlignPixels;
 }
@@ -441,8 +443,8 @@ ADDR_E_RETURNCODE AddrLib::ComputeSurfaceInfo(
             pOut->height = pIn->height;
         }
 
-        UINT_32 expandX = 1;
-        UINT_32 expandY = 1;
+        uint32_t expandX = 1;
+        uint32_t expandY = 1;
         AddrElemMode elemMode;
 
         // Save outputs that may not go through HWL
@@ -514,9 +516,9 @@ ADDR_E_RETURNCODE AddrLib::ComputeSurfaceInfo(
                 // Make sure pTileInfo is not NULL
                 ADDR_ASSERT(localIn.pTileInfo);
 
-                UINT_32 numSamples = GetNumFragments(localIn.numSamples, localIn.numFrags);
+                uint32_t numSamples = GetNumFragments(localIn.numSamples, localIn.numFrags);
 
-                INT_32 macroModeIndex = TileIndexNoMacroIndex;
+                int32_t macroModeIndex = TileIndexNoMacroIndex;
 
                 if (localIn.tileIndex != TileIndexLinearGeneral)
                 {
@@ -685,10 +687,10 @@ ADDR_E_RETURNCODE AddrLib::ComputeSurfaceAddrFromCoord(
             input.pTileInfo = &tileInfoNull;
 
             const ADDR_SURFACE_FLAGS flags = {{0}};
-            UINT_32 numSamples = GetNumFragments(pIn->numSamples, pIn->numFrags);
+            uint32_t numSamples = GetNumFragments(pIn->numSamples, pIn->numFrags);
 
             // Try finding a macroModeIndex
-            INT_32 macroModeIndex = HwlComputeMacroModeIndex(input.tileIndex,
+            int32_t macroModeIndex = HwlComputeMacroModeIndex(input.tileIndex,
                                                              flags,
                                                              input.bpp,
                                                              numSamples,
@@ -718,7 +720,7 @@ ADDR_E_RETURNCODE AddrLib::ComputeSurfaceAddrFromCoord(
 
             if (returnCode == ADDR_OK)
             {
-                pOut->prtBlockIndex = static_cast<UINT_32>(pOut->addr / (64 * 1024));
+                pOut->prtBlockIndex = static_cast<uint32_t>(pOut->addr / (64 * 1024));
             }
         }
     }
@@ -765,10 +767,10 @@ ADDR_E_RETURNCODE AddrLib::ComputeSurfaceCoordFromAddr(
             input.pTileInfo = &tileInfoNull;
 
             const ADDR_SURFACE_FLAGS flags = {{0}};
-            UINT_32 numSamples = GetNumFragments(pIn->numSamples, pIn->numFrags);
+            uint32_t numSamples = GetNumFragments(pIn->numSamples, pIn->numFrags);
 
             // Try finding a macroModeIndex
-            INT_32 macroModeIndex = HwlComputeMacroModeIndex(input.tileIndex,
+            int32_t macroModeIndex = HwlComputeMacroModeIndex(input.tileIndex,
                                                              flags,
                                                              input.bpp,
                                                              numSamples,
@@ -1075,7 +1077,7 @@ ADDR_E_RETURNCODE AddrLib::ComputeFmaskInfo(
             flags.fmask = 1;
 
             // Try finding a macroModeIndex
-            INT_32 macroModeIndex = HwlComputeMacroModeIndex(pIn->tileIndex,
+            int32_t macroModeIndex = HwlComputeMacroModeIndex(pIn->tileIndex,
                                                              flags,
                                                              HwlComputeFmaskBits(pIn, NULL),
                                                              pIn->numSamples,
@@ -1397,7 +1399,7 @@ ADDR_E_RETURNCODE AddrLib::GetTileIndex(
 *       Surface thickness
 ***************************************************************************************************
 */
-UINT_32 AddrLib::ComputeSurfaceThickness(
+uint32_t AddrLib::ComputeSurfaceThickness(
     AddrTileMode tileMode)    ///< [in] tile mode
 {
     return m_modeFlags[tileMode].thickness;
@@ -1883,16 +1885,16 @@ ADDR_E_RETURNCODE AddrLib::ComputeCmaskCoordFromAddr(
 ***************************************************************************************************
 */
 VOID AddrLib::ComputeTileDataWidthAndHeight(
-    UINT_32         bpp,             ///< [in] bits per pixel
-    UINT_32         cacheBits,       ///< [in] bits of cache
+    uint32_t        bpp,             ///< [in] bits per pixel
+    uint32_t        cacheBits,       ///< [in] bits of cache
     ADDR_TILEINFO*  pTileInfo,       ///< [in] Tile info
-    UINT_32*        pMacroWidth,     ///< [out] macro tile width
-    UINT_32*        pMacroHeight     ///< [out] macro tile height
+    uint32_t*       pMacroWidth,     ///< [out] macro tile width
+    uint32_t*       pMacroHeight     ///< [out] macro tile height
     ) const
 {
-    UINT_32 height = 1;
-    UINT_32 width  = cacheBits / bpp;
-    UINT_32 pipes  = HwlGetPipes(pTileInfo);
+    uint32_t height = 1;
+    uint32_t width  = cacheBits / bpp;
+    uint32_t pipes  = HwlGetPipes(pTileInfo);
 
     // Double height until the macro-tile is close to square
     // Height can only be doubled if width is even
@@ -1927,9 +1929,9 @@ VOID AddrLib::ComputeTileDataWidthAndHeight(
 ***************************************************************************************************
 */
 VOID AddrLib::HwlComputeTileDataWidthAndHeightLinear(
-    UINT_32*        pMacroWidth,     ///< [out] macro tile width
-    UINT_32*        pMacroHeight,    ///< [out] macro tile height
-    UINT_32         bpp,             ///< [in] bits per pixel
+    uint32_t*       pMacroWidth,     ///< [out] macro tile width
+    uint32_t*       pMacroHeight,    ///< [out] macro tile height
+    uint32_t        bpp,             ///< [in] bits per pixel
     ADDR_TILEINFO*  pTileInfo        ///< [in] tile info
     ) const
 {
@@ -1951,35 +1953,35 @@ VOID AddrLib::HwlComputeTileDataWidthAndHeightLinear(
 *       *Htile pitch, height, total size in bytes, macro-tile dimensions and slice size*
 ***************************************************************************************************
 */
-UINT_32 AddrLib::ComputeHtileInfo(
+uint32_t AddrLib::ComputeHtileInfo(
     ADDR_HTILE_FLAGS flags,             ///< [in] htile flags
-    UINT_32          pitchIn,           ///< [in] pitch input
-    UINT_32          heightIn,          ///< [in] height input
-    UINT_32          numSlices,         ///< [in] number of slices
+    uint32_t         pitchIn,           ///< [in] pitch input
+    uint32_t         heightIn,          ///< [in] height input
+    uint32_t         numSlices,         ///< [in] number of slices
     BOOL_32          isLinear,          ///< [in] if it is linear mode
     BOOL_32          isWidth8,          ///< [in] if htile block width is 8
     BOOL_32          isHeight8,         ///< [in] if htile block height is 8
     ADDR_TILEINFO*   pTileInfo,         ///< [in] Tile info
-    UINT_32*         pPitchOut,         ///< [out] pitch output
-    UINT_32*         pHeightOut,        ///< [out] height output
-    UINT_64*         pHtileBytes,       ///< [out] bytes per 2D slice
-    UINT_32*         pMacroWidth,       ///< [out] macro-tile width in pixels
-    UINT_32*         pMacroHeight,      ///< [out] macro-tile width in pixels
-    UINT_64*         pSliceSize,        ///< [out] slice size in bytes
-    UINT_32*         pBaseAlign         ///< [out] base alignment
+    uint32_t*        pPitchOut,         ///< [out] pitch output
+    uint32_t*        pHeightOut,        ///< [out] height output
+    uint64_t*        pHtileBytes,       ///< [out] bytes per 2D slice
+    uint32_t*        pMacroWidth,       ///< [out] macro-tile width in pixels
+    uint32_t*        pMacroHeight,      ///< [out] macro-tile width in pixels
+    uint64_t*        pSliceSize,        ///< [out] slice size in bytes
+    uint32_t*        pBaseAlign         ///< [out] base alignment
     ) const
 {
 
-    UINT_32 macroWidth;
-    UINT_32 macroHeight;
-    UINT_32 baseAlign;
-    UINT_64 surfBytes;
-    UINT_64 sliceBytes;
+    uint32_t macroWidth;
+    uint32_t macroHeight;
+    uint32_t baseAlign;
+    uint64_t surfBytes;
+    uint64_t sliceBytes;
 
     numSlices = Max(1u, numSlices);
 
-    const UINT_32 bpp = HwlComputeHtileBpp(isWidth8, isHeight8);
-    const UINT_32 cacheBits = HtileCacheBits;
+    const uint32_t bpp = HwlComputeHtileBpp(isWidth8, isHeight8);
+    const uint32_t cacheBits = HtileCacheBits;
 
     if (isLinear)
     {
@@ -2037,12 +2039,12 @@ UINT_32 AddrLib::ComputeHtileInfo(
 *       Cmask base alignment
 ***************************************************************************************************
 */
-UINT_32 AddrLib::ComputeCmaskBaseAlign(
+uint32_t AddrLib::ComputeCmaskBaseAlign(
     ADDR_CMASK_FLAGS flags,           ///< [in] Cmask flags
     ADDR_TILEINFO*   pTileInfo        ///< [in] Tile info
     ) const
 {
-    UINT_32 baseAlign = m_pipeInterleaveBytes * HwlGetPipes(pTileInfo);
+    uint32_t baseAlign = m_pipeInterleaveBytes * HwlGetPipes(pTileInfo);
 
     if (flags.tcCompatible)
     {
@@ -2067,13 +2069,13 @@ UINT_32 AddrLib::ComputeCmaskBaseAlign(
 *       Cmask size in bytes
 ***************************************************************************************************
 */
-UINT_64 AddrLib::ComputeCmaskBytes(
-    UINT_32 pitch,        ///< [in] pitch
-    UINT_32 height,       ///< [in] height
-    UINT_32 numSlices     ///< [in] number of slices
+uint64_t AddrLib::ComputeCmaskBytes(
+    uint32_t pitch,       ///< [in] pitch
+    uint32_t height,      ///< [in] height
+    uint32_t numSlices    ///< [in] number of slices
     ) const
 {
-    return BITS_TO_BYTES(static_cast<UINT_64>(pitch) * height * numSlices * CmaskElemBits) /
+    return BITS_TO_BYTES(static_cast<uint64_t>(pitch) * height * numSlices * CmaskElemBits) /
         MicroTilePixels;
 }
 
@@ -2091,31 +2093,31 @@ UINT_64 AddrLib::ComputeCmaskBytes(
 */
 ADDR_E_RETURNCODE AddrLib::ComputeCmaskInfo(
     ADDR_CMASK_FLAGS flags,            ///< [in] cmask flags
-    UINT_32          pitchIn,           ///< [in] pitch input
-    UINT_32          heightIn,          ///< [in] height input
-    UINT_32          numSlices,         ///< [in] number of slices
+    uint32_t         pitchIn,           ///< [in] pitch input
+    uint32_t         heightIn,          ///< [in] height input
+    uint32_t         numSlices,         ///< [in] number of slices
     BOOL_32          isLinear,          ///< [in] is linear mode
     ADDR_TILEINFO*   pTileInfo,         ///< [in] Tile info
-    UINT_32*         pPitchOut,         ///< [out] pitch output
-    UINT_32*         pHeightOut,        ///< [out] height output
-    UINT_64*         pCmaskBytes,       ///< [out] bytes per 2D slice
-    UINT_32*         pMacroWidth,       ///< [out] macro-tile width in pixels
-    UINT_32*         pMacroHeight,      ///< [out] macro-tile width in pixels
-    UINT_64*         pSliceSize,        ///< [out] slice size in bytes
-    UINT_32*         pBaseAlign,        ///< [out] base alignment
-    UINT_32*         pBlockMax          ///< [out] block max == slice / 128 / 128 - 1
+    uint32_t*        pPitchOut,         ///< [out] pitch output
+    uint32_t*        pHeightOut,        ///< [out] height output
+    uint64_t*        pCmaskBytes,       ///< [out] bytes per 2D slice
+    uint32_t*        pMacroWidth,       ///< [out] macro-tile width in pixels
+    uint32_t*        pMacroHeight,      ///< [out] macro-tile width in pixels
+    uint64_t*        pSliceSize,        ///< [out] slice size in bytes
+    uint32_t*        pBaseAlign,        ///< [out] base alignment
+    uint32_t*        pBlockMax          ///< [out] block max == slice / 128 / 128 - 1
     ) const
 {
-    UINT_32 macroWidth;
-    UINT_32 macroHeight;
-    UINT_32 baseAlign;
-    UINT_64 surfBytes;
-    UINT_64 sliceBytes;
+    uint32_t macroWidth;
+    uint32_t macroHeight;
+    uint32_t baseAlign;
+    uint64_t surfBytes;
+    uint64_t sliceBytes;
 
     numSlices = Max(1u, numSlices);
 
-    const UINT_32 bpp = CmaskElemBits;
-    const UINT_32 cacheBits = CmaskCacheBits;
+    const uint32_t bpp = CmaskElemBits;
+    const uint32_t cacheBits = CmaskCacheBits;
 
     ADDR_E_RETURNCODE returnCode = ADDR_OK;
 
@@ -2169,8 +2171,8 @@ ADDR_E_RETURNCODE AddrLib::ComputeCmaskInfo(
 
     SafeAssign(pSliceSize, sliceBytes);
 
-    UINT_32 slice = (*pPitchOut) * (*pHeightOut);
-    UINT_32 blockMax = slice / 128 / 128 - 1;
+    uint32_t slice = (*pPitchOut) * (*pHeightOut);
+    uint32_t blockMax = slice / 128 / 128 - 1;
 
 #if DEBUG
     if (slice % (64*256) != 0)
@@ -2179,7 +2181,7 @@ ADDR_E_RETURNCODE AddrLib::ComputeCmaskInfo(
     }
 #endif //DEBUG
 
-    UINT_32 maxBlockMax = HwlGetMaxCmaskBlockMax();
+    uint32_t maxBlockMax = HwlGetMaxCmaskBlockMax();
 
     if (blockMax > maxBlockMax)
     {
@@ -2204,21 +2206,21 @@ ADDR_E_RETURNCODE AddrLib::ComputeCmaskInfo(
 *
 ***************************************************************************************************
 */
-UINT_32 AddrLib::ComputeXmaskCoordYFromPipe(
-    UINT_32         pipe,       ///< [in] pipe number
-    UINT_32         x           ///< [in] x coordinate
+uint32_t AddrLib::ComputeXmaskCoordYFromPipe(
+    uint32_t        pipe,       ///< [in] pipe number
+    uint32_t        x           ///< [in] x coordinate
     ) const
 {
-    UINT_32 pipeBit0;
-    UINT_32 pipeBit1;
-    UINT_32 xBit0;
-    UINT_32 xBit1;
-    UINT_32 yBit0;
-    UINT_32 yBit1;
+    uint32_t pipeBit0;
+    uint32_t pipeBit1;
+    uint32_t xBit0;
+    uint32_t xBit1;
+    uint32_t yBit0;
+    uint32_t yBit1;
 
-    UINT_32 y = 0;
+    uint32_t y = 0;
 
-    UINT_32 numPipes = m_pipes; // SI has its implementation
+    uint32_t numPipes = m_pipes; // SI has its implementation
     //
     // Convert pipe + x to y coordinate.
     //
@@ -2299,55 +2301,55 @@ UINT_32 AddrLib::ComputeXmaskCoordYFromPipe(
 ***************************************************************************************************
 */
 VOID AddrLib::HwlComputeXmaskCoordFromAddr(
-    UINT_64         addr,           ///< [in] address
-    UINT_32         bitPosition,    ///< [in] bitPosition in a byte
-    UINT_32         pitch,          ///< [in] pitch
-    UINT_32         height,         ///< [in] height
-    UINT_32         numSlices,      ///< [in] number of slices
-    UINT_32         factor,         ///< [in] factor that indicates cmask or htile
+    uint64_t        addr,           ///< [in] address
+    uint32_t        bitPosition,    ///< [in] bitPosition in a byte
+    uint32_t        pitch,          ///< [in] pitch
+    uint32_t        height,         ///< [in] height
+    uint32_t        numSlices,      ///< [in] number of slices
+    uint32_t        factor,         ///< [in] factor that indicates cmask or htile
     BOOL_32         isLinear,       ///< [in] linear or tiled HTILE layout
     BOOL_32         isWidth8,       ///< [in] TRUE if width is 8, FALSE means 4. It's register value
     BOOL_32         isHeight8,      ///< [in] TRUE if width is 8, FALSE means 4. It's register value
     ADDR_TILEINFO*  pTileInfo,      ///< [in] Tile info
-    UINT_32*        pX,             ///< [out] x coord
-    UINT_32*        pY,             ///< [out] y coord
-    UINT_32*        pSlice          ///< [out] slice index
+    uint32_t*       pX,             ///< [out] x coord
+    uint32_t*       pY,             ///< [out] y coord
+    uint32_t*       pSlice          ///< [out] slice index
     ) const
 {
-    UINT_32 pipe;
-    UINT_32 numPipes;
-    UINT_32 numPipeBits;
-    UINT_32 macroTilePitch;
-    UINT_32 macroTileHeight;
+    uint32_t pipe;
+    uint32_t numPipes;
+    uint32_t numPipeBits;
+    uint32_t macroTilePitch;
+    uint32_t macroTileHeight;
 
-    UINT_64 bitAddr;
+    uint64_t bitAddr;
 
-    UINT_32 microTileCoordY;
+    uint32_t microTileCoordY;
 
-    UINT_32 elemBits;
+    uint32_t elemBits;
 
-    UINT_32 pitchAligned = pitch;
-    UINT_32 heightAligned = height;
-    UINT_64 totalBytes;
+    uint32_t pitchAligned = pitch;
+    uint32_t heightAligned = height;
+    uint64_t totalBytes;
 
-    UINT_64 elemOffset;
+    uint64_t elemOffset;
 
-    UINT_64 macroIndex;
-    UINT_32 microIndex;
+    uint64_t macroIndex;
+    uint32_t microIndex;
 
-    UINT_64 macroNumber;
-    UINT_32 microNumber;
+    uint64_t macroNumber;
+    uint32_t microNumber;
 
-    UINT_32 macroX;
-    UINT_32 macroY;
-    UINT_32 macroZ;
+    uint32_t macroX;
+    uint32_t macroY;
+    uint32_t macroZ;
 
-    UINT_32 microX;
-    UINT_32 microY;
+    uint32_t microX;
+    uint32_t microY;
 
-    UINT_32 tilesPerMacro;
-    UINT_32 macrosPerPitch;
-    UINT_32 macrosPerSlice;
+    uint32_t tilesPerMacro;
+    uint32_t macrosPerPitch;
+    uint32_t macrosPerSlice;
 
     //
     // Extract pipe.
@@ -2360,8 +2362,8 @@ VOID AddrLib::HwlComputeXmaskCoordFromAddr(
     //
     numPipeBits  = Log2(numPipes);
 
-    UINT_32 groupBits = 8 * m_pipeInterleaveBytes;
-    UINT_32 pipes = numPipes;
+    uint32_t groupBits = 8 * m_pipeInterleaveBytes;
+    uint32_t pipes = numPipes;
 
 
     //
@@ -2438,14 +2440,14 @@ VOID AddrLib::HwlComputeXmaskCoordFromAddr(
     macrosPerSlice = macrosPerPitch * height / macroTileHeight;
 
     macroIndex = elemOffset / factor / tilesPerMacro;
-    microIndex = static_cast<UINT_32>(elemOffset % (tilesPerMacro * factor));
+    microIndex = static_cast<uint32_t>(elemOffset % (tilesPerMacro * factor));
 
     macroNumber = macroIndex * factor + microIndex % factor;
     microNumber = microIndex / factor;
 
-    macroX = static_cast<UINT_32>((macroNumber % macrosPerPitch));
-    macroY = static_cast<UINT_32>((macroNumber % macrosPerSlice) / macrosPerPitch);
-    macroZ = static_cast<UINT_32>((macroNumber / macrosPerSlice));
+    macroX = static_cast<uint32_t>((macroNumber % macrosPerPitch));
+    macroY = static_cast<uint32_t>((macroNumber % macrosPerSlice) / macrosPerPitch);
+    macroZ = static_cast<uint32_t>((macroNumber / macrosPerSlice));
 
 
     microX = microNumber % (macroTilePitch / factor / MicroTileWidth);
@@ -2478,50 +2480,49 @@ VOID AddrLib::HwlComputeXmaskCoordFromAddr(
 *
 ***************************************************************************************************
 */
-UINT_64 AddrLib::HwlComputeXmaskAddrFromCoord(
-    UINT_32        pitch,          ///< [in] pitch
-    UINT_32        height,         ///< [in] height
-    UINT_32        x,              ///< [in] x coord
-    UINT_32        y,              ///< [in] y coord
-    UINT_32        slice,          ///< [in] slice/depth index
-    UINT_32        numSlices,      ///< [in] number of slices
-    UINT_32        factor,         ///< [in] factor that indicates cmask(2) or htile(1)
+uint64_t AddrLib::HwlComputeXmaskAddrFromCoord(
+    uint32_t       pitch,          ///< [in] pitch
+    uint32_t       height,         ///< [in] height
+    uint32_t       x,              ///< [in] x coord
+    uint32_t       y,              ///< [in] y coord
+    uint32_t       slice,          ///< [in] slice/depth index
+    uint32_t       numSlices,      ///< [in] number of slices
+    uint32_t       factor,         ///< [in] factor that indicates cmask(2) or htile(1)
     BOOL_32        isLinear,       ///< [in] linear or tiled HTILE layout
     BOOL_32        isWidth8,       ///< [in] TRUE if width is 8, FALSE means 4. It's register value
     BOOL_32        isHeight8,      ///< [in] TRUE if width is 8, FALSE means 4. It's register value
     ADDR_TILEINFO* pTileInfo,      ///< [in] Tile info
-    UINT_32*       pBitPosition    ///< [out] bit position inside a byte
+    uint32_t*      pBitPosition    ///< [out] bit position inside a byte
     ) const
 {
-    UINT_64 addr;
-    UINT_32 numGroupBits;
-    UINT_32 numPipeBits;
-    UINT_32 newPitch = 0;
-    UINT_32 newHeight = 0;
-    UINT_64 sliceBytes = 0;
-    UINT_64 totalBytes = 0;
-    UINT_64 sliceOffset;
-    UINT_32 pipe;
-    UINT_32 macroTileWidth;
-    UINT_32 macroTileHeight;
-    UINT_32 macroTilesPerRow;
-    UINT_32 macroTileBytes;
-    UINT_32 macroTileIndexX;
-    UINT_32 macroTileIndexY;
-    UINT_64 macroTileOffset;
-    UINT_32 pixelBytesPerRow;
-    UINT_32 pixelOffsetX;
-    UINT_32 pixelOffsetY;
-    UINT_32 pixelOffset;
-    UINT_64 totalOffset;
-    UINT_64 offsetLo;
-    UINT_64 offsetHi;
-    UINT_64 groupMask;
+    uint64_t addr;
+    uint32_t numGroupBits;
+    uint32_t numPipeBits;
+    uint32_t newPitch = 0;
+    uint32_t newHeight = 0;
+    uint64_t sliceBytes = 0;
+    uint64_t totalBytes = 0;
+    uint64_t sliceOffset;
+    uint32_t pipe;
+    uint32_t macroTileWidth;
+    uint32_t macroTileHeight;
+    uint32_t macroTilesPerRow;
+    uint32_t macroTileBytes;
+    uint32_t macroTileIndexX;
+    uint32_t macroTileIndexY;
+    uint64_t macroTileOffset;
+    uint32_t pixelBytesPerRow;
+    uint32_t pixelOffsetX;
+    uint32_t pixelOffsetY;
+    uint32_t pixelOffset;
+    uint64_t totalOffset;
+    uint64_t offsetLo;
+    uint64_t offsetHi;
+    uint64_t groupMask;
 
+    uint32_t elemBits = 0;
 
-    UINT_32 elemBits = 0;
-
-    UINT_32 numPipes = m_pipes; // This function is accessed prior to si only
+    uint32_t numPipes = m_pipes; // This function is accessed prior to si only
 
     if (factor == 2) //CMASK
     {
@@ -2661,7 +2662,7 @@ UINT_64 AddrLib::HwlComputeXmaskAddrFromCoord(
     addr  = offsetLo;
     addr |= offsetHi;
     // This is to remove warning with /analyze option
-    UINT_32 pipeBits = pipe << numGroupBits;
+    uint32_t pipeBits = pipe << numGroupBits;
     addr |= pipeBits;
 
     //
@@ -2690,27 +2691,27 @@ UINT_64 AddrLib::HwlComputeXmaskAddrFromCoord(
 *
 ***************************************************************************************************
 */
-UINT_64 AddrLib::ComputeSurfaceAddrFromCoordLinear(
-    UINT_32  x,              ///< [in] x coord
-    UINT_32  y,              ///< [in] y coord
-    UINT_32  slice,          ///< [in] slice/depth index
-    UINT_32  sample,         ///< [in] sample index
-    UINT_32  bpp,            ///< [in] bits per pixel
-    UINT_32  pitch,          ///< [in] pitch
-    UINT_32  height,         ///< [in] height
-    UINT_32  numSlices,      ///< [in] number of slices
-    UINT_32* pBitPosition    ///< [out] bit position inside a byte
+uint64_t AddrLib::ComputeSurfaceAddrFromCoordLinear(
+    uint32_t  x,             ///< [in] x coord
+    uint32_t  y,             ///< [in] y coord
+    uint32_t  slice,         ///< [in] slice/depth index
+    uint32_t  sample,        ///< [in] sample index
+    uint32_t  bpp,           ///< [in] bits per pixel
+    uint32_t  pitch,         ///< [in] pitch
+    uint32_t  height,        ///< [in] height
+    uint32_t  numSlices,     ///< [in] number of slices
+    uint32_t* pBitPosition   ///< [out] bit position inside a byte
     ) const
 {
-    const UINT_64 sliceSize = static_cast<UINT_64>(pitch) * height;
+    const uint64_t sliceSize = static_cast<uint64_t>(pitch) * height;
 
-    UINT_64 sliceOffset = (slice + sample * numSlices)* sliceSize;
-    UINT_64 rowOffset   = static_cast<UINT_64>(y) * pitch;
-    UINT_64 pixOffset   = x;
+    uint64_t sliceOffset = (slice + sample * numSlices)* sliceSize;
+    uint64_t rowOffset   = static_cast<uint64_t>(y) * pitch;
+    uint64_t pixOffset   = x;
 
-    UINT_64 addr = (sliceOffset + rowOffset + pixOffset) * bpp;
+    uint64_t addr = (sliceOffset + rowOffset + pixOffset) * bpp;
 
-    *pBitPosition = static_cast<UINT_32>(addr % 8);
+    *pBitPosition = static_cast<uint32_t>(addr % 8);
     addr /= 8;
 
     return addr;
@@ -2728,25 +2729,25 @@ UINT_64 AddrLib::ComputeSurfaceAddrFromCoordLinear(
 ***************************************************************************************************
 */
 VOID AddrLib::ComputeSurfaceCoordFromAddrLinear(
-    UINT_64  addr,           ///< [in] address
-    UINT_32  bitPosition,    ///< [in] bitPosition in a byte
-    UINT_32  bpp,            ///< [in] bits per pixel
-    UINT_32  pitch,          ///< [in] pitch
-    UINT_32  height,         ///< [in] height
-    UINT_32  numSlices,      ///< [in] number of slices
-    UINT_32* pX,             ///< [out] x coord
-    UINT_32* pY,             ///< [out] y coord
-    UINT_32* pSlice,         ///< [out] slice/depth index
-    UINT_32* pSample         ///< [out] sample index
+    uint64_t  addr,          ///< [in] address
+    uint32_t  bitPosition,   ///< [in] bitPosition in a byte
+    uint32_t  bpp,           ///< [in] bits per pixel
+    uint32_t  pitch,         ///< [in] pitch
+    uint32_t  height,        ///< [in] height
+    uint32_t  numSlices,     ///< [in] number of slices
+    uint32_t* pX,            ///< [out] x coord
+    uint32_t* pY,            ///< [out] y coord
+    uint32_t* pSlice,        ///< [out] slice/depth index
+    uint32_t* pSample        ///< [out] sample index
     ) const
 {
-    const UINT_64 sliceSize = static_cast<UINT_64>(pitch) * height;
-    const UINT_64 linearOffset = (BYTES_TO_BITS(addr) + bitPosition) / bpp;
+    const uint64_t sliceSize = static_cast<uint64_t>(pitch) * height;
+    const uint64_t linearOffset = (BYTES_TO_BITS(addr) + bitPosition) / bpp;
 
-    *pX = static_cast<UINT_32>((linearOffset % sliceSize) % pitch);
-    *pY = static_cast<UINT_32>((linearOffset % sliceSize) / pitch % height);
-    *pSlice  = static_cast<UINT_32>((linearOffset / sliceSize) % numSlices);
-    *pSample = static_cast<UINT_32>((linearOffset / sliceSize) / numSlices);
+    *pX = static_cast<uint32_t>((linearOffset % sliceSize) % pitch);
+    *pY = static_cast<uint32_t>((linearOffset % sliceSize) / pitch % height);
+    *pSlice  = static_cast<uint32_t>((linearOffset / sliceSize) % numSlices);
+    *pSample = static_cast<uint32_t>((linearOffset / sliceSize) / numSlices);
 }
 
 /**
@@ -2761,36 +2762,36 @@ VOID AddrLib::ComputeSurfaceCoordFromAddrLinear(
 ***************************************************************************************************
 */
 VOID AddrLib::ComputeSurfaceCoordFromAddrMicroTiled(
-    UINT_64         addr,               ///< [in] address
-    UINT_32         bitPosition,        ///< [in] bitPosition in a byte
-    UINT_32         bpp,                ///< [in] bits per pixel
-    UINT_32         pitch,              ///< [in] pitch
-    UINT_32         height,             ///< [in] height
-    UINT_32         numSamples,         ///< [in] number of samples
+    uint64_t        addr,               ///< [in] address
+    uint32_t        bitPosition,        ///< [in] bitPosition in a byte
+    uint32_t        bpp,                ///< [in] bits per pixel
+    uint32_t        pitch,              ///< [in] pitch
+    uint32_t        height,             ///< [in] height
+    uint32_t        numSamples,         ///< [in] number of samples
     AddrTileMode    tileMode,           ///< [in] tile mode
-    UINT_32         tileBase,           ///< [in] base offset within a tile
-    UINT_32         compBits,           ///< [in] component bits actually needed(for planar surface)
-    UINT_32*        pX,                 ///< [out] x coord
-    UINT_32*        pY,                 ///< [out] y coord
-    UINT_32*        pSlice,             ///< [out] slice/depth index
-    UINT_32*        pSample,            ///< [out] sample index,
+    uint32_t        tileBase,           ///< [in] base offset within a tile
+    uint32_t        compBits,           ///< [in] component bits actually needed(for planar surface)
+    uint32_t*       pX,                 ///< [out] x coord
+    uint32_t*       pY,                 ///< [out] y coord
+    uint32_t*       pSlice,             ///< [out] slice/depth index
+    uint32_t*       pSample,            ///< [out] sample index,
     AddrTileType    microTileType,      ///< [in] micro tiling order
     BOOL_32         isDepthSampleOrder  ///< [in] TRUE if in depth sample order
     ) const
 {
-    UINT_64 bitAddr;
-    UINT_32 microTileThickness;
-    UINT_32 microTileBits;
-    UINT_64 sliceBits;
-    UINT_64 rowBits;
-    UINT_32 sliceIndex;
-    UINT_32 microTileCoordX;
-    UINT_32 microTileCoordY;
-    UINT_32 pixelOffset;
-    UINT_32 pixelCoordX = 0;
-    UINT_32 pixelCoordY = 0;
-    UINT_32 pixelCoordZ = 0;
-    UINT_32 pixelCoordS = 0;
+    uint64_t bitAddr;
+    uint32_t microTileThickness;
+    uint32_t microTileBits;
+    uint64_t sliceBits;
+    uint64_t rowBits;
+    uint32_t sliceIndex;
+    uint32_t microTileCoordX;
+    uint32_t microTileCoordY;
+    uint32_t pixelOffset;
+    uint32_t pixelCoordX = 0;
+    uint32_t pixelCoordY = 0;
+    uint32_t pixelCoordZ = 0;
+    uint32_t pixelCoordS = 0;
 
     //
     // Convert byte address to bit address.
@@ -2815,31 +2816,31 @@ VOID AddrLib::ComputeSurfaceCoordFromAddrMicroTiled(
     //
     // Compute number of bits per slice and number of bits per row of micro tiles.
     //
-    sliceBits = static_cast<UINT_64>(pitch) * height * microTileThickness * bpp * numSamples;
+    sliceBits = static_cast<uint64_t>(pitch) * height * microTileThickness * bpp * numSamples;
 
     rowBits   = (pitch / MicroTileWidth) * microTileBits;
 
     //
     // Extract the slice index.
     //
-    sliceIndex = static_cast<UINT_32>(bitAddr / sliceBits);
+    sliceIndex = static_cast<uint32_t>(bitAddr / sliceBits);
     bitAddr -= sliceIndex * sliceBits;
 
     //
     // Extract the y coordinate of the micro tile.
     //
-    microTileCoordY = static_cast<UINT_32>(bitAddr / rowBits) * MicroTileHeight;
+    microTileCoordY = static_cast<uint32_t>(bitAddr / rowBits) * MicroTileHeight;
     bitAddr -= (microTileCoordY / MicroTileHeight) * rowBits;
 
     //
     // Extract the x coordinate of the micro tile.
     //
-    microTileCoordX = static_cast<UINT_32>(bitAddr / microTileBits) * MicroTileWidth;
+    microTileCoordX = static_cast<uint32_t>(bitAddr / microTileBits) * MicroTileWidth;
 
     //
     // Compute the pixel offset within the micro tile.
     //
-    pixelOffset = static_cast<UINT_32>(bitAddr % microTileBits);
+    pixelOffset = static_cast<uint32_t>(bitAddr % microTileBits);
 
     //
     // Extract pixel coordinates from the offset.
@@ -2883,14 +2884,14 @@ VOID AddrLib::ComputeSurfaceCoordFromAddrMicroTiled(
 *
 ***************************************************************************************************
 */
-UINT_32 AddrLib::ComputePipeFromAddr(
-    UINT_64 addr,        ///< [in] address
-    UINT_32 numPipes     ///< [in] number of banks
+uint32_t AddrLib::ComputePipeFromAddr(
+    uint64_t addr,       ///< [in] address
+    uint32_t numPipes    ///< [in] number of banks
     ) const
 {
-    UINT_32 pipe;
+    uint32_t pipe;
 
-    UINT_32 groupBytes = m_pipeInterleaveBytes; //just different terms
+    uint32_t groupBytes = m_pipeInterleaveBytes; //just different terms
 
     // R600
     // The LSBs of the address are arranged as follows:
@@ -2906,7 +2907,7 @@ UINT_32 AddrLib::ComputePipeFromAddr(
     // To get the pipe number, shift off the pipe interleave bits and mask the pipe bits.
     //
 
-    pipe = static_cast<UINT_32>(addr >> Log2(groupBytes)) & (numPipes - 1);
+    pipe = static_cast<uint32_t>(addr >> Log2(groupBytes)) & (numPipes - 1);
 
     return pipe;
 }
@@ -2923,37 +2924,37 @@ UINT_32 AddrLib::ComputePipeFromAddr(
 *
 ***************************************************************************************************
 */
-UINT_32 AddrLib::ComputePixelIndexWithinMicroTile(
-    UINT_32         x,              ///< [in] x coord
-    UINT_32         y,              ///< [in] y coord
-    UINT_32         z,              ///< [in] slice/depth index
-    UINT_32         bpp,            ///< [in] bits per pixel
+uint32_t AddrLib::ComputePixelIndexWithinMicroTile(
+    uint32_t        x,              ///< [in] x coord
+    uint32_t        y,              ///< [in] y coord
+    uint32_t        z,              ///< [in] slice/depth index
+    uint32_t        bpp,            ///< [in] bits per pixel
     AddrTileMode    tileMode,       ///< [in] tile mode
     AddrTileType    microTileType   ///< [in] pixel order in display/non-display mode
     ) const
 {
-    UINT_32 pixelBit0 = 0;
-    UINT_32 pixelBit1 = 0;
-    UINT_32 pixelBit2 = 0;
-    UINT_32 pixelBit3 = 0;
-    UINT_32 pixelBit4 = 0;
-    UINT_32 pixelBit5 = 0;
-    UINT_32 pixelBit6 = 0;
-    UINT_32 pixelBit7 = 0;
-    UINT_32 pixelBit8 = 0;
-    UINT_32 pixelNumber;
+    uint32_t pixelBit0 = 0;
+    uint32_t pixelBit1 = 0;
+    uint32_t pixelBit2 = 0;
+    uint32_t pixelBit3 = 0;
+    uint32_t pixelBit4 = 0;
+    uint32_t pixelBit5 = 0;
+    uint32_t pixelBit6 = 0;
+    uint32_t pixelBit7 = 0;
+    uint32_t pixelBit8 = 0;
+    uint32_t pixelNumber;
 
-    UINT_32 x0 = _BIT(x, 0);
-    UINT_32 x1 = _BIT(x, 1);
-    UINT_32 x2 = _BIT(x, 2);
-    UINT_32 y0 = _BIT(y, 0);
-    UINT_32 y1 = _BIT(y, 1);
-    UINT_32 y2 = _BIT(y, 2);
-    UINT_32 z0 = _BIT(z, 0);
-    UINT_32 z1 = _BIT(z, 1);
-    UINT_32 z2 = _BIT(z, 2);
+    uint32_t x0 = _BIT(x, 0);
+    uint32_t x1 = _BIT(x, 1);
+    uint32_t x2 = _BIT(x, 2);
+    uint32_t y0 = _BIT(y, 0);
+    uint32_t y1 = _BIT(y, 1);
+    uint32_t y2 = _BIT(y, 2);
+    uint32_t z0 = _BIT(z, 0);
+    uint32_t z1 = _BIT(z, 1);
+    uint32_t z2 = _BIT(z, 2);
 
-    UINT_32 thickness = ComputeSurfaceThickness(tileMode);
+    uint32_t thickness = ComputeSurfaceThickness(tileMode);
 
     // Compute the pixel number within the micro tile.
 
@@ -3140,7 +3141,7 @@ UINT_32 AddrLib::ComputePixelIndexWithinMicroTile(
 */
 VOID AddrLib::AdjustPitchAlignment(
     ADDR_SURFACE_FLAGS  flags,      ///< [in] Surface flags
-    UINT_32*            pPitchAlign ///< [out] Pointer to pitch alignment
+    uint32_t*           pPitchAlign ///< [out] Pointer to pitch alignment
     ) const
 {
     // Display engine hardwires lower 5 bit of GRPH_PITCH to ZERO which means 32 pixel alignment
@@ -3170,21 +3171,21 @@ VOID AddrLib::AdjustPitchAlignment(
 */
 VOID AddrLib::PadDimensions(
     AddrTileMode        tileMode,    ///< [in] tile mode
-    UINT_32             bpp,         ///< [in] bits per pixel
+    uint32_t            bpp,         ///< [in] bits per pixel
     ADDR_SURFACE_FLAGS  flags,       ///< [in] surface flags
-    UINT_32             numSamples,  ///< [in] number of samples
+    uint32_t            numSamples,  ///< [in] number of samples
     ADDR_TILEINFO*      pTileInfo,   ///< [in/out] bank structure.
-    UINT_32             padDims,     ///< [in] Dimensions to pad valid value 1,2,3
-    UINT_32             mipLevel,    ///< [in] MipLevel
-    UINT_32*            pPitch,      ///< [in/out] pitch in pixels
-    UINT_32             pitchAlign,  ///< [in] pitch alignment
-    UINT_32*            pHeight,     ///< [in/out] height in pixels
-    UINT_32             heightAlign, ///< [in] height alignment
-    UINT_32*            pSlices,     ///< [in/out] number of slices
-    UINT_32             sliceAlign   ///< [in] number of slice alignment
+    uint32_t            padDims,     ///< [in] Dimensions to pad valid value 1,2,3
+    uint32_t            mipLevel,    ///< [in] MipLevel
+    uint32_t*           pPitch,      ///< [in/out] pitch in pixels
+    uint32_t            pitchAlign,  ///< [in] pitch alignment
+    uint32_t*           pHeight,     ///< [in/out] height in pixels
+    uint32_t            heightAlign, ///< [in] height alignment
+    uint32_t*           pSlices,     ///< [in/out] number of slices
+    uint32_t            sliceAlign   ///< [in] number of slice alignment
     ) const
 {
-    UINT_32 thickness = ComputeSurfaceThickness(tileMode);
+    uint32_t thickness = ComputeSurfaceThickness(tileMode);
 
     ADDR_ASSERT(padDims <= 3);
 
@@ -3273,9 +3274,9 @@ VOID AddrLib::PadDimensions(
 *       Expected pitch
 ***************************************************************************************************
 */
-UINT_32 AddrLib::HwlPreHandleBaseLvl3xPitch(
+uint32_t AddrLib::HwlPreHandleBaseLvl3xPitch(
     const ADDR_COMPUTE_SURFACE_INFO_INPUT*  pIn,        ///< [in] input
-    UINT_32                                 expPitch    ///< [in] pitch
+    uint32_t                                expPitch    ///< [in] pitch
     ) const
 {
     ADDR_ASSERT(pIn->width == expPitch);
@@ -3304,9 +3305,9 @@ UINT_32 AddrLib::HwlPreHandleBaseLvl3xPitch(
 *       Expected pitch
 ***************************************************************************************************
 */
-UINT_32 AddrLib::HwlPostHandleBaseLvl3xPitch(
+uint32_t AddrLib::HwlPostHandleBaseLvl3xPitch(
     const ADDR_COMPUTE_SURFACE_INFO_INPUT*  pIn,        ///< [in] input
-    UINT_32                                 expPitch    ///< [in] pitch
+    uint32_t                                expPitch    ///< [in] pitch
     ) const
 {
     //
@@ -3435,19 +3436,19 @@ BOOL_32 AddrLib::IsPrtTileMode(
 *       The number combined with the array of bits
 ***************************************************************************************************
 */
-UINT_32 AddrLib::Bits2Number(
-    UINT_32 bitNum,     ///< [in] how many bits
+uint32_t AddrLib::Bits2Number(
+    uint32_t bitNum,    ///< [in] how many bits
     ...)                ///< [in] varaible bits value starting from MSB
 {
-    UINT_32 number = 0;
-    UINT_32 i;
+    uint32_t number = 0;
+    uint32_t i;
     va_list bits_ptr;
 
     va_start(bits_ptr, bitNum);
 
     for(i = 0; i < bitNum; i++)
     {
-        number |= va_arg(bits_ptr, UINT_32);
+        number |= va_arg(bits_ptr, uint32_t);
         number <<= 1;
     }
 
@@ -3505,7 +3506,7 @@ BOOL_32 AddrLib::DegradeBaseLevel(
 {
     BOOL_32 degraded = FALSE;
     AddrTileMode tileMode = pIn->tileMode;
-    UINT_32 thickness = ComputeSurfaceThickness(tileMode);
+    uint32_t thickness = ComputeSurfaceThickness(tileMode);
 
     if (m_configFlags.degradeBaseLevel) // This is a global setting
     {
@@ -3554,16 +3555,16 @@ BOOL_32 AddrLib::DegradeBaseLevel(
 */
 AddrTileMode AddrLib::DegradeLargeThickTile(
     AddrTileMode tileMode,
-    UINT_32 bpp) const
+    uint32_t bpp) const
 {
     // Override tilemode
     // When tile_width (8) * tile_height (8) * thickness * element_bytes is > row_size,
     // it is better to just use THIN mode in this case
-    UINT_32 thickness = ComputeSurfaceThickness(tileMode);
+    uint32_t thickness = ComputeSurfaceThickness(tileMode);
 
     if (thickness > 1 && m_configFlags.allowLargeThickTile == 0)
     {
-        UINT_32 tileSize = MicroTilePixels * thickness * (bpp >> 3);
+        uint32_t tileSize = MicroTilePixels * thickness * (bpp >> 3);
 
         if (tileSize > m_rowSize)
         {
@@ -3663,8 +3664,8 @@ ADDR_E_RETURNCODE AddrLib::PostComputeMipLevel(
 ***************************************************************************************************
 */
 ADDR_E_RETURNCODE AddrLib::HwlSetupTileCfg(
-    INT_32          index,            ///< [in] Tile index
-    INT_32          macroModeIndex,   ///< [in] Index in macro tile mode table(CI)
+    int32_t         index,            ///< [in] Tile index
+    int32_t         macroModeIndex,   ///< [in] Index in macro tile mode table(CI)
     ADDR_TILEINFO*  pInfo,            ///< [out] Tile Info
     AddrTileMode*   pMode,            ///< [out] Tile mode
     AddrTileType*   pType             ///< [out] Tile type
@@ -3683,7 +3684,7 @@ ADDR_E_RETURNCODE AddrLib::HwlSetupTileCfg(
 *       num pipes
 ***************************************************************************************************
 */
-UINT_32 AddrLib::HwlGetPipes(
+uint32_t AddrLib::HwlGetPipes(
     const ADDR_TILEINFO* pTileInfo    ///< [in] Tile info
     ) const
 {
@@ -3716,7 +3717,7 @@ BOOL_32 AddrLib::ComputeQbStereoInfo(
         pOut->pStereoInfo->eyeHeight = pOut->height;
 
         // Right offset
-        pOut->pStereoInfo->rightOffset = static_cast<UINT_32>(pOut->surfSize);
+        pOut->pStereoInfo->rightOffset = static_cast<uint32_t>(pOut->surfSize);
 
         pOut->pStereoInfo->rightSwizzle = HwlComputeQbStereoRightSwizzle(pOut);
         // Double height
@@ -3770,10 +3771,10 @@ ADDR_E_RETURNCODE AddrLib::Flt32ToDepthPixel(
         GetElemLib()->Flt32ToDepthPixel(pIn->format,
                                         pIn->comps,
                                         pOut->pPixel);
-        UINT_32 depthBase = 0;
-        UINT_32 stencilBase = 0;
-        UINT_32 depthBits = 0;
-        UINT_32 stencilBits = 0;
+        uint32_t depthBase = 0;
+        uint32_t stencilBase = 0;
+        uint32_t depthBits = 0;
+        uint32_t stencilBits = 0;
 
         switch (pIn->format)
         {
@@ -3911,11 +3912,11 @@ ADDR_E_RETURNCODE AddrLib::ComputePrtInfo(
 
     ADDR_E_RETURNCODE returnCode = ADDR_OK;
 
-    UINT_32     expandX = 1;
-    UINT_32     expandY = 1;
+    uint32_t     expandX = 1;
+    uint32_t     expandY = 1;
     AddrElemMode elemMode;
 
-    UINT_32     bpp = GetElemLib()->GetBitsPerPixel(pIn->format,
+    uint32_t     bpp = GetElemLib()->GetBitsPerPixel(pIn->format,
                                                 &elemMode,
                                                 &expandX,
                                                 &expandY);
@@ -3925,11 +3926,11 @@ ADDR_E_RETURNCODE AddrLib::ComputePrtInfo(
         returnCode = ADDR_INVALIDPARAMS;
     }
 
-    UINT_32     numFrags = pIn->numFrags;
+    uint32_t     numFrags = pIn->numFrags;
     ADDR_ASSERT(numFrags <= 8);
 
-    UINT_32     tileWidth = 0;
-    UINT_32     tileHeight = 0;
+    uint32_t     tileWidth = 0;
+    uint32_t     tileHeight = 0;
     if (returnCode == ADDR_OK)
     {
         // 3D texture without depth or 2d texture

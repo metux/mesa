@@ -33,6 +33,8 @@
 #ifndef __ADDR_TYPES_H__
 #define __ADDR_TYPES_H__
 
+#include <stdint.h>
+
 #if defined(__APPLE__) || defined(TCORE_BUILD)
 // External definitions header maintained by Mac driver team (and TCORE team)
 // Helps address compilation issues & reduces code covered by NDA
@@ -459,30 +461,6 @@ typedef enum _AddrTileType
 #define BOOL_32 int
 #endif
 
-#ifndef INT_32
-#define INT_32  int
-#endif
-
-#ifndef UINT_32
-#define UINT_32 unsigned int
-#endif
-
-#ifndef INT_16
-#define INT_16  short
-#endif
-
-#ifndef UINT_16
-#define UINT_16 unsigned short
-#endif
-
-#ifndef INT_8
-#define INT_8   char
-#endif
-
-#ifndef UINT_8
-#define UINT_8  unsigned char
-#endif
-
 #ifndef NULL
 #define NULL 0
 #endif
@@ -493,38 +471,6 @@ typedef enum _AddrTileType
 
 #ifndef FALSE
 #define FALSE 0
-#endif
-
-//
-//  64-bit integer types depend on the compiler
-//
-#if defined( __GNUC__ ) || defined( __WATCOMC__ )
-#define INT_64   long long
-#define UINT_64  unsigned long long
-
-#elif defined( _WIN32 )
-#define INT_64   __int64
-#define UINT_64  unsigned __int64
-
-#else
-#error Unsupported compiler and/or operating system for 64-bit integers
-
-/// @brief 64-bit signed integer type (compiler dependent)
-/// @ingroup type
-///
-/// The addrlib defines a 64-bit signed integer type for either
-/// Gnu/Watcom compilers (which use the first syntax) or for
-/// the Windows VCC compiler (which uses the second syntax).
-#define INT_64  long long OR __int64
-
-/// @brief 64-bit unsigned integer type (compiler dependent)
-/// @ingroup type
-///
-/// The addrlib defines a 64-bit unsigned integer type for either
-/// Gnu/Watcom compilers (which use the first syntax) or for
-/// the Windows VCC compiler (which uses the second syntax).
-///
-#define UINT_64  unsigned long long OR unsigned __int64
 #endif
 
 #endif // #if !defined(__APPLE__)
@@ -564,8 +510,8 @@ typedef enum _AddrTileType
 /// floating point data do so by passing or returning a FLT_32.
 ///
 typedef union {
-    INT_32   i;
-    UINT_32  u;
+    int32_t  i;
+    uint32_t u;
     float    f;
 } ADDR_FLT_32;
 
@@ -587,4 +533,3 @@ typedef union {
 #endif
 
 #endif // __ADDR_TYPES_H__
-

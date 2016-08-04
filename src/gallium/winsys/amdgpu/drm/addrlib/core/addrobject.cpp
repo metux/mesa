@@ -31,6 +31,8 @@
 ***************************************************************************************************
 */
 
+#include <stdint.h>
+
 #include "addrinterface.h"
 #include "addrobject.h"
 
@@ -95,7 +97,7 @@ VOID* AddrObject::ClientAlloc(
 
         allocInput.size        = sizeof(ADDR_ALLOCSYSMEM_INPUT);
         allocInput.flags.value = 0;
-        allocInput.sizeInBytes = static_cast<UINT_32>(objSize);
+        allocInput.sizeInBytes = static_cast<uint32_t>(objSize);
         allocInput.hClient     = pClient->handle;
 
         pObjMem = pClient->callbacks.allocSysMem(&allocInput);
@@ -243,4 +245,3 @@ VOID AddrObject::DebugPrint(
     }
 #endif
 }
-

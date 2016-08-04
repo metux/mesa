@@ -34,6 +34,8 @@
 #ifndef __ADDR_COMMON_H__
 #define __ADDR_COMMON_H__
 
+#include <stdint.h>
+
 #include "addrinterface.h"
 
 
@@ -49,20 +51,20 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // Common constants
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-static const UINT_32 MicroTileWidth      = 8;       ///< Micro tile width, for 1D and 2D tiling
-static const UINT_32 MicroTileHeight     = 8;       ///< Micro tile height, for 1D and 2D tiling
-static const UINT_32 ThickTileThickness  = 4;       ///< Micro tile thickness, for THICK modes
-static const UINT_32 XThickTileThickness = 8;       ///< Extra thick tiling thickness
-static const UINT_32 PowerSaveTileBytes  = 64;      ///< Nuber of bytes per tile for power save 64
-static const UINT_32 CmaskCacheBits      = 1024;    ///< Number of bits for CMASK cache
-static const UINT_32 CmaskElemBits       = 4;       ///< Number of bits for CMASK element
-static const UINT_32 HtileCacheBits      = 16384;   ///< Number of bits for HTILE cache 512*32
+static const uint32_t MicroTileWidth      = 8;       ///< Micro tile width, for 1D and 2D tiling
+static const uint32_t MicroTileHeight     = 8;       ///< Micro tile height, for 1D and 2D tiling
+static const uint32_t ThickTileThickness  = 4;       ///< Micro tile thickness, for THICK modes
+static const uint32_t XThickTileThickness = 8;       ///< Extra thick tiling thickness
+static const uint32_t PowerSaveTileBytes  = 64;      ///< Nuber of bytes per tile for power save 64
+static const uint32_t CmaskCacheBits      = 1024;    ///< Number of bits for CMASK cache
+static const uint32_t CmaskElemBits       = 4;       ///< Number of bits for CMASK element
+static const uint32_t HtileCacheBits      = 16384;   ///< Number of bits for HTILE cache 512*32
 
-static const UINT_32 MicroTilePixels     = MicroTileWidth * MicroTileHeight;
+static const uint32_t MicroTilePixels     = MicroTileWidth * MicroTileHeight;
 
-static const INT_32 TileIndexInvalid        = TILEINDEX_INVALID;
-static const INT_32 TileIndexLinearGeneral  = TILEINDEX_LINEAR_GENERAL;
-static const INT_32 TileIndexNoMacroIndex   = -3;
+static const int32_t TileIndexInvalid       = TILEINDEX_INVALID;
+static const int32_t TileIndexLinearGeneral = TILEINDEX_LINEAR_GENERAL;
+static const int32_t TileIndexNoMacroIndex  = -3;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // Common macros
@@ -123,21 +125,21 @@ union ADDR_CONFIG_FLAGS
     {
         /// Clients do not need to set these flags except forceLinearAligned.
         /// There flags are set up by AddrLib inside thru AddrInitGlobalParamsFromRegister
-        UINT_32 optimalBankSwap        : 1;    ///< New bank tiling for RV770 only
-        UINT_32 noCubeMipSlicesPad     : 1;    ///< Disables faces padding for cubemap mipmaps
-        UINT_32 fillSizeFields         : 1;    ///< If clients fill size fields in all input and
+        uint32_t optimalBankSwap        : 1;   ///< New bank tiling for RV770 only
+        uint32_t noCubeMipSlicesPad     : 1;   ///< Disables faces padding for cubemap mipmaps
+        uint32_t fillSizeFields         : 1;   ///< If clients fill size fields in all input and
                                                ///  output structure
-        UINT_32 ignoreTileInfo         : 1;    ///< Don't use tile info structure
-        UINT_32 useTileIndex           : 1;    ///< Make tileIndex field in input valid
-        UINT_32 useCombinedSwizzle     : 1;    ///< Use combined swizzle
-        UINT_32 checkLast2DLevel       : 1;    ///< Check the last 2D mip sub level
-        UINT_32 useHtileSliceAlign     : 1;    ///< Do htile single slice alignment
-        UINT_32 degradeBaseLevel       : 1;    ///< Degrade to 1D modes automatically for base level
-        UINT_32 allowLargeThickTile    : 1;    ///< Allow 64*thickness*bytesPerPixel > rowSize
-        UINT_32 reserved               : 22;   ///< Reserved bits for future use
+        uint32_t ignoreTileInfo         : 1;   ///< Don't use tile info structure
+        uint32_t useTileIndex           : 1;   ///< Make tileIndex field in input valid
+        uint32_t useCombinedSwizzle     : 1;   ///< Use combined swizzle
+        uint32_t checkLast2DLevel       : 1;   ///< Check the last 2D mip sub level
+        uint32_t useHtileSliceAlign     : 1;   ///< Do htile single slice alignment
+        uint32_t degradeBaseLevel       : 1;   ///< Degrade to 1D modes automatically for base level
+        uint32_t allowLargeThickTile    : 1;   ///< Allow 64*thickness*bytesPerPixel > rowSize
+        uint32_t reserved               : 22;  ///< Reserved bits for future use
     };
 
-    UINT_32 value;
+    uint32_t value;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -259,12 +261,12 @@ union ADDR_CONFIG_FLAGS
 *       Xor the right-side numberOfBits bits of x.
 ***************************************************************************************************
 */
-static inline UINT_32 XorReduce(
-    UINT_32 x,
-    UINT_32 numberOfBits)
+static inline uint32_t XorReduce(
+    uint32_t x,
+    uint32_t numberOfBits)
 {
-    UINT_32 i;
-    UINT_32 result = x & 1;
+    uint32_t i;
+    uint32_t result = x & 1;
 
     for (i=1; i<numberOfBits; i++)
     {
@@ -279,11 +281,11 @@ static inline UINT_32 XorReduce(
 *   IsPow2
 *
 *   @brief
-*       Check if the size (UINT_32) is pow 2
+*       Check if the size (uint32_t) is pow 2
 ***************************************************************************************************
 */
-static inline UINT_32 IsPow2(
-    UINT_32 dim)        ///< [in] dimension of miplevel
+static inline uint32_t IsPow2(
+    uint32_t dim)        ///< [in] dimension of miplevel
 {
     ADDR_ASSERT(dim > 0);
     return !(dim & (dim - 1));
@@ -294,11 +296,11 @@ static inline UINT_32 IsPow2(
 *   IsPow2
 *
 *   @brief
-*       Check if the size (UINT_64) is pow 2
+*       Check if the size (uint64_t) is pow 2
 ***************************************************************************************************
 */
-static inline UINT_64 IsPow2(
-    UINT_64 dim)        ///< [in] dimension of miplevel
+static inline int64_t IsPow2(
+    uint64_t dim)       ///< [in] dimension of miplevel
 {
     ADDR_ASSERT(dim > 0);
     return !(dim & (dim - 1));
@@ -309,12 +311,12 @@ static inline UINT_64 IsPow2(
 *   ByteAlign
 *
 *   @brief
-*       Align UINT_32 "x" to "align" alignment, "align" should be power of 2
+*       Align uint32_t "x" to "align" alignment, "align" should be power of 2
 ***************************************************************************************************
 */
-static inline UINT_32 PowTwoAlign(
-    UINT_32 x,
-    UINT_32 align)
+static inline uint32_t PowTwoAlign(
+    uint32_t x,
+    uint32_t align)
 {
     //
     // Assert that x is a power of two.
@@ -328,12 +330,12 @@ static inline UINT_32 PowTwoAlign(
 *   ByteAlign
 *
 *   @brief
-*       Align UINT_64 "x" to "align" alignment, "align" should be power of 2
+*       Align uint64_t "x" to "align" alignment, "align" should be power of 2
 ***************************************************************************************************
 */
-static inline UINT_64 PowTwoAlign(
-    UINT_64 x,
-    UINT_64 align)
+static inline uint64_t PowTwoAlign(
+    uint64_t x,
+    uint64_t align)
 {
     //
     // Assert that x is a power of two.
@@ -350,9 +352,9 @@ static inline UINT_64 PowTwoAlign(
 *       Get the min value between two unsigned values
 ***************************************************************************************************
 */
-static inline UINT_32 Min(
-    UINT_32 value1,
-    UINT_32 value2)
+static inline uint32_t Min(
+    uint32_t value1,
+    uint32_t value2)
 {
     return ((value1 < (value2)) ? (value1) : value2);
 }
@@ -365,9 +367,9 @@ static inline UINT_32 Min(
 *       Get the min value between two signed values
 ***************************************************************************************************
 */
-static inline INT_32 Min(
-    INT_32 value1,
-    INT_32 value2)
+static inline int32_t Min(
+    int32_t value1,
+    int32_t value2)
 {
     return ((value1 < (value2)) ? (value1) : value2);
 }
@@ -380,9 +382,9 @@ static inline INT_32 Min(
 *       Get the max value between two unsigned values
 ***************************************************************************************************
 */
-static inline UINT_32 Max(
-    UINT_32 value1,
-    UINT_32 value2)
+static inline uint32_t Max(
+    uint32_t value1,
+    uint32_t value2)
 {
     return ((value1 > (value2)) ? (value1) : value2);
 }
@@ -395,9 +397,9 @@ static inline UINT_32 Max(
 *       Get the max value between two signed values
 ***************************************************************************************************
 */
-static inline INT_32 Max(
-    INT_32 value1,
-    INT_32 value2)
+static inline int32_t Max(
+    int32_t value1,
+    int32_t value2)
 {
     return ((value1 > (value2)) ? (value1) : value2);
 }
@@ -410,10 +412,10 @@ static inline INT_32 Max(
 *       Compute the mipmap's next level dim size
 ***************************************************************************************************
 */
-static inline UINT_32 NextPow2(
-    UINT_32 dim)        ///< [in] dimension of miplevel
+static inline uint32_t NextPow2(
+    uint32_t dim)        ///< [in] dimension of miplevel
 {
-    UINT_32 newDim;
+    uint32_t newDim;
 
     newDim = 1;
 
@@ -441,10 +443,10 @@ static inline UINT_32 NextPow2(
 *       Compute log of base 2
 ***************************************************************************************************
 */
-static inline UINT_32 Log2(
-    UINT_32 x)      ///< [in] the value should calculate log based 2
+static inline uint32_t Log2(
+    uint32_t x)      ///< [in] the value should calculate log based 2
 {
-    UINT_32 y;
+    uint32_t y;
 
     //
     // Assert that x is a power of two.
@@ -469,12 +471,12 @@ static inline UINT_32 Log2(
 *       Compute log of base 2 quickly (<= 16)
 ***************************************************************************************************
 */
-static inline UINT_32 QLog2(
-    UINT_32 x)      ///< [in] the value should calculate log based 2
+static inline uint32_t QLog2(
+    uint32_t x)      ///< [in] the value should calculate log based 2
 {
     ADDR_ASSERT(x <= 16);
 
-    UINT_32 y = 0;
+    uint32_t y = 0;
 
     switch (x)
     {
@@ -509,8 +511,8 @@ static inline UINT_32 QLog2(
 ***************************************************************************************************
 */
 static inline VOID SafeAssign(
-    UINT_32*    pLVal,  ///< [in] Pointer to left val
-    UINT_32     rVal)   ///< [in] Right value
+    uint32_t*    pLVal,  ///< [in] Pointer to left val
+    uint32_t     rVal)   ///< [in] Right value
 {
     if (pLVal)
     {
@@ -527,8 +529,8 @@ static inline VOID SafeAssign(
 ***************************************************************************************************
 */
 static inline VOID SafeAssign(
-    UINT_64*    pLVal,  ///< [in] Pointer to left val
-    UINT_64     rVal)   ///< [in] Right value
+    uint64_t*   pLVal,  ///< [in] Pointer to left val
+    uint64_t    rVal)   ///< [in] Right value
 {
     if (pLVal)
     {
@@ -555,4 +557,3 @@ static inline VOID SafeAssign(
 }
 
 #endif // __ADDR_COMMON_H__
-
