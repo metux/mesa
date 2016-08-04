@@ -66,30 +66,6 @@
 
 
 /*
- * C99 inline keyword
- */
-#ifndef inline
-#  ifdef __cplusplus
-     /* C++ supports inline keyword */
-#  elif defined(__GNUC__)
-#    define inline __inline__
-#  elif defined(_MSC_VER)
-#    define inline __inline
-#  elif defined(__ICL)
-#    define inline __inline
-#  elif defined(__INTEL_COMPILER)
-     /* Intel compiler supports inline keyword */
-#  elif defined(__WATCOMC__) && (__WATCOMC__ >= 1100)
-#    define inline __inline
-#  elif (__STDC_VERSION__ >= 199901L)
-     /* C99 supports inline keyword */
-#  else
-#    define inline
-#  endif
-#endif
-
-
-/*
  * C99 restrict keyword
  *
  * See also:
