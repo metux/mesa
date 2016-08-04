@@ -27,8 +27,7 @@
 
 #pragma once
 
-
-#include "c99_alloca.h"
+#include <alloca.h>
 
 
 /* Declare a variable length array, with no initialization */

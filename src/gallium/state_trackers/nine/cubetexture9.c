@@ -20,7 +20,7 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#include "c99_alloca.h"
+#include <alloca.h>
 
 #include "device9.h"
 #include "cubetexture9.h"
