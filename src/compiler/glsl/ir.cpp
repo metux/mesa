@@ -803,8 +803,8 @@ ir_constant::ir_constant(const struct glsl_type *type, exec_list *value_list)
       return;
    }
 
-   for (unsigned i = 0; i < 16; i++) {
-      this->value.u[i] = 0;
+   for (unsigned x = 0; x < 16; x++) {
+      this->value.u[x] = 0;
    }
 
    ir_constant *value = (ir_constant *) (value_list->get_head_raw());
