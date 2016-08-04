@@ -9,13 +9,6 @@
 #define DISASSEM 0
 #define X86_TWOB 0x0f
 
-#if 0
-static unsigned char *cptr( void (*label)() )
-{
-   return (unsigned char *)(unsigned long)label;
-}
-#endif
-
 
 static void do_realloc( struct x86_function *p )
 {
@@ -93,13 +86,13 @@ static void emit_modrm( struct x86_function *p,
 			struct x86_reg regmem )
 {
    unsigned char val = 0;
-   
+
    assert(reg.mod == mod_REG);
-   
+
    val |= regmem.mod << 6;     	/* mod field */
    val |= reg.idx << 3;		/* reg field */
    val |= regmem.idx;		/* r/m field */
-   
+
    emit_1ub(p, val);
 
    /* Oh-oh we've stumbled into the SIB thing.
@@ -164,11 +157,6 @@ static void emit_op_modrm( struct x86_function *p,
 }
 
 
-
-
-
-
-
 /* Create and manipulate registers and regmem values:
  */
 struct x86_reg x86_make_reg( enum x86_reg_file file,
@@ -220,18 +208,16 @@ unsigned char *x86_get_label( struct x86_function *p )
 }
 
 
-
 /***********************************************************************
  * x86 instructions
  */
-
 
 void x86_jcc( struct x86_function *p,
 	      enum x86_cc cc,
 	      unsigned char *label )
 {
    int offset = label - (x86_get_label(p) + 2);
-   
+
    if (offset <= 127 && offset >= -128) {
       emit_1ub(p, 0x70 + cc);
       emit_1b(p, (char) offset);
@@ -281,24 +267,11 @@ void x86_jmp( struct x86_function *p, unsigned char *label)
    emit_1i(p, label - x86_get_label(p) - 4);
 }
 
-#if 0
-/* This doesn't work once we start reallocating & copying the
- * generated code on buffer fills, because the call is relative to the
- * current pc.
- */
-void x86_call( struct x86_function *p, void (*label)())
-{
-   emit_1ub(p, 0xe8);
-   emit_1i(p, cptr(label) - x86_get_label(p) - 4);
-}
-#else
 void x86_call( struct x86_function *p, struct x86_reg reg)
 {
    emit_1ub(p, 0xff);
    emit_modrm_noreg(p, 2, reg);
 }
-#endif
-
 
 /* michal:
  * Temporary. As I need immediate operands, and dont want to mess with the codegen,
@@ -422,7 +395,6 @@ void x86_and( struct x86_function *p,
 {
    emit_op_modrm( p, 0x23, 0x21, dst, src );
 }
-
 
 
 /***********************************************************************
@@ -738,8 +710,6 @@ void sse2_movd( struct x86_function *p,
 }
 
 
-
-
 /***********************************************************************
  * x87 instructions
  */
@@ -765,7 +735,6 @@ void x87_fldz( struct x86_function *p )
 {
    emit_2ub(p, 0xd9, 0xee);
 }
-
 
 void x87_fldcw( struct x86_function *p, struct x86_reg arg )
 {
@@ -961,7 +930,6 @@ void x87_fcos( struct x86_function *p )
    emit_2ub(p, 0xd9, 0xff);
 }
 
-
 void x87_fprndint( struct x86_function *p )
 {
    emit_2ub(p, 0xd9, 0xfc);
@@ -1083,8 +1051,6 @@ void x87_fnstsw( struct x86_function *p, struct x86_reg dst )
       emit_modrm_noreg(p, 7, dst);
    }
 }
-
-
 
 
 /***********************************************************************
