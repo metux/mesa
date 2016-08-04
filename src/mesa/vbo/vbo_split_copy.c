@@ -181,17 +181,7 @@ flush( struct copy_context *copy )
     */
    copy->dstib.count = copy->dstelt_nr;
 
-#if 0
-   dump_draw_info(copy->ctx,
-                  copy->dstarray_ptr,
-                  copy->dstprim,
-                  copy->dstprim_nr,
-                  &copy->dstib,
-                  0,
-                  copy->dstbuf_nr);
-#else
    (void) dump_draw_info;
-#endif
 
    ctx->Array._DrawArrays = copy->dstarray_ptr;
    ctx->NewDriverState |= ctx->DriverFlags.NewArray;
@@ -310,8 +300,6 @@ static void
 end( struct copy_context *copy, GLboolean end_flag )
 {
    struct _mesa_prim *prim = &copy->dstprim[copy->dstprim_nr];
-
-/*    printf("end (%d)\n", end_flag); */
 
    prim->end = end_flag;
    prim->count = copy->dstelt_nr - prim->start;

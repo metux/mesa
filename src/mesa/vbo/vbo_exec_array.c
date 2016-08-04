@@ -738,68 +738,6 @@ vbo_exec_DrawArraysInstancedBaseInstance(GLenum mode, GLint first, GLsizei count
 }
 
 
-
-/**
- * Map GL_ELEMENT_ARRAY_BUFFER and print contents.
- * For debugging.
- */
-#if 0
-static void
-dump_element_buffer(struct gl_context *ctx, GLenum type)
-{
-   const GLvoid *map =
-      ctx->Driver.MapBufferRange(ctx, 0,
-				 ctx->Array.VAO->IndexBufferObj->Size,
-				 GL_MAP_READ_BIT,
-                                 ctx->Array.VAO->IndexBufferObj,
-                                 MAP_INTERNAL);
-   switch (type) {
-   case GL_UNSIGNED_BYTE:
-      {
-         const GLubyte *us = (const GLubyte *) map;
-         GLint i;
-         for (i = 0; i < ctx->Array.VAO->IndexBufferObj->Size; i++) {
-            printf("%02x ", us[i]);
-            if (i % 32 == 31)
-               printf("\n");
-         }
-         printf("\n");
-      }
-      break;
-   case GL_UNSIGNED_SHORT:
-      {
-         const GLushort *us = (const GLushort *) map;
-         GLint i;
-         for (i = 0; i < ctx->Array.VAO->IndexBufferObj->Size / 2; i++) {
-            printf("%04x ", us[i]);
-            if (i % 16 == 15)
-               printf("\n");
-         }
-         printf("\n");
-      }
-      break;
-   case GL_UNSIGNED_INT:
-      {
-         const GLuint *us = (const GLuint *) map;
-         GLint i;
-         for (i = 0; i < ctx->Array.VAO->IndexBufferObj->Size / 4; i++) {
-            printf("%08x ", us[i]);
-            if (i % 8 == 7)
-               printf("\n");
-         }
-         printf("\n");
-      }
-      break;
-   default:
-      ;
-   }
-
-   ctx->Driver.UnmapBuffer(ctx, ctx->Array.VAO->IndexBufferObj,
-                           MAP_INTERNAL);
-}
-#endif
-
-
 /**
  * Inner support for both _mesa_DrawElements and _mesa_DrawRangeElements.
  * Do the rendering for a glDrawElements or glDrawRangeElements call after
@@ -958,11 +896,7 @@ vbo_exec_DrawRangeElementsBaseVertex(GLenum mode,
        end + basevertex >= max_element)
       index_bounds_valid = GL_FALSE;
 
-#if 0
-   check_draw_elements_data(ctx, count, type, indices);
-#else
    (void) check_draw_elements_data;
-#endif
 
    vbo_validated_drawrangeelements(ctx, mode, index_bounds_valid, start, end,
 				   count, type, indices, basevertex, 1, 0);
