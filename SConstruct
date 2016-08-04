@@ -80,6 +80,13 @@ env.Append(CPPPATH = [
 	'#/src/gallium/winsys',
 ])
 
+if sys.platform == 'win32':
+	print 'We are on win32 - assuming MSVC'
+	print 'FIXME: should check for cygwin or mingw32'
+	env.Prepend(CPPPATH = [
+		'#/os/win32/include',
+	])
+
 # for debugging
 #print env.Dump()
 
