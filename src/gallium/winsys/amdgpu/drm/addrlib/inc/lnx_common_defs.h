@@ -41,40 +41,9 @@
 extern "C" {
 #endif
 
-typedef unsigned long __ke_size_t;              // as it is defined in firegl_public.h
-typedef int           __kernel_ptrdiff_t;       // as it is defined in posix_types.h
-
-
 #if !defined(ATI_API_CALL)
 #define ATI_API_CALL __attribute__((regparm(0)))
 #endif
-
-extern void * ATI_API_CALL __ke_memset(void* s, int c, __ke_size_t count);
-extern void * ATI_API_CALL __ke_memcpy(void* d, const void* s, __ke_size_t count);
-extern ATI_API_CALL __ke_size_t __ke_strlen(const char *s);
-extern char* ATI_API_CALL __ke_strcpy(char* d, const char* s);
-extern char* ATI_API_CALL __ke_strncpy(char* d, const char* s, __ke_size_t count);
-extern void __ke_printk(const char* fmt, ...);
-
-extern int ATI_API_CALL __ke_snprintf(char* buf, __ke_size_t size, const char* fmt, ...);
-extern int ATI_API_CALL KCL_CopyFromUserSpace(void* to, const void* from, __ke_size_t size);
-extern int ATI_API_CALL KCL_CopyToUserSpace(void* to, const void* from, __ke_size_t size);
-#define __ke_copy_from_user  KCL_CopyFromUserSpace
-#define __ke_copy_to_user    KCL_CopyToUserSpace
-extern int ATI_API_CALL __ke_verify_area(int type, const void * addr, unsigned long size);
-
-extern unsigned long ATI_API_CALL KAS_GetTickCounter(void);
-extern unsigned long ATI_API_CALL KAS_GetTicksPerSecond(void);
-
-
-#if DBG
-extern int ATI_API_CALL __ke_vsnprintf(char *buf, __ke_size_t size, const char *fmt, va_list ap);
-#define vsnprintf(_dst, _size, _fmt, varg)  __ke_snprintf(_dst, _size, _fmt, varg)
-#endif                                      // #if DBG
-
-
-// Note: This function is not defined in firegl_public.h.
-void    firegl_hardwareHangRecovery(void);
 
 #ifdef __cplusplus
 }
@@ -111,19 +80,4 @@ typedef int                 ptrdiff_t;
 #define offsetof(TYPE, MEMBER) ((size_t) &((TYPE *)0)->MEMBER)  // as it is defined in stddef.h
 #define CHAR_BIT            8                                   // as it is defined in limits.h
 
-//
-// ---------------------------------  C RTL -----------------------------------
-//
-
-#define memset(_p, _v, _n)                  __ke_memset(_p, _v, _n)
-#define memcpy(_d, _s, _n)                  __ke_memcpy(_d, _s, _n)
-#define strlen(_s)                          __ke_strlen(_s)
-#define strcpy(_d, _s)                      __ke_strcpy(_d, _s)
-#define strncpy(_d, _s, _n)                 __ke_strncpy(_d, _s, _n)
-// Note: C99 supports macros with variable number of arguments. GCC also supports this C99 feature as
-//       C++ extension.
-#define snprintf(_dst, _size, _fmt, arg...) __ke_snprintf(_dst, _size, _fmt, ##arg)
-
-
 #endif                                      // #ifdef _lnx_common_defs_h_
-
